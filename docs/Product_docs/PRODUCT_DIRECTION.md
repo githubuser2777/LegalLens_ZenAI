@@ -1,5 +1,3 @@
-# PRODUCT_DIRECTION.md
-
 # LegalLens AI
 
 ## Product Vision
