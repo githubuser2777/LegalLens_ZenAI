@@ -14,16 +14,15 @@ graph TD
     Epic1 --> US02["US-02: Xem văn bản trích xuất"]
     
     Epic2["Epic 2: Khám phá tài liệu"] --> US03["US-03: Tìm từ khóa nhanh"]
-    Epic2 --> US04["US-04: Điều hiểu mục lục"]
+    Epic2 --> US04["US-04: Điều hướng mục lục"]
     
-    Epic3["Epic 3: Phân tích Rủi ro"] --> US05["US-05: Nhận diện rủi ro AI"]
-    Epic3 --> US06["US-06: Phân loại mức nghiêm trọng"]
+    Epic3["Epic 3: Phân tích Rủi ro"] --> US05["US-05: Phân tích & Phân loại rủi ro AI"]
     
-    Epic4["Epic 4: Minh bạch nguồn"] --> US07["US-07: Xem liên kết trích dẫn"]
-    Epic4 --> US08["US-08: Tự động cuộn & tô sáng"]
+    Epic4["Epic 4: Minh bạch nguồn"] --> US06["US-06: Trích xuất trích dẫn AI"]
+    Epic4 --> US07["US-07: Tự động cuộn & tô sáng"]
     
-    Epic5["Epic 5: Bảo mật tài khoản"] --> US09["US-09: Đăng ký tài khoản"]
-    Epic5 --> US10["US-10: Đăng nhập bảo mật"]
+    Epic5["Epic 5: Bảo mật tài khoản"] --> US08["US-08: Đăng ký tài khoản"]
+    Epic5 --> US09["US-09: Đăng nhập bảo mật"]
 ```
 
 ---
@@ -36,12 +35,11 @@ graph TD
 | **US-02** | Xem nội dung hợp đồng | Epic 1 | Must Have (P1) | 3 | Sprint 1 (Tuần 6) | Không |
 | **US-03** | Tìm từ khóa nhanh | Epic 2 | Should Have (P2) | 3 | Sprint 3 (Tuần 8-9) | Không |
 | **US-04** | Điều hướng mục lục | Epic 2 | Should Have (P2) | 2 | Sprint 3 (Tuần 8-9) | Không |
-| **US-05** | Phân tích rủi ro tự động bằng AI | Epic 3 | Must Have (P1) | 8 | Sprint 2 (Tuần 7) | **Có** |
-| **US-06** | Phân loại rủi ro theo mức độ | Epic 3 | Must Have (P1) | 5 | Sprint 2 (Tuần 7) | **Có** |
-| **US-07** | Xem nguồn trích dẫn hỗ trợ | Epic 4 | Must Have (P1) | 3 | Sprint 2 (Tuần 7) | **Có** |
-| **US-08** | Tự động cuộn và tô sáng văn bản gốc | Epic 4 | Must Have (P1) | 3 | Sprint 2 (Tuần 7) | Không |
-| **US-09** | Đăng ký tài khoản mới | Epic 5 | Could Have (P3) | 3 | Sprint 3 (Tuần 8-9) | Không |
-| **US-10** | Đăng nhập hệ thống bảo mật | Epic 5 | Could Have (P3) | 3 | Sprint 3 (Tuần 8-9) | Không |
+| **US-05** | Phân tích và phân loại mức độ rủi ro bằng AI | Epic 3 | Must Have (P1) | 8 | Sprint 2 (Tuần 7) | **Có** |
+| **US-06** | Trích xuất trích dẫn nguồn làm bằng chứng cho rủi ro | Epic 4 | Must Have (P1) | 3 | Sprint 2 (Tuần 7) | **Có** |
+| **US-07** | Tự động cuộn và tô sáng văn bản gốc | Epic 4 | Must Have (P1) | 3 | Sprint 2 (Tuần 7) | Không |
+| **US-08** | Đăng ký tài khoản mới | Epic 5 | Could Have (P3) | 3 | Sprint 3 (Tuần 8-9) | Không |
+| **US-09** | Đăng nhập hệ thống bảo mật | Epic 5 | Could Have (P3) | 3 | Sprint 3 (Tuần 8-9) | Không |
 
 ---
 
@@ -116,41 +114,31 @@ graph TD
 
 ### Epic 3: Phân tích Rủi ro tự động (Risk Analysis)
 
-#### US-05: Phân tích rủi ro tự động bằng AI
-* **Mô tả:** Là một người dùng, tôi muốn hệ thống tự động quét và phân tích để tìm kiếm các điều khoản tiềm ẩn nguy hiểm, giúp tôi tập trung chú ý vào các phần quan trọng đó.
+#### US-05: Phân tích và phân loại mức độ rủi ro bằng AI
+* **Mô tả:** Là một người dùng, tôi muốn hệ thống tự động quét, phân tích và phân loại các điều khoản rủi ro tiềm ẩn nguy hiểm theo mức độ nghiêm trọng (Cao, Trung bình, Thấp), giúp tôi dễ dàng tập trung sự chú ý vào các phần quan trọng nhất.
 * **Độ ưu tiên:** Must Have (P1)
 * **Độ phức tạp:** 8 SP
 * **AI tham gia:** **Có**
 * **Tiêu chuẩn nghiệm thu (BDD):**
   * **Given:** Văn bản hợp đồng thô đã được trích xuất hoàn tất.
   * **When:** Người dùng nhấp vào nút "Analyze Risks".
-  * **Then:** Hệ thống gửi dữ liệu đến RAG pipeline và trả về danh sách các cảnh báo rủi ro được phát hiện ở phân khu bên phải, dịch rõ nghĩa của điều khoản pháp lý sang ngôn ngữ phổ thông.
-
-#### US-06: Phân loại rủi ro theo mức độ nghiêm trọng
-* **Mô tả:** Là một người dùng, tôi muốn các cảnh báo rủi ro được phân chia trực quan theo mức độ (Cao, Trung bình, Thấp) để tôi dễ dàng phân loại sự chú ý.
-* **Độ ưu tiên:** Must Have (P1)
-* **Độ phức tạp:** 5 SP
-* **AI tham gia:** **Có**
-* **Tiêu chuẩn nghiệm thu (BDD):**
-  * **Given:** Quá trình phân tích rủi ro hoàn tất.
-  * **When:** Người dùng xem danh mục cảnh báo trên Dashboard.
-  * **Then:** Các cảnh báo hiển thị rõ ràng màu sắc tương ứng: Cao (Đỏ), Trung bình (Vàng), Thấp (Xanh) kèm theo bộ lọc danh mục giúp người dùng lọc nhanh theo mức độ.
+  * **Then:** Hệ thống gửi dữ liệu đến RAG pipeline và hiển thị danh sách các cảnh báo rủi ro được phát hiện ở phân khu bên phải, được dịch nghĩa rõ ràng sang ngôn ngữ phổ thông và phân loại màu sắc trực quan: Cao (Đỏ), Trung bình (Vàng), Thấp (Xanh) kèm theo bộ lọc danh mục giúp người dùng lọc nhanh theo mức độ.
 
 ---
 
 ### Epic 4: Bằng chứng & Sự Minh bạch (Evidence & Transparency)
 
-#### US-07: Xem nguồn trích dẫn hỗ trợ của cảnh báo
-* **Mô tả:** Là một người dùng, tôi muốn mỗi cảnh báo rủi ro do AI sinh ra đều đi kèm thông tin chỉ định rõ điều khoản làm căn cứ để tôi kiểm chứng tính trung thực.
+#### US-06: Trích xuất trích dẫn nguồn làm bằng chứng cho rủi ro
+* **Mô tả:** Là một người dùng, tôi muốn mỗi cảnh báo rủi ro do AI sinh ra đều đi kèm thông tin chỉ định rõ đoạn văn bản gốc làm căn cứ để tôi kiểm chứng tính trung thực.
 * **Độ ưu tiên:** Must Have (P1)
 * **Độ phức tạp:** 3 SP
 * **AI tham gia:** **Có**
 * **Tiêu chuẩn nghiệm thu (BDD):**
   * **Given:** AI phát hiện ra một rủi ro cụ thể trong hợp đồng.
   * **When:** Hệ thống hiển thị thẻ cảnh báo rủi ro đó.
-  * **Then:** Thẻ cảnh báo phải hiển thị đoạn văn bản gốc (Excerpt) làm bằng chứng kiểm chứng trực tiếp và ghi rõ số hiệu Điều/Khoản trong văn bản gốc.
+  * **Then:** Thẻ cảnh báo phải hiển thị đoạn văn bản gốc (Excerpt) làm bằng chứng kiểm chứng trực tiếp và ghi rõ số hiệu Điều/Khoản làm căn cứ.
 
-#### US-08: Tự động cuộn và tô sáng văn bản gốc
+#### US-07: Tự động cuộn và tô sáng văn bản gốc
 * **Mô tả:** Là một người dùng, tôi muốn nhấp vào nguồn trích dẫn của rủi ro và hệ thống tự động đưa tôi đến vị trí điều khoản đó trong văn bản gốc và đánh dấu nổi bật nó.
 * **Độ ưu tiên:** Must Have (P1)
 * **Độ phức tạp:** 3 SP
@@ -164,7 +152,7 @@ graph TD
 
 ### Epic 5: Bảo mật tài khoản (Account Security)
 
-#### US-09: Đăng ký tài khoản mới
+#### US-08: Đăng ký tài khoản mới
 * **Mô tả:** Là một người dùng mới, tôi muốn đăng ký một tài khoản an toàn để lưu trữ lịch sử phân tích hợp đồng của cá nhân.
 * **Độ ưu tiên:** Could Have (P3)
 * **Độ phức tạp:** 3 SP
@@ -174,7 +162,7 @@ graph TD
   * **When:** Nhập thông tin Email hợp lệ, Mật khẩu đạt chuẩn bảo mật (ít nhất 8 ký tự, có số, chữ hoa, ký tự đặc biệt) và bấm nút "Đăng ký".
   * **Then:** Hệ thống gửi email xác minh và hiển thị thông báo yêu cầu người dùng kích hoạt tài khoản.
 
-#### US-10: Đăng nhập hệ thống bảo mật
+#### US-09: Đăng nhập hệ thống bảo mật
 * **Mô tả:** Là một người dùng đã có tài khoản, tôi muốn đăng nhập bảo mật vào hệ thống để truy cập workspace cá nhân.
 * **Độ ưu tiên:** Could Have (P3)
 * **Độ phức tạp:** 3 SP
