@@ -1,429 +1,150 @@
-# LegalLens AI
+# ĐỊNH HƯỚNG SẢN PHẨM — LEGALLENS AI
 
-## Product Vision
-
-LegalLens AI helps ordinary people understand contracts before signing them.
-
-Most users do not read contracts because legal documents are long, difficult to understand, and filled with unfamiliar terminology.
-
-The product transforms lengthy legal documents into understandable insights, highlights potentially risky clauses, and enables users to ask questions grounded in the actual contract.
-
-The goal is understanding, not legal consultation.
+> **[Sứ mệnh]** Giúp người dùng phổ thông thấu hiểu các rủi ro cốt lõi trong hợp đồng chỉ trong vòng **5 phút** thay vì hàng giờ đọc tài liệu khô khan.
 
 ---
 
-# Product Mission
+## Tầm nhìn Sản phẩm (Product Vision)
 
-Enable users to understand important contract risks in less than five minutes.
+LegalLens AI giúp người dùng phổ thông hiểu rõ hợp đồng trước khi đặt bút ký bằng cách đơn giản hóa quá trình xem xét, điều hướng và phân tích các văn bản pháp lý phức tạp.
 
-Instead of reading 20 pages of legal text, users should quickly learn:
+Nền tảng thu hẹp khoảng cách thông tin bất đối xứng giữa bên soạn thảo hợp đồng và bên ký hợp đồng, giúp người dùng tự tin đưa ra các quyết định sáng suốt mà không đòi hỏi phải có chuyên môn sâu về pháp lý.
 
-* What should I worry about?
-* What rights am I giving up?
-* What penalties exist?
-* Can this contract renew automatically?
-* What happens if I cancel?
+> [!IMPORTANT]
+> **Tuyên bố miễn trừ:** Hệ thống chỉ cung cấp thông tin tham khảo và hỗ trợ giáo dục. Đây không phải là dịch vụ tư vấn pháp lý chuyên nghiệp và không thay thế vai trò của luật sư.
 
 ---
 
-# Problem Statement
+## Vấn đề thực tế (Problem Statement)
 
-People frequently sign agreements without fully understanding them.
+Mọi người thường xuyên ký kết các thỏa thuận dân sự hoặc thương mại mà không thực sự hiểu rõ những gì mình đã đồng ý do:
+1. **Thuật ngữ phức tạp (Legalese):** Ngôn ngữ pháp lý lắt léo, xa lạ đối với người không chuyên.
+2. **Độ dài tài liệu lớn:** Hợp đồng thường dài hàng chục trang, gây nản lòng khi tự đọc.
+3. **Cạm bẫy ẩn giấu:** Các điều khoản bất lợi thường bị che giấu tinh vi bên trong các chương mục lớn.
 
-Examples include:
-
-* Rental agreements
-* Employment contracts
-* Freelance contracts
-* Service agreements
-* Website Terms of Service
-* Privacy Policies
-
-This creates risks such as:
-
-* Unexpected fees
-* Automatic renewals
-* Loss of deposits
-* Unfair termination clauses
-* Broad data-sharing permissions
-
-Most users lack legal expertise and are unwilling to read lengthy documents.
+Điều này dẫn đến các rủi ro thực tế:
+* Phát sinh các khoản phí phạt tài chính ngoài ý muốn.
+* Tự động gia hạn hợp đồng ngoài tầm kiểm soát.
+* Mất tiền đặt cọc bất hợp lý.
+* Cho phép chia sẻ rộng rãi dữ liệu cá nhân nhạy cảm.
 
 ---
 
-# Product Principles
+## Khách hàng Mục tiêu (Target Personas)
 
-## Clarity Over Complexity
-
-The product should simplify legal language.
-
-Users should never need legal training to understand explanations.
-
-Every feature should improve comprehension.
-
----
-
-## Evidence Over Opinion
-
-The system should explain what exists in the document.
-
-The system should not speculate.
-
-The system should not provide unsupported conclusions.
-
----
-
-## Trust Through Transparency
-
-Every warning must show supporting evidence.
-
-Users should always know where information came from.
-
-The product should never behave like a black box.
+```mermaid
+mindmap
+  root((Người dùng chính))
+    Sinh viên
+      Hợp đồng thuê phòng trọ
+      Thỏa thuận học bổng
+      Hợp đồng thực tập
+    Freelancer
+      Hợp đồng cung cấp dịch vụ
+      Thỏa thuận thanh toán
+      Cam kết sở hữu trí tuệ
+    Người lao động
+      Hợp đồng lao động
+      Thỏa thuận bảo mật NDA
+      Cam kết không cạnh tranh
+    Người tiêu dùng
+      Điều khoản sử dụng web/app
+      Đăng ký gói thuê bao
+      Chính sách bảo mật
+```
 
 ---
 
-## Actionable Insights
+## Nguyên tắc Thiết kế Sản phẩm (Product Principles)
 
-Do not merely summarize.
-
-Help users identify:
-
-* Risks
-* Obligations
-* Deadlines
-* Costs
-* Restrictions
-
-Information should be useful for decision making.
+* **Rõ ràng trước Phức tạp (Clarity Over Complexity):** Dịch thuật ngữ pháp lý khó hiểu thành ngôn ngữ phổ thông dễ hiểu cho mọi người dùng.
+* **Bằng chứng trước Nhận định (Evidence Over Opinion):** AI chỉ phân tích dựa trên văn bản gốc trong tài liệu, không tự suy diễn vô căn cứ.
+* **Tin cậy qua Minh bạch (Trust Through Transparency):** Mọi cảnh báo rủi ro đều phải hiển thị liên kết trích dẫn điều khoản gốc trực tiếp để đối chứng.
+* **Thông tin có khả năng Hành động (Actionable Insights):** Không chỉ tóm tắt mà phải chỉ rõ nghĩa vụ, hạn chót, chi phí phạt và rủi ro trực diện.
 
 ---
 
-# Primary Users
+## Kiến trúc Luồng Dữ liệu (RAG Architecture)
 
-## Students
+Dưới đây là mô hình xử lý thông tin từ khi người dùng tải tài liệu lên cho tới khi nhận được phản hồi phân tích từ AI:
 
-Users reviewing:
-
-* Housing contracts
-* Internship agreements
-* Scholarship terms
-
----
-
-## Employees
-
-Users reviewing:
-
-* Employment contracts
-* NDA agreements
-* Benefit policies
-
----
-
-## Freelancers
-
-Users reviewing:
-
-* Client agreements
-* Service contracts
-* Payment terms
+```mermaid
+graph TD
+    User([Người dùng]) -->|1. Tải lên PDF| FE[Frontend - Next.js]
+    FE -->|2. Gửi file| BE[Backend - FastAPI]
+    BE -->|3. Parse văn bản| DP[Document Processing]
+    DP -->|4. Phân đoạn text| Chunk[Text Chunking]
+    Chunk -->|5. Vectorize| Embed[Embedding Generation]
+    Embed -->|6. Indexing| DB[(Vector Store - FAISS)]
+    
+    User -->|7. Hỏi đáp / Yêu cầu Phân tích| FE
+    FE -->|8. Gửi truy vấn RAG| BE
+    BE -->|9. Tìm kiếm ngữ cảnh| DB
+    DB -->|10. Trả về đoạn văn bản khớp| BE
+    BE -->|11. Tạo prompt kết hợp| LLM[AI Model - Gemini 2.5 Flash]
+    LLM -->|12. Trả kết quả + Trích dẫn nguồn| BE
+    BE -->|13. Hiển thị| FE
+    FE -->|14. Đối chiếu trực quan| User
+```
 
 ---
 
-## Consumers
+## Bản đồ Tính năng & Phân loại Ưu tiên (Feature Roadmap)
 
-Users reviewing:
-
-* Website terms
-* Subscription agreements
-* Privacy policies
-
----
-
-# User Goals
-
-Users want answers to questions such as:
-
-* Is there anything dangerous here?
-* Can I lose money?
-* Can the other party terminate this contract?
-* Does this agreement renew automatically?
-* What data can be shared?
-* What happens if I break the contract?
-
-The product should optimize for these questions.
+| Độ ưu tiên | Tên tính năng | Mô tả chi tiết | Tích hợp AI |
+| :--- | :--- | :--- | :---: |
+| **P0 (Critical)** | **Tải lên PDF** | Cho phép người dùng kéo thả file PDF hợp đồng cá nhân | Không |
+| **P0 (Critical)** | **Xử lý tài liệu** | Trích xuất văn bản thô từ tệp PDF và phân mảnh dữ liệu | Không |
+| **P0 (Critical)** | **Tóm tắt hợp đồng** | Tạo bản tóm tắt nội dung cốt lõi của hợp đồng trong 1 trang | Có |
+| **P0 (Critical)** | **Phát hiện rủi ro** | Nhận diện điều khoản phạt, gia hạn, mất cọc, quyền riêng tư | Có |
+| **P0 (Critical)** | **Hỏi đáp RAG** | Chat hỏi đáp trực tiếp dựa trên nội dung hợp đồng gốc | Có |
+| **P1 (Important)**| **Tô sáng điều khoản** | Tự động cuộn và làm nổi bật dòng văn bản gốc khi bấm rủi ro | Không |
+| **P1 (Important)**| **Phân loại rủi ro** | Nhóm rủi ro theo danh mục: Tài chính, Gia hạn, Riêng tư... | Có |
+| **P1 (Important)**| **Xuất báo cáo** | Cho phép tải báo cáo đánh giá rủi ro dạng PDF/Word | Không |
+| **P2 (Optional)** | **So sánh hợp đồng** | Đặt 2 hợp đồng cạnh nhau để đối chiếu điều khoản | Có |
+| **P2 (Optional)** | **Lịch sử phân tích** | Lưu trữ và hiển thị lại các hợp đồng đã phân tích trước đó | Không |
 
 ---
 
-# MVP Definition
+## Hành trình Trải nghiệm Người dùng (User Journey)
 
-The MVP must support:
-
-1. PDF Upload
-2. Text Extraction
-3. Contract Summary
-4. Risk Detection
-5. RAG-Based Question Answering
-6. Source Citations
-
-Nothing else is required for MVP success.
-
----
-
-# Features Ranked By Priority
-
-## P0 (Critical)
-
-### Contract Upload
-
-Allow users to upload PDF files.
-
-Without this feature, the product has no value.
-
----
-
-### Document Processing
-
-Extract readable text.
-
-Handle common contract structures.
+```mermaid
+sequenceDiagram
+    actor User as Người dùng
+    participant App as Giao diện Web
+    participant Server as Backend Server
+    participant AI as Mô hình AI
+    
+    User->>App: 1. Tải lên tệp PDF Hợp đồng
+    App->>Server: Gửi tệp xử lý
+    Server->>Server: Trích xuất text & indexing FAISS
+    Server-->>App: Trả về trạng thái sẵn sàng
+    User->>App: 2. Nhấp nút "Phân tích Rủi ro"
+    App->>Server: Yêu cầu phân tích
+    Server->>AI: Gửi ngữ cảnh RAG
+    AI-->>Server: Trả về danh sách rủi ro + trích dẫn nguồn
+    Server-->>App: Hiển thị bảng điều khiển rủi ro
+    User->>App: 3. Nhấp vào trích dẫn nguồn trên thẻ rủi ro
+    App->>App: Tự động cuộn và tô sáng điều khoản gốc bên trái
+    User->>App: 4. Nhập câu hỏi thắc mắc vào ô chat
+    App->>Server: Gửi câu hỏi
+    Server->>AI: Truy xuất vector và gọi LLM
+    AI-->>Server: Trả về câu trả lời grounded kèm trích dẫn [Điều X]
+    Server-->>App: Hiển thị câu trả lời
+    User->>App: 5. Nhấp vào [Điều X] để kiểm chứng trực tiếp
+```
 
 ---
 
-### Contract Summary
-
-Generate a concise overview.
-
-Users should understand the document within minutes.
-
----
-
-### Risk Detection
-
-Identify potentially risky clauses.
-
-Provide explanations.
-
-Provide supporting evidence.
-
----
-
-### Ask Your Contract
-
-Users can ask questions.
-
-Responses must use RAG.
-
-Responses must reference source text.
-
----
-
-## P1 (Important)
-
-### Clause Highlighting
-
-Selecting a warning highlights relevant sections.
-
----
-
-### Risk Categories
-
-Group findings by category:
-
-* Payment
-* Privacy
-* Termination
-* Deposit
-* Renewal
-
----
-
-### Downloadable Report
-
-Generate analysis reports.
-
----
-
-## P2 (Optional)
-
-### Multi-Contract Comparison
-
-Compare two contracts.
-
----
-
-### Historical Analysis
-
-View previous uploads.
-
----
-
-### Team Collaboration
-
-Share documents with others.
-
----
-
-# Features Explicitly Out Of Scope
-
-The product does NOT:
-
-* Replace lawyers
-* Offer legal representation
-* Guarantee legal correctness
-* Predict court outcomes
-* Draft legal documents
-* Sign contracts
-
-Any feature resembling legal advice should be rejected.
-
----
-
-# User Journey
-
-## Step 1
-
-User uploads a contract.
-
----
-
-## Step 2
-
-System extracts text.
-
----
-
-## Step 3
-
-System analyzes the document.
-
----
-
-## Step 4
-
-System displays:
-
-* Summary
-* Risks
-* Key clauses
-
----
-
-## Step 5
-
-User asks questions.
-
----
-
-## Step 6
-
-System answers using retrieved document content.
-
----
-
-## Step 7
-
-User reviews cited sections.
-
----
-
-# Success Metrics
-
-The MVP is successful if:
-
-* Users can upload contracts successfully.
-* Users receive understandable summaries.
-* Risk findings are relevant.
-* RAG answers are grounded in source material.
-* Responses include citations.
-
----
-
-# Failure Conditions
-
-The MVP is failing if:
-
-* Users cannot understand explanations.
-* Answers contain hallucinations.
-* Risks cannot be traced to source text.
-* Uploads frequently fail.
-* Response times are excessively slow.
-
----
-
-# UX Direction
-
-The interface should feel like:
-
-"Google Docs + AI Audit"
-
-Not:
-
-"Generic Chatbot"
-
-The contract should remain visible.
-
-Users should always see:
-
-* The original document
-* The detected risks
-* The AI explanation
-
-At the same time.
-
----
-
-# Risk Presentation Model
-
-Each finding should contain:
-
-Risk Level
-
-* Low
-* Medium
-* High
-
-Explanation
-
-* Plain language summary
-
-Evidence
-
-* Source excerpt
-
-Location
-
-* Clause or section reference
-
----
-
-# AI Usage Philosophy
-
-AI should assist understanding.
-
-AI should not dominate the experience.
-
-The product is a document analysis platform enhanced by AI.
-
-It is not an AI chatbot product.
-
-This distinction should guide all future product decisions.
-
----
-
-# Long-Term Vision
-
-Future versions may support:
-
-* Multiple languages
-* OCR for scanned contracts
-* Enterprise document review
-* Contract comparison
-* Compliance checking
-* Clause classification
-* Audit report generation
-
-However, the first version succeeds by solving one problem exceptionally well:
-
-Helping users understand contracts before signing them.
+## Chỉ số Đo lường & Điều kiện Nghiệm thu
+
+### Chỉ số Thành công (Success Metrics)
+* **Thời gian thấu hiểu:** Người dùng nhận diện toàn bộ rủi ro chính trong hợp đồng mới dưới **5 phút**.
+* **Độ tin cậy:** 100% các câu trả lời/cảnh báo rủi ro có hiển thị trích dẫn trực tiếp tới điều khoản tương ứng trong tài liệu gốc.
+* **Trải nghiệm sử dụng:** Tỷ lệ người dùng tải lên hợp đồng và hoàn thành quá trình phân tích đạt trên 90%.
+
+### Điều kiện Thất bại (Failure Conditions)
+* Người dùng không thể hiểu các giải thích do AI đưa ra (quá nhiều từ ngữ chuyên môn, tối nghĩa).
+* AI sinh ra các câu trả lời bị ảo tưởng (hallucination), không khớp với tài liệu gốc.
+* Giao diện bị mất tính trực quan, hoạt động giống như một chatbot hỏi đáp thông thường thay vì một không gian làm việc chia đôi (workspace).
+* Tốc độ phản hồi phân tích vượt quá 30 giây gây mất kiên nhẫn.

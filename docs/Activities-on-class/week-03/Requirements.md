@@ -1,315 +1,120 @@
-# Step 05 - Requirements
-
-# Purpose
-
-This document defines the primary scenarios, epics, and user stories for the LegalLens AI MVP.
-
-The requirements focus on solving the core problem: helping users understand contracts before signing them.
+# YÊU CẦU DỰ ÁN & MÔ TẢ USER STORIES
 
 ---
 
-# Scenarios
+## Bản đồ liên kết tính năng (Epics & User Stories Mapping)
 
-## Scenario 1: Rental Contract Review
+Dưới đây là sơ đồ mô tả cách phân nhóm các Câu chuyện người dùng (User Stories) vào các Nhóm tính năng lớn (Epics):
 
-### Actor
-
-Student Tenant
-
-### Goal
-
-Understand potential risks before signing a rental agreement.
-
-### Flow
-
-1. User receives a rental contract.
-2. User uploads the PDF.
-3. System extracts contract content.
-4. User starts risk analysis.
-5. System identifies risky clauses.
-6. User reviews explanations and citations.
-7. User reads original clauses.
-8. User decides whether to proceed.
-
-### Expected Outcome
-
-The user understands important risks before signing.
+```mermaid
+graph TD
+    Epic1[Epic 1: Quản lý Hợp đồng] --> US01[US-01: Tải hợp đồng PDF]
+    Epic1 --> US02[US-02: Xem văn bản trích xuất]
+    
+    Epic2[Epic 2: Khám phá tài liệu] --> US03[US-03: Tìm từ khóa nhanh]
+    Epic2 --> US04[US-04: Điều hướng mục lục]
+    
+    Epic3[Epic 3: Phân tích Rủi ro] --> US05[US-05: Nhận diện rủi ro AI]
+    Epic3 --> US06[US-06: Phân loại mức nghiêm trọng]
+    
+    Epic4[Epic 4: Minh bạch nguồn] --> US07[US-07: Xem liên kết trích dẫn]
+    Epic4 --> US08[US-08: Tự động cuộn & tô sáng]
+    
+    Epic5[Epic 5: Bảo mật tài khoản] --> US09[US-09: Đăng ký tài khoản]
+    Epic5 --> US10[US-10: Đăng nhập bảo mật]
+```
 
 ---
 
-## Scenario 2: Employment Contract Review
+## Các Kịch bản Sử dụng Thực tế (Use Case Scenarios)
 
-### Actor
+### Kịch bản 1: Sinh viên thuê phòng trọ rà soát điều khoản đặt cọc
+* **Tác nhân:** Minh Nguyễn (Sinh viên Bách Khoa).
+* **Mục tiêu:** Kiểm tra xem điều kiện để nhận lại tiền đặt cọc có quá khắt khe hay chủ nhà có cài cắm điều khoản phạt chấm dứt hợp đồng sớm quá mức hợp lý không.
+* **Hành trình:** Minh tải file scan hợp đồng thuê nhà PDF lên ứng dụng -> Bấm nút phân tích rủi ro -> AI báo có 2 rủi ro Cao (Điều khoản tịch thu 100% tiền đặt cọc khi chấm dứt sớm, phạt đền bù thêm 1 tháng tiền phòng) -> Minh bấm xem trích dẫn nguồn để kiểm chứng -> Hệ thống cuộn và tô sáng Điều 2.2 và Điều 8.4 -> Minh đàm phán lại với chủ nhà yêu cầu sửa đổi điều kiện báo trước 30 ngày để nhận lại cọc.
 
-Employee
-
-### Goal
-
-Understand restrictions and obligations within an employment contract.
-
-### Flow
-
-1. User uploads employment contract.
-2. System processes the document.
-3. Risk analysis highlights important clauses.
-4. User reviews findings.
-5. User verifies citations.
-
-### Expected Outcome
-
-The user understands contractual obligations before accepting employment.
+### Kịch bản 2: Freelancer kiểm tra điều khoản nghiệm thu & thanh toán
+* **Tác nhân:** Linh Trần (Freelancer Designer).
+* **Mục tiêu:** Xác định rõ thời hạn khách hàng phê duyệt sản phẩm thiết kế và quy trình giải ngân thanh toán sau khi hoàn tất các mốc tiến độ (milestones).
+* **Hành trình:** Linh tải hợp đồng dịch vụ thiết kế lên -> Đọc tóm tắt và xem bảng điều khiển rủi ro -> AI phát hiện rủi ro Trung bình (Khách hàng có quyền đơn phương thay đổi tiến độ hoặc yêu cầu sửa đổi không giới hạn số lần) -> Linh trò chuyện với AI hỏi "Khách hàng trả tiền chậm phạt thế nào?" -> AI báo không tìm thấy điều khoản phạt trả chậm trong hợp đồng gốc -> Linh sửa đổi bổ sung điều khoản này vào hợp đồng trước khi ký.
 
 ---
 
-## Scenario 3: Freelancer Agreement Review
+## MÔ TẢ CHI TIẾT CÁC CÂU CHUYỆN NGƯỜI DÙNG (USER STORIES)
 
-### Actor
+### Epic 1: Quản lý Hợp đồng (Contract Management)
 
-Freelancer
+#### US-01: Tải lên tài liệu hợp đồng
+* **Mô tả:** Là một người dùng, tôi muốn dễ dàng kéo thả hoặc tải tệp PDF hợp đồng cá nhân lên hệ thống, để hệ thống xử lý nội dung văn bản.
+* **Độ ưu tiên:** Cao (Must Have)
+* **AI tham gia:** Không
+* **Tiêu chuẩn nghiệm thu (Acceptance Criteria):**
+  * **Given:** Người dùng ở trang chủ tải lên.
+  * **When:** Chọn một tệp hợp đồng định dạng PDF hợp lệ (dung lượng dưới 10MB).
+  * **Then:** Hệ thống tải tệp thành công và hiển thị tiến trình trích xuất văn bản thô.
 
-### Goal
-
-Identify financial and liability risks.
-
-### Flow
-
-1. User uploads service agreement.
-2. System analyzes contract content.
-3. Risk analyzer highlights concerning clauses.
-4. User reviews findings and citations.
-
-### Expected Outcome
-
-The user gains a better understanding of potential risks.
-
----
-
-# Epics
-
-## Epic 1: Contract Management
-
-Users can upload and review contracts.
-
-### Business Value
-
-Provides the foundation for all contract analysis activities.
+#### US-02: Xem nội dung hợp đồng
+* **Mô tả:** Là một người dùng, tôi muốn xem văn bản thô đã trích xuất từ tệp PDF trực quan trên giao diện ứng dụng, để tôi tự rà soát nội dung.
+* **Độ ưu tiên:** Cao (Must Have)
+* **AI tham gia:** Không
+* **Tiêu chuẩn nghiệm thu:**
+  * **Given:** Hệ thống hoàn thành trích xuất tệp hợp đồng.
+  * **When:** Người dùng chuyển hướng tới màn hình chính Workspace.
+  * **Then:** Văn bản gốc của hợp đồng hiển thị đầy đủ ở phân khu bên trái (Contract Viewer), giữ nguyên định dạng xuống dòng cơ bản.
 
 ---
 
-## Epic 2: Contract Exploration
+### Epic 3: Phân tích Rủi ro tự động (Risk Analysis)
 
-Users can inspect and navigate contract content efficiently.
+#### US-05: Phân tích rủi ro tự động bằng AI
+* **Mô tả:** Là một người dùng, tôi muốn hệ thống tự động quét và phân tích để tìm kiếm các điều khoản tiềm ẩn nguy hiểm, giúp tôi tập trung chú ý vào các phần quan trọng đó.
+* **Độ ưu tiên:** Cao (Must Have)
+* **AI tham gia:** **Có**
+* **Tiêu chuẩn nghiệm thu:**
+  * **Given:** Văn bản hợp đồng thô đã được trích xuất hoàn tất.
+  * **When:** Người dùng nhấp vào nút "Analyze Risks".
+  * **Then:** Hệ thống trả về danh sách các cảnh báo rủi ro được phát hiện ở phân khu bên phải, dịch rõ nghĩa của điều khoản pháp lý sang ngôn ngữ phổ thông.
 
-### Business Value
-
-Improves contract readability and accessibility.
-
----
-
-## Epic 3: Risk Analysis
-
-Users can identify potentially risky clauses.
-
-### Business Value
-
-Helps users focus on important sections quickly.
-
----
-
-## Epic 4: Evidence and Transparency
-
-Users can verify analysis results.
-
-### Business Value
-
-Builds trust in the system.
+#### US-06: Phân loại rủi ro theo mức độ nghiêm trọng
+* **Mô tả:** Là một người dùng, tôi muốn các cảnh báo rủi ro được phân chia trực quan theo mức độ (Cao, Trung bình, Thấp) để tôi dễ dàng phân loại sự chú ý.
+* **Độ ưu tiên:** Cao (Must Have)
+* **AI tham gia:** **Có**
+* **Tiêu chuẩn nghiệm thu:**
+  * **Given:** Quá trình phân tích rủi ro hoàn tất.
+  * **When:** Người dùng xem danh mục cảnh báo trên Dashboard.
+  * **Then:** Các cảnh báo hiển thị rõ ràng màu sắc tương ứng: Cao (Đỏ), Trung bình (Vàng), Thấp (Xanh) kèm theo bộ lọc danh mục.
 
 ---
 
-## Epic 5: User Security
+### Epic 4: Bằng chứng & Sự Minh bạch (Evidence & Transparency)
 
-Users can securely manage personal contracts.
+#### US-07: Xem nguồn trích dẫn hỗ trợ của cảnh báo
+* **Mô tả:** Là một người dùng, tôi muốn mỗi cảnh báo rủi ro do AI sinh ra đều đi kèm thông tin chỉ định rõ điều khoản làm căn cứ để tôi kiểm chứng tính trung thực.
+* **Độ ưu tiên:** Cao (Must Have)
+* **AI tham gia:** **Có**
+* **Tiêu chuẩn nghiệm thu:**
+  * **Given:** AI phát hiện ra một rủi ro cụ thể trong hợp đồng.
+  * **When:** Hệ thống hiển thị thẻ cảnh báo rủi ro đó.
+  * **Then:** Thẻ cảnh báo phải ghi rõ đoạn văn gốc gốc (Excerpt) làm bằng chứng và ghi rõ số hiệu Điều/Khoản trong văn bản gốc.
 
-### Business Value
-
-Protects user privacy and document access.
-
----
-
-# User Stories
-
-## Epic 1: Contract Management
-
-### US-01 Upload Contract
-
-As a user,
-
-I want to upload a PDF contract,
-
-so that I can analyze it.
-
-Priority: High
-
-AI Involved: No
+#### US-08: Tự động cuộn và tô sáng văn bản gốc
+* **Mô tả:** Là một người dùng, tôi muốn nhấp vào nguồn trích dẫn của rủi ro và hệ thống tự động đưa tôi đến vị trí điều khoản đó trong văn bản gốc và đánh dấu nổi bật nó.
+* **Độ ưu tiên:** Cao (Must Have)
+* **AI tham gia:** Không
+* **Tiêu chuẩn nghiệm thu:**
+  * **Given:** Người dùng đang xem danh sách rủi ro ở bên phải và văn bản hợp đồng ở bên trái.
+  * **When:** Người dùng nhấp vào liên kết nguồn "Điều X.Y" trên thẻ rủi ro.
+  * **Then:** Trình xem hợp đồng bên trái tự động cuộn (smooth scroll) đến đoạn văn bản đó và tô sáng (highlight) bằng màu sắc tương ứng với mức độ nghiêm trọng của rủi ro.
 
 ---
 
-### US-02 View Uploaded Contract
-
-As a user,
-
-I want to view extracted contract content,
-
-so that I can review the document.
-
-Priority: High
-
-AI Involved: No
-
----
-
-## Epic 2: Contract Exploration
-
-### US-03 Search Contract Content
-
-As a user,
-
-I want to search keywords inside a contract,
-
-so that I can quickly find relevant clauses.
-
-Priority: Medium
-
-AI Involved: No
-
----
-
-### US-04 Navigate Contract Sections
-
-As a user,
-
-I want to browse contract sections easily,
-
-so that I can understand document structure.
-
-Priority: Medium
-
-AI Involved: No
-
----
-
-## Epic 3: Risk Analysis
-
-### US-05 Analyze Contract Risks
-
-As a user,
-
-I want the system to identify potentially risky clauses,
-
-so that I can focus on important sections.
-
-Priority: High
-
-AI Involved: Yes
-
----
-
-### US-06 View Risk Severity
-
-As a user,
-
-I want risks categorized by severity,
-
-so that I can prioritize my attention.
-
-Priority: High
-
-AI Involved: Yes
-
----
-
-## Epic 4: Evidence and Transparency
-
-### US-07 View Supporting Citations
-
-As a user,
-
-I want every risk finding linked to original clauses,
-
-so that I can verify the analysis.
-
-Priority: High
-
-AI Involved: Yes
-
----
-
-### US-08 Review Original Contract Clause
-
-As a user,
-
-I want to open the cited clause,
-
-so that I can understand the context.
-
-Priority: High
-
-AI Involved: No
-
----
-
-## Epic 5: User Security
-
-### US-09 Register Account
-
-As a user,
-
-I want to create an account,
-
-so that I can save my contracts.
-
-Priority: Medium
-
-AI Involved: No
-
----
-
-### US-10 Login Securely
-
-As a user,
-
-I want secure authentication,
-
-so that only I can access my documents.
-
-Priority: Medium
-
-AI Involved: No
-
----
-
-# MVP User Stories
-
-The MVP will focus on the following stories:
-
-* US-01 Upload Contract
-* US-02 View Uploaded Contract
-* US-05 Analyze Contract Risks
-* US-06 View Risk Severity
-* US-07 View Supporting Citations
-* US-08 Review Original Contract Clause
-
-These stories directly support the primary value proposition of the product.
-
----
-
-# Non-MVP User Stories
-
-The following stories may be implemented later:
-
-* US-03 Search Contract Content
-* US-04 Navigate Contract Sections
-* US-09 Register Account
-* US-10 Login Securely
-
-These features improve usability but are not required for demonstrating the core MVP.
+## Phân định Phạm vi Phát triển MVP (Sprint Scope)
+
+### MVP Scope (Must Have - Phát triển ngay ở Sprint 1 & 2)
+* **US-01** (Tải lên PDF) & **US-02** (Hiển thị văn bản hợp đồng thô).
+* **US-05** (Phân tích rủi ro AI) & **US-06** (Phân loại mức độ rủi ro).
+* **US-07** (Cung cấp trích dẫn chứng cứ) & **US-08** (Tự động cuộn và tô sáng văn bản gốc).
+
+### Post-MVP Scope (Should/Could Have - Phát triển ở Sprint 3 hoặc các giai đoạn sau)
+* **US-03** (Tìm kiếm từ khóa nhanh) & **US-04** (Thanh mục lục điều hướng).
+* **US-09** (Đăng ký tài khoản mới) & **US-10** (Đăng nhập bảo mật quản lý lịch sử).

@@ -1,411 +1,411 @@
-# AI Logs - Week 01
+# Nhật ký Sử dụng AI - Tuần 01
 
-## Project
+## Dự án
 
 LegalLens AI
 
-## Sprint
+## Nhịp phát triển (Sprint)
 
-Week 01 - Product Discovery & Product Thinking
+Tuần 01 - Khám phá Sản phẩm & Tư duy Sản phẩm (Product Discovery & Product Thinking)
 
-## Objective
+## Mục tiêu
 
-The objective of Week 01 was to identify a meaningful problem, understand target users, define the product vision, establish the MVP scope and learn how AI can be integrated into the software engineering workflow.
-
----
-
-# Activity 1 - Product Thinking
-
-## Goal
-
-Understand the real-world problem that the product aims to solve.
+Mục tiêu của Tuần 01 là xác định một bài toán thực tế có ý nghĩa, thấu hiểu đối tượng người dùng mục tiêu, định hình tầm nhìn sản phẩm, xác định phạm vi phiên bản MVP và nghiên cứu cách thức tích hợp AI vào luồng công việc kỹ nghệ phần mềm.
 
 ---
 
-### Prompt Used
+# Hoạt động 1 - Tư duy Sản phẩm (Product Thinking)
 
-Analyze the problem space for a contract analysis platform.
+## Mục tiêu
 
-Who are the target users?
-
-What problems do they face?
-
-Why would they use this product?
+Hiểu rõ bài toán thực tế trong đời sống mà sản phẩm hướng tới giải quyết.
 
 ---
 
-### AI Response Summary
+### Prompt đã sử dụng
 
-AI identified several user groups:
+Phân tích không gian vấn đề cho một nền tảng phân tích hợp đồng.
 
-* Students
-* Employees
-* Freelancers
-* Consumers
+Người dùng mục tiêu là ai?
 
-Common problems included:
+Họ đang gặp phải những vấn đề gì?
 
-* Complex legal language
-* Long contracts
-* Hidden clauses
-* Lack of legal knowledge
+Tại sao họ lại cần sử dụng sản phẩm này?
 
 ---
 
-### Team Evaluation
+### Tóm tắt phản hồi của AI
 
-The AI-generated analysis aligned closely with the intended product direction.
+AI đã xác định được một số nhóm người dùng:
 
-The team refined the user segments to focus on:
+* Học sinh, sinh viên
+* Người lao động
+* Người làm tự do (Freelancer)
+* Người tiêu dùng nói chung
 
-* Students
-* Employees
-* Freelancers
+Các vấn đề phổ biến được chỉ ra bao gồm:
 
-as primary users for the MVP.
-
----
-
-### Outcome
-
-Problem statement drafted.
-
-Target users identified.
+* Ngôn ngữ pháp lý phức tạp
+* Tài liệu hợp đồng quá dài
+* Các điều khoản ẩn nguy hiểm
+* Thiếu kiến thức chuyên môn về pháp lý
 
 ---
 
-# Activity 2 - Product vs Project
+### Đánh giá của Nhóm phát triển
 
-## Goal
+Bản phân tích do AI tạo ra rất sát với định hướng sản phẩm ban đầu của nhóm.
 
-Understand the difference between building a product and building a project.
+Nhóm đã tinh chỉnh các phân khúc người dùng tập trung vào:
 
----
+* Học sinh, sinh viên
+* Người lao động
+* Freelancer
 
-### Prompt Used
-
-Explain the differences between product-based software and project-based software.
-
----
-
-### AI Response Summary
-
-AI highlighted:
-
-Project Focus:
-
-* Requirements
-* Delivery
-* Deadlines
-
-Product Focus:
-
-* User value
-* Growth
-* Continuous improvement
+là những người dùng chính cho phiên bản MVP.
 
 ---
 
-### Team Evaluation
+### Kết quả đạt được
 
-The distinction helped the team position LegalLens AI as a product-oriented solution rather than a one-time software delivery.
+Đã phác thảo xong phát biểu vấn đề (problem statement).
 
----
-
-### Outcome
-
-Product mindset established.
+Xác định xong các nhóm người dùng mục tiêu.
 
 ---
 
-# Activity 3 - Product Vision
+# Hoạt động 2 - Sản phẩm so với Dự án (Product vs Project)
 
-## Goal
+## Mục tiêu
 
-Create a product vision using the Moore Vision Template.
-
----
-
-### Prompt Used
-
-Create a product vision for an AI-powered contract analysis platform using the Moore Vision framework.
+Hiểu rõ sự khác biệt giữa việc xây dựng một sản phẩm (product) dài hạn và thực hiện một dự án (project) bàn giao một lần.
 
 ---
 
-### AI Response Summary
+### Prompt đã sử dụng
 
-Generated:
-
-* Target audience
-* Product positioning
-* Value proposition
-* Differentiation
+Giải thích sự khác biệt giữa phần mềm dạng sản phẩm (product-based) và phần mềm dạng dự án (project-based).
 
 ---
 
-### Team Evaluation
+### Tóm tắt phản hồi của AI
 
-The output provided a strong foundation.
+AI đã làm nổi bật các điểm khác biệt:
 
-The team revised wording to better reflect:
+Tập trung vào Dự án:
 
-* Educational purpose
-* Explainable AI
-* RAG-based analysis
+* Đáp ứng đúng yêu cầu định sẵn
+* Bàn giao đúng hạn
+* Tuân thủ hạn chót (deadlines)
 
----
+Tập trung vào Sản phẩm:
 
-### Outcome
-
-Product Vision completed.
-
----
-
-# Activity 4 - MVP Prioritization
-
-## Goal
-
-Identify the minimum feature set needed to validate the product idea.
+* Giá trị mang lại cho người dùng
+* Sự tăng trưởng và giữ chân người dùng
+* Cải tiến và tối ưu hóa liên tục
 
 ---
 
-### Prompt Used
+### Đánh giá của Nhóm phát triển
 
-Prioritize features for a contract analysis MVP.
-
-Classify features into Must Have, Should Have and Future Features.
+Sự phân biệt rõ ràng này giúp nhóm định vị LegalLens AI là một giải pháp hướng sản phẩm lâu dài, thay vì chỉ là một phần mềm bàn giao bài tập lớn một lần.
 
 ---
 
-### AI Response Summary
+### Kết quả đạt được
 
-Must Have:
-
-* PDF Upload
-* Risk Detection
-* Contract Question Answering
-
-Should Have:
-
-* Highlighting
-* Reporting
-
-Future Features:
-
-* OCR
-* Contract Comparison
-* Team Collaboration
+Thiết lập thành công tư duy phát triển sản phẩm (product mindset).
 
 ---
 
-### Team Evaluation
+# Hoạt động 3 - Tầm nhìn Sản phẩm (Product Vision)
 
-The AI recommendations matched project constraints and available development time.
+## Mục tiêu
 
----
-
-### Outcome
-
-MVP scope finalized.
+Xây dựng tầm nhìn sản phẩm dựa trên Bản mẫu Tầm nhìn Moore (Moore Vision Template).
 
 ---
 
-# Activity 5 - Prototype Design
+### Prompt đã sử dụng
 
-## Goal
-
-Design the first version of the user interface.
+Tạo tầm nhìn sản phẩm cho một nền tảng phân tích hợp đồng thông minh sử dụng khung tầm nhìn Moore.
 
 ---
 
-### Prompt Used
+### Tóm tắt phản hồi của AI
 
-Design a dashboard for a legal contract analysis platform.
+AI đã tạo ra các phần:
 
-The interface should include:
-
-* Contract viewer
-* Risk dashboard
-* AI chat section
-
----
-
-### AI Response Summary
-
-Suggested:
-
-* Three-panel layout
-* Risk analysis section
-* Interactive contract viewer
+* Khách hàng mục tiêu
+* Định vị sản phẩm
+* Tuyên bố giá trị
+* Điểm khác biệt cạnh tranh
 
 ---
 
-### Team Evaluation
+### Đánh giá của Nhóm phát triển
 
-The proposed structure supports the primary user workflow effectively.
+Kết quả đầu ra cung cấp nền tảng cấu trúc rất tốt.
 
----
+Nhóm đã điều chỉnh lại câu từ để làm nổi bật hơn:
 
-### Outcome
-
-Initial wireframe prepared.
-
----
-
-# Activity 6 - AI Workflow
-
-## Goal
-
-Identify how AI can support software engineering activities.
+* Mục đích hỗ trợ giáo dục/nhận thức người dùng
+* Trí tuệ nhân tạo có tính giải thích cao (Explainable AI)
+* Công nghệ phân tích dựa trên RAG
 
 ---
 
-### Areas Where AI Was Used
+### Kết quả đạt được
 
-#### Product Discovery
-
-* Idea generation
-* User identification
-* Problem analysis
-
-#### Documentation
-
-* Product Vision
-* README
-* Product Direction
-
-#### Planning
-
-* MVP prioritization
-* Sprint planning
-
-#### Architecture
-
-* RAG pipeline suggestions
-* Technology recommendations
+Hoàn thành tuyên bố Tầm nhìn Sản phẩm.
 
 ---
 
-### Areas Where Human Judgment Was Required
+# Hoạt động 4 - Ưu tiên tính năng MVP
 
-* Final product decisions
-* Feature prioritization
-* Technical feasibility analysis
-* Scope management
+## Mục tiêu
 
----
-
-### Outcome
-
-AI workflow documented.
+Xác định tập hợp các tính năng tối thiểu cần có để xác thực ý tưởng sản phẩm.
 
 ---
 
-# Activity 7 - AI Evaluation
+### Prompt đã sử dụng
 
-## Goal
+Ưu tiên các tính năng cho một phiên bản hợp đồng phân tích MVP.
 
-Evaluate the usefulness and limitations of AI-generated outputs.
-
----
-
-### Strengths
-
-#### Speed
-
-Generated multiple ideas within minutes.
-
-#### Structure
-
-Produced organized documents and templates.
-
-#### Creativity
-
-Suggested perspectives the team had not initially considered.
+Phân loại các tính năng thành: Bắt buộc phải có (Must Have), Nên có (Should Have) và Các tính năng trong tương lai (Future Features).
 
 ---
 
-### Weaknesses
+### Tóm tắt phản hồi của AI
 
-#### Hallucination
+Bắt buộc phải có (Must Have):
 
-Some outputs contained unsupported assumptions.
+* Tải lên tệp PDF
+* Phát hiện rủi ro (Risk Detection)
+* Hỏi đáp dựa trên hợp đồng (Contract QA)
 
-#### Generic Recommendations
+Nên có (Should Have):
 
-Many suggestions lacked legal-domain specificity.
+* Tô sáng đoạn văn bản liên quan
+* Xuất báo cáo phân tích
 
-#### Context Limitations
+Tính năng tương lai:
 
-AI occasionally ignored project constraints.
-
----
-
-### Team Conclusion
-
-AI is effective for ideation and documentation but requires human verification.
-
----
-
-# Activity 8 - Reflection
-
-## What Went Well
-
-* Product idea selected quickly.
-* Product vision completed.
-* MVP scope defined.
-* Core documentation established.
+* Công nghệ OCR quét ảnh
+* So sánh các hợp đồng
+* Cộng tác làm việc nhóm
 
 ---
 
-## What Could Be Improved
+### Đánh giá của Nhóm phát triển
 
-* More validation with real users.
-* Better prompt engineering.
-* More domain research on legal technology.
+Các khuyến nghị của AI hoàn toàn phù hợp với các ràng buộc về mặt công nghệ và thời gian phát triển thực tế của nhóm sinh viên.
 
 ---
 
-## Key Learning
+### Kết quả đạt được
 
-AI should be treated as a collaborative assistant rather than an autonomous decision-maker.
-
-The quality of AI output depends heavily on the quality of prompts and human review.
+Hoàn thiện phạm vi phát triển phiên bản MVP.
 
 ---
 
-# AI Usage Statistics
+# Hoạt động 5 - Thiết kế Bản mẫu UI (Prototype Design)
 
-| Activity           | AI Used | Human Review Required |
+## Mục tiêu
+
+Thiết kế phiên bản giao diện người dùng đầu tiên của ứng dụng.
+
+---
+
+### Prompt đã sử dụng
+
+Thiết kế giao diện bảng điều khiển (dashboard) cho một nền tảng phân tích hợp đồng pháp lý.
+
+Giao diện cần chứa các phần:
+
+* Trình xem văn bản hợp đồng
+* Bảng thống kê rủi ro phát hiện
+* Khung trò chuyện hỏi đáp AI
+
+---
+
+### Tóm tắt phản hồi của AI
+
+AI đã đề xuất:
+
+* Bố cục giao diện chia làm 3 phân khu (Three-panel layout)
+* Phân khu thống kê phân tích rủi ro
+* Trình xem tài liệu tương tác trực quan
+
+---
+
+### Đánh giá của Nhóm phát triển
+
+Cấu trúc đề xuất hỗ trợ tối đa luồng công việc cốt lõi của người dùng một cách hiệu quả nhất.
+
+---
+
+### Kết quả đạt được
+
+Chuẩn bị xong bản phác thảo wireframe ban đầu.
+
+---
+
+# Hoạt động 6 - Luồng công việc tích hợp AI (AI Workflow)
+
+## Mục tiêu
+
+Xác định cách thức AI hỗ trợ hiệu quả các hoạt động kỹ nghệ phần mềm của nhóm.
+
+---
+
+### Các mảng công việc đã áp dụng AI hỗ trợ
+
+#### Khám phá Sản phẩm (Product Discovery)
+
+* Khởi tạo ý tưởng
+* Xác định đối tượng người dùng
+* Phân tích các vấn đề của người dùng
+
+#### Viết tài liệu (Documentation)
+
+* Tầm nhìn Sản phẩm (Product Vision)
+* Tài liệu hướng dẫn (README)
+* Định hướng Sản phẩm (Product Direction)
+
+#### Lên kế hoạch (Planning)
+
+* Ưu tiên các tính năng MVP
+* Lên kế hoạch cho các nhịp phát triển (Sprints)
+
+#### Kiến trúc hệ thống (Architecture)
+
+* Gợi ý thiết kế luồng xử lý RAG
+* Khuyến nghị lựa chọn công nghệ phù hợp
+
+---
+
+### Các mảng công việc bắt buộc phải sử dụng Nhận định của Con người
+
+* Quyết định cuối cùng về định hướng sản phẩm
+* Ưu tiên thứ tự phát triển các tính năng
+* Phân tích tính khả thi về mặt kỹ thuật thực tế
+* Quản lý phạm vi công việc dự án (tránh phình to tính năng)
+
+---
+
+### Kết quả đạt được
+
+Tài liệu hóa luồng công việc có AI hỗ trợ thành công.
+
+---
+
+# Hoạt động 7 - Đánh giá AI (AI Evaluation)
+
+## Mục tiêu
+
+Đánh giá mức độ hữu ích cũng như các giới hạn của kết quả do AI tạo ra.
+
+---
+
+### Điểm mạnh
+
+#### Tốc độ phản hồi nhanh
+
+Khởi tạo nhiều ý tưởng đa dạng chỉ trong vòng vài phút.
+
+#### Tính cấu trúc cao
+
+Tạo ra các biểu mẫu tài liệu được tổ chức một cách khoa học.
+
+#### Tính sáng tạo
+
+Gợi ý một số góc nhìn độc đáo mà nhóm chưa từng nghĩ tới ban đầu.
+
+---
+
+### Điểm yếu / Hạn chế
+
+#### Hiện tượng ảo tưởng (Hallucination)
+
+Một số kết quả sinh ra chứa các giả định vô căn cứ hoặc không sát thực tế.
+
+#### Khuyến nghị chung chung
+
+Nhiều gợi ý thiếu đi tính chuyên sâu cụ thể trong lĩnh vực pháp lý thực tế.
+
+#### Giới hạn về mặt ngữ cảnh
+
+Đôi khi AI bỏ qua các ràng buộc cụ thể về mặt thời gian và nhân lực của dự án.
+
+---
+
+### Kết luận của Nhóm phát triển
+
+AI cực kỳ hiệu quả trong giai đoạn lên ý tưởng và soạn thảo tài liệu thô, tuy nhiên bắt buộc phải có sự kiểm chứng và tinh chỉnh lại của con người.
+
+---
+
+# Hoạt động 8 - Tự vấn & Phản hồi (Reflection)
+
+## Điểm đã làm tốt
+
+* Chọn được ý tưởng sản phẩm nhanh chóng.
+* Hoàn thành tuyên bố tầm nhìn sản phẩm.
+* Xác định rõ ràng phạm vi tính năng MVP.
+* Xây dựng được bộ tài liệu cốt lõi ban đầu.
+
+---
+
+## Điểm cần cải thiện
+
+* Cần thực hiện kiểm chứng nhiều hơn với người dùng thực tế.
+* Cải thiện kỹ năng thiết kế prompt (prompt engineering).
+* Nghiên cứu chuyên sâu hơn về các công nghệ áp dụng trong lĩnh vực pháp lý (LegalTech).
+
+---
+
+## Bài học kinh nghiệm cốt lõi
+
+AI nên được coi là một cộng sự hỗ trợ đắc lực thay vì là một thực thể tự đưa ra các quyết định thay thế con người.
+
+Chất lượng đầu ra của AI phụ thuộc rất lớn vào chất lượng của câu lệnh (prompts) và quá trình kiểm duyệt chéo của con người.
+
+---
+
+# Thống kê Sử dụng AI
+
+| Hoạt động | Có dùng AI | Yêu cầu Con người kiểm duyệt |
 | ------------------ | ------- | --------------------- |
-| Product Thinking   | Yes     | Yes                   |
-| Product Vision     | Yes     | Yes                   |
-| MVP Prioritization | Yes     | Yes                   |
-| Prototype Design   | Yes     | Yes                   |
-| Documentation      | Yes     | Yes                   |
-| Technical Planning | Yes     | Yes                   |
+| Tư duy Sản phẩm | Có | Có |
+| Tầm nhìn Sản phẩm | Có | Có |
+| Ưu tiên tính năng MVP | Có | Có |
+| Thiết kế Giao diện mẫu | Có | Có |
+| Soạn thảo Tài liệu | Có | Có |
+| Lên kế hoạch Kỹ thuật | Có | Có |
 
 ---
 
-# Week 01 Deliverables Supported by AI
+# Tài liệu bàn giao Tuần 01 được hỗ trợ bởi AI
 
-Completed:
+Đã hoàn thành:
 
-* Product Thinking Analysis
-* Product vs Project Analysis
-* Product Vision
-* MVP Prioritization
-* Prototype Design
-* AI Workflow Documentation
-* AI Evaluation
-* Initial Project Documentation
+* Phân tích Tư duy Sản phẩm (Product Thinking)
+* Phân tích so sánh Sản phẩm và Dự án (Product vs Project)
+* Tuyên bố Tầm nhìn Sản phẩm (Product Vision)
+* Bảng ưu tiên tính năng MVP (MVP Prioritization)
+* Bản thiết kế giao diện mẫu (Prototype Design)
+* Tài liệu hóa luồng công việc AI (AI Workflow)
+* Báo cáo đánh giá AI (AI Evaluation)
+* Các tài liệu khởi tạo dự án ban đầu
 
 ---
 
-# Week 01 Summary
+# Tổng kết Tuần 01
 
-AI significantly accelerated the product discovery process and helped the team structure ideas into actionable deliverables.
+AI đã hỗ trợ đẩy nhanh đáng kể quá trình khám phá sản phẩm và giúp nhóm cấu trúc các ý tưởng thành các tài liệu có thể triển khai được ngay.
 
-However, all outputs required validation and refinement by team members before adoption.
+Tuy nhiên, mọi kết quả do AI sinh ra đều được các thành viên trong nhóm đánh giá, kiểm duyệt và tinh chỉnh kỹ lưỡng trước khi chính thức áp dụng.
 
-The team successfully completed all Week 01 learning activities while establishing a clear direction for the development of LegalLens AI in subsequent weeks.
+Nhóm đã hoàn thành xuất sắc tất cả các hoạt động học tập của Tuần 01, đặt nền móng và định hướng rõ ràng cho quá trình phát triển ứng dụng LegalLens AI trong các tuần tiếp theo.

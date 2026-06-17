@@ -29,7 +29,7 @@ Bản mẫu tập trung vào luồng tương tác cốt lõi của MVP (Minimum 
 * **Bố cục "Google Docs + AI Audit" (Không dùng Chatbot truyền thống):** Tránh thiết kế dạng cửa sổ chat đơn thuần vì người dùng dễ mất dấu văn bản gốc. Hợp đồng gốc luôn hiển thị ở 2/3 màn hình bên trái; bảng phân tích rủi ro và khung giải thích của AI nằm ở 1/3 bên phải.
 * **Rõ ràng trước phức tạp (Clarity Over Complexity):** Thuật ngữ pháp lý ("legalese") phức tạp phải được dịch trực tiếp sang ngôn ngữ phổ thông. Cảnh báo rủi ro phải đi kèm với câu hỏi tự vấn thực tế (Ví dụ: *"Tôi có bị mất tiền cọc không?"*, *"Tôi phải báo trước bao nhiêu ngày?"*).
 * **Độ tin cậy qua tính minh bạch (Trust through Transparency):** Tránh hiện tượng AI "ảo tưởng" (hallucination) bằng cách bắt buộc hiển thị trích dẫn gốc (Citation Source). Khi nhấn vào một rủi ro, hệ thống tự động cuộn đến và tô sáng điều khoản tương ứng trong hợp đồng gốc.
-* **Hạn chế lựa chọn để giảm tải nhận thức:** Luồng đi từ Tải lên $\rightarrow$ Đợi xử lý $\rightarrow$ Đọc kết quả phân tích là luồng tuyến tính, hạn chế menu rườm rà.
+* **Hạn chế lựa chọn để giảm tải nhận thức:** Luồng đi từ Tải lên -> Đợi xử lý -> Đọc kết quả phân tích là luồng tuyến tính, hạn chế menu rườm rà.
 
 ---
 
@@ -59,18 +59,18 @@ Cấu trúc trang web của bản mẫu được thiết kế tối giản:
 1. Người dùng truy cập trang chủ, thấy khu vực kéo thả tệp tin hoặc nhấn nút **Tải hợp đồng lên**.
 2. Người dùng kéo thả file PDF (Kích thước tối đa 10MB).
 3. Hệ thống hiển thị tiến trình xử lý trực quan qua 4 giai đoạn liên tiếp:
-   * `[Step 1/4]` Tải lên file PDF (Uploading PDF...)
-   * `[Step 2/4]` Trích xuất văn bản (Extracting contract text...)
-   * `[Step 3/4]` Định danh và phân loại điều khoản (Indexing clauses...)
-   * `[Step 4/4]` Phân tích rủi ro bằng AI (AI Risk Analysis running...)
+   * `[Giai đoạn 1/4]` Tải lên file PDF (Uploading PDF...)
+   * `[Giai đoạn 2/4]` Trích xuất văn bản (Extracting contract text...)
+   * `[Giai đoạn 3/4]` Định danh và phân loại điều khoản (Indexing clauses...)
+   * `[Giai đoạn 4/4]` Phân tích rủi ro bằng AI (AI Risk Analysis running...)
 4. Chuyển hướng tự động sang màn hình Workspace sau khi hoàn tất.
 
 ### Luồng 2: Xem kết quả rủi ro và Đối chiếu nguồn (Risk Audit & Citation Interaction)
 1. Trên màn hình Workspace, Sidebar bên phải mở sẵn Tab **Risk Dashboard**.
-2. Sidebar hiển thị tổng số rủi ro: `3 Rủi ro được phát hiện (1 Cao 🔴 | 1 Trung bình 🟡 | 1 Thấp 🟢)`.
+2. Sidebar hiển thị tổng số rủi ro: `3 Rủi ro được phát hiện (1 Cao | 1 Trung bình | 1 Thấp)`.
 3. Người dùng đọc qua danh sách thẻ rủi ro. Mỗi thẻ chứa: Mức độ nghiêm trọng, Danh mục, Giải thích ngôn ngữ dân dã, Trích dẫn gốc sơ bộ.
 4. Người dùng nhấn vào nút **"Xem điều khoản gốc" (View Source Clause)** trên một thẻ rủi ro (Ví dụ: Rủi ro mất cọc).
-5. Phân khu bên trái (Contract Viewer) tự động cuộn (scroll) tới vị trí điều khoản đó trong văn bản hợp đồng và tô sáng (highlight) bằng màu tương ứng với mức độ nghiêm trọng (ví dụ: đỏ nhạt cho High Risk).
+5. Phân khu bên trái (Contract Viewer) tự động cuộn (scroll) tới vị trí điều khoản đó trong văn bản hợp đồng và tô sáng (highlight) bằng màu tương ứng với mức độ nghiêm trọng (ví dụ: đỏ nhạt cho rủi ro Cao).
 
 ### Luồng 3: Hỏi đáp dựa trên hợp đồng (AI Grounded Q&A Flow)
 1. Người dùng chuyển từ Tab **Risk Dashboard** sang Tab **AI Assistant**.
@@ -84,7 +84,7 @@ Cấu trúc trang web của bản mẫu được thiết kế tối giản:
 ## 5. Thiết kế Giao diện Chi tiết (Wireframes)
 
 ### 5.1. Màn hình 1: Welcome & Upload Page (Trang tải lên hợp đồng)
-Trang thiết kế theo phong cách tối giản hiện đại (Sleek Dark Mode / Vibrant Border).
+Trang thiết kế theo phong cách tối giản hiện đại.
 
 ```
 +-----------------------------------------------------------------------------+
@@ -145,27 +145,27 @@ Hiển thị để giảm thời gian chờ đợi nhận thức của người 
 +------------------------------------+----------------------------------------+
 |                                    |  [ TAB 1: RỦI RO ]  |  TAB 2: HỎI ĐÁP  |
 |          CONTRACT VIEWER           +----------------------------------------+
-|                                    | 📊 Tổng quan: 3 Rủi Ro Phát Hiện       |
-| HỢP ĐỒNG THUÊ PHÒNG TRỌ            |   🔴 1 Cao  |  🟡 1 Trung bình  |  🟢 1 Thấp|
+|                                    | Tổng quan: 3 Rủi Ro Phát Hiện          |
+| HỢP ĐỒNG THUÊ PHÒNG TRỌ            |   [Cao] 1  |  [Trung bình] 1  | [Thấp] 1 |
 |                                    |----------------------------------------|
-| Điều 1: Đối tượng thuê...          | 🔴 RỦI RO MẤT TIỀN CỌC (Tài chính)     |
+| Điều 1: Đối tượng thuê...          | [CAOOOO] RỦI RO MẤT TIỀN CỌC (Tài chính)|
 | Bên A đồng ý cho bên B thuê phòng  | Điều khoản cho phép chủ nhà tịch thu   |
 | trọ số 203 tại địa chỉ...          | toàn bộ tiền cọc mà không báo trước    |
 |                                    | nếu chấm dứt hợp đồng sớm.             |
-| Điều 2: Tiền đặt cọc               | [!] Source: Điều 2.2                   |
+| Điều 2: Tiền đặt cọc               | [!] Nguồn: Điều 2.2                    |
 | [[ BÊN B PHẢI ĐẶT CỌC 2 THÁNG TIỀN  | [ Xem điều khoản gốc ]                 |
 | NHÀ (6.000.000 VNĐ). NẾU BÊN B     |----------------------------------------|
-| CHẤM DỨT HỢP ĐỒNG TRƯỚC THỜI HẠN   | 🟡 TỰ ĐỘNG GIA HẠN (Hợp đồng)           |
+| CHẤM DỨT HỢP ĐỒNG TRƯỚC THỜI HẠN   | [TRUNG BÌNH] TỰ ĐỘNG GIA HẠN (Hợp đồng)|
 | THÌ SẼ BỊ MẤT TOÀN BỘ SỐ TIỀN CỌC  | Hợp đồng tự động gia hạn thêm 1 năm    |
 | NÀY MÀ KHÔNG ĐƯỢC BỒI HOÀN. ]] <== | nếu bên thuê không thông báo bằng văn  |
 | (Tô sáng màu đỏ khi click xem)     | bản trước 30 ngày.                     |
-|                                    | [!] Source: Điều 8.3                   |
+|                                    | [!] Nguồn: Điều 8.3                    |
 | Điều 3: Quyền và nghĩa vụ...       | [ Xem điều khoản gốc ]                 |
 |                                    |----------------------------------------|
-| Điều 8: Thời hạn & Gia hạn         | 🟢 QUY ĐỊNH NUÔI THÚ CƯNG (Sinh hoạt)   |
+| Điều 8: Thời hạn & Gia hạn         | [THẤP] QUY ĐỊNH NUÔI THÚ CƯNG          |
 | Hợp đồng có giá trị 01 năm...      | Không được phép nuôi chó, mèo trong    |
 | Hợp đồng tự động gia hạn thêm 1    | khuôn viên phòng trọ để tránh ồn ào.   |
-| năm nếu...                         | [!] Source: Điều 11.1                  |
+| năm nếu...                         | [!] Nguồn: Điều 11.1                   |
 |                                    | [ Xem điều khoản gốc ]                 |
 +------------------------------------+----------------------------------------+
 | Tuyên bố miễn trừ: Thông tin do AI phân tích chỉ dùng để tham khảo.          |
@@ -279,11 +279,11 @@ Người dùng thử (là sinh viên đi thuê nhà) được cung cấp bản P
 3. *Họ cần làm gì để tránh hợp đồng tự động gia hạn thêm 1 năm khác?*
 
 **Chỉ số đo lường thành công (Target Metrics):**
-* **Tỷ lệ hoàn thành nhiệm vụ (Task Completion Rate):** $> 90\%$ người dùng tìm ra thông tin cảnh báo.
-* **Thời gian hoàn thành trung bình (Average Time to Identify Risks):** $< 2$ phút.
-* **Mức độ hài lòng về tính minh bạch (Trust Rating):** $\ge 4.5/5$ điểm (Người dùng cảm thấy tự tin vì đối chiếu trực tiếp được từ rủi ro sang dòng text gốc trong hợp đồng).
+* **Tỷ lệ hoàn thành nhiệm vụ (Task Completion Rate):** trên 90% người dùng tìm ra thông tin cảnh báo.
+* **Thời gian hoàn thành trung bình (Average Time to Identify Risks):** dưới 2 phút.
+* **Mức độ hài lòng về tính minh bạch (Trust Rating):** từ 4.5/5 điểm trở lên (Người dùng cảm thấy tự tin vì đối chiếu trực tiếp được từ rủi ro sang dòng text gốc trong hợp đồng).
 
 ### 7.2. Kế hoạch Hiện thực hóa Prototype (Tuần 3 & 4)
 * Thiết kế mã nguồn tĩnh cho giao diện Workspace chia đôi màn hình (Sử dụng React/Next.js kết hợp Tailwind CSS ở mức cơ bản).
-* Tích hợp dữ liệu Mock dạng tĩnh (JSON) để người dùng có thể bấm vào thẻ rủi ro $\rightarrow$ màn hình cuộn và đổi màu nổi bật văn bản tương ứng.
-* Tích hợp bộ máy chat Mock (gửi câu hỏi $\rightarrow$ hiển thị trạng thái loading $\rightarrow$ hiển thị câu trả lời có chứa link trích dẫn định trước).
+* Tích hợp dữ liệu Mock dạng tĩnh (JSON) để người dùng có thể bấm vào thẻ rủi ro -> màn hình cuộn và đổi màu nổi bật văn bản tương ứng.
+* Tích hợp bộ máy chat Mock (gửi câu hỏi -> hiển thị trạng thái loading -> hiển thị câu trả lời có chứa link trích dẫn định trước).

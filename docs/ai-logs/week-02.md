@@ -1,280 +1,274 @@
-# AI Usage Log - Week 02
+# Nhật ký Sử dụng AI - Tuần 02
 
-## Project
+## Dự án
 
 LegalLens AI
 
-## Week
+## Tuần phát triển
 
-Week 02 - Product Analysis & AI Feature Proposal
+Tuần 02 - Phân tích Sản phẩm & Đề xuất Tính năng AI (Product Analysis & AI Feature Proposal)
 
-## Team Goal
+## Mục tiêu của Nhóm
 
-Analyze the product idea, define a realistic MVP scope, and determine whether AI should be a core component or a supporting feature.
-
----
-
-# Tasks Performed
-
-## Task 1: Product Analysis
-
-### Objective
-
-Understand the problem space, target users, and MVP scope before starting implementation.
-
-### AI Assistance
-
-AI was used as a Product Analyst to:
-
-* Analyze the legal contract review problem.
-* Identify target user groups.
-* Compare existing solutions.
-* Suggest MVP boundaries.
-* Identify potential project risks.
-
-### Prompt
-
-```text
-Analyze an AI-powered contract analysis platform for a student software engineering project.
-
-Provide:
-
-1. Target users
-2. User pain points
-3. MVP scope
-4. Core features
-5. Risks
-6. Success criteria
-
-Keep the MVP realistic for a 10-week student project.
-```
-
-### Output Summary
-
-AI identified:
-
-* Students
-* Employees
-* Freelancers
-* Consumers
-
-as primary users.
-
-AI also recommended limiting the MVP to:
-
-* PDF Upload
-* Text Extraction
-* Risk Detection
-* Basic Contract Review
-
-instead of attempting a full legal platform.
-
-### Human Review
-
-The team reviewed the suggestions and adjusted the scope to better match the project timeline.
-
-Decision:
-
-Accepted with modifications.
+Phân tích sâu ý tưởng sản phẩm, xác định phạm vi thực tế cho phiên bản MVP, và đánh giá xem AI nên đóng vai trò là thành phần cốt lõi hay là tính năng bổ trợ.
 
 ---
 
-## Task 2: AI Feature Evaluation
+# Các công việc đã thực hiện
 
-### Objective
+## Công việc 1: Phân tích Sản phẩm (Product Analysis)
 
-Determine whether multiple AI features were necessary.
+### Mục tiêu
 
-### Initial Idea
+Thấu hiểu không gian vấn đề, đối tượng người dùng mục tiêu và khoanh vùng phạm vi MVP trước khi bắt tay vào viết code.
 
-Several AI features were considered:
+### Hỗ trợ từ AI
 
-* Contract Summary
-* Risk Detection
-* Plain Language Translation
-* Contract Question Answering
+AI đóng vai trò là Chuyên viên Phân tích Sản phẩm (Product Analyst) để:
 
-### AI Assistance
+* Phân tích bài toán rà soát hợp đồng pháp lý trong đời sống.
+* Xác định các phân khúc người dùng mục tiêu.
+* So sánh và đánh giá các giải pháp thay thế hiện có trên thị trường.
+* Gợi ý ranh giới phạm vi cho phiên bản MVP.
+* Nhận diện các rủi ro tiềm ẩn của dự án.
 
-AI was asked to evaluate the value, complexity, and feasibility of each feature.
+### Prompt đã sử dụng
 
-### Prompt
+Phân tích một nền tảng phân tích hợp đồng hỗ trợ bởi AI cho một dự án môn học kỹ nghệ phần mềm của sinh viên.
 
-```text
-For a 10-week software engineering course project, evaluate these AI features:
+Cung cấp các thông tin:
 
-- Contract Summary
-- Risk Detection
-- Plain Language Translation
-- Contract QA
+1. Người dùng mục tiêu
+2. Khó khăn của người dùng (Pain points)
+3. Phạm vi MVP
+4. Các tính năng cốt lõi
+5. Rủi ro dự án
+6. Tiêu chí thành công
 
-Which feature provides the highest value while remaining realistic for a student team?
-```
+Thiết kế phạm vi MVP sao cho thực tế và khả thi trong vòng 10 tuần phát triển của sinh viên.
 
-### Output Summary
+### Tóm tắt phản hồi của AI
 
-AI concluded:
+AI đã xác định rõ các đối tượng người dùng:
 
-* Risk Detection provides the best balance of value and complexity.
-* Contract QA requires a significantly larger architecture.
-* Translation overlaps with summarization.
-* Too many AI features would make the project AI-heavy.
+* Sinh viên
+* Người lao động
+* Freelancer
+* Người tiêu dùng nói chung
 
-### Human Review
+Đồng thời, AI khuyến nghị giới hạn phạm vi MVP tập trung vào:
 
-The team agreed with the analysis.
+* Tải lên tài liệu PDF
+* Trích xuất văn bản hợp đồng
+* Phát hiện rủi ro (Risk Detection)
+* Trình xem và rà soát hợp đồng cơ bản
 
-Decision:
+thay vì cố gắng xây dựng một nền tảng pháp lý đồ sộ và phức tạp.
 
-Use only one primary AI feature for MVP.
+### Đánh giá của Con người
 
----
+Nhóm phát triển đã xem xét kỹ lưỡng các gợi ý từ AI và điều chỉnh phạm vi công việc để đảm bảo tính khả thi cao nhất theo tiến độ môn học.
 
-## Task 3: AI Feature Proposal
+Quyết định cuối cùng:
 
-### Objective
-
-Design a single AI feature aligned with course requirements.
-
-### Selected Feature
-
-AI Risk Analyzer
-
-### Reason for Selection
-
-The feature:
-
-* Solves a real user problem.
-* Demonstrates meaningful AI usage.
-* Is easier to implement than a complete RAG chatbot.
-* Keeps AI as a supporting tool rather than the entire product.
-
-### Expected Inputs
-
-* Contract text
-
-### Expected Outputs
-
-* Risk category
-* Severity level
-* Explanation
-* Source citation
+Chấp nhận các đề xuất của AI và thực hiện một số điều chỉnh nhỏ.
 
 ---
 
-# Important Decisions
+## Công việc 2: Đánh giá Tính năng AI (AI Feature Evaluation)
 
-## Decision 1
+### Mục tiêu
 
-AI should support the product, not define the entire product.
+Xác định xem liệu hệ thống có thực sự cần tích hợp nhiều tính năng AI khác nhau hay không.
 
-Status:
+### Các ý tưởng ban đầu
 
-Accepted
+Nhóm đã cân nhắc một số tính năng AI tiềm năng:
 
----
+* Tóm tắt hợp đồng tự động
+* Phát hiện rủi ro trong hợp đồng
+* Dịch thuật pháp lý sang ngôn ngữ bình dân
+* Trò chuyện hỏi đáp về hợp đồng (Contract QA)
 
-## Decision 2
+### Hỗ trợ từ AI
 
-The product must remain useful if AI is disabled.
+AI được yêu cầu đánh giá giá trị thực tiễn, độ phức tạp công nghệ và tính khả thi của từng tính năng đối với nhóm sinh viên.
 
-Status:
+### Prompt đã sử dụng
 
-Accepted
+Đối với một dự án môn học công nghệ phần mềm kéo dài 10 tuần, hãy đánh giá các tính năng AI sau:
 
-Reason:
+- Tóm tắt hợp đồng
+- Phát hiện rủi ro
+- Dịch ngôn ngữ pháp lý sang ngôn ngữ bình dân
+- Hỏi đáp về hợp đồng (QA)
 
-This is one of the required project defense questions.
+Tính năng nào mang lại giá trị thực tiễn cao nhất trong khi vẫn đảm bảo tính khả thi để nhóm sinh viên triển khai?
 
----
+### Tóm tắt phản hồi của AI
 
-## Decision 3
+AI kết luận rằng:
 
-Use only one AI feature in the MVP.
+* **Phát hiện rủi ro (Risk Detection)** mang lại sự cân bằng tốt nhất giữa giá trị thực tế và độ phức tạp kỹ thuật.
+* **Hỏi đáp về hợp đồng (QA)** đòi hỏi xây dựng kiến trúc hệ thống RAG phức tạp hơn rất nhiều.
+* **Dịch thuật** có phần trùng lặp nhiều với tính năng tóm tắt nội dung.
+* Việc nhồi nhét quá nhiều tính năng AI sẽ khiến dự án bị quá tải và khó kiểm soát chất lượng.
 
-Status:
+### Đánh giá của Con người
 
-Accepted
+Nhóm phát triển đồng tình với kết quả phân tích phân loại của AI.
 
-Selected Feature:
+Quyết định cuối cùng:
 
-AI Risk Analyzer
-
----
-
-# Lessons Learned
-
-### Lesson 1
-
-Starting implementation before product analysis can lead to unnecessary complexity.
-
-### Lesson 2
-
-Not every useful feature should be included in the MVP.
-
-### Lesson 3
-
-A smaller, focused AI feature is easier to implement, test, explain, and defend.
-
-### Lesson 4
-
-AI-generated suggestions require human evaluation and decision-making.
+Chỉ tập trung phát triển duy nhất một tính năng AI cốt lõi cho phiên bản MVP.
 
 ---
 
-# AI Tools Used
+## Công việc 3: Đề xuất Tính năng AI (AI Feature Proposal)
 
-| Tool    | Purpose                |
+### Mục tiêu
+
+Thiết kế chi tiết tính năng AI được lựa chọn phù hợp với yêu cầu của môn học.
+
+### Tính năng được chọn
+
+Trình Phân Tích Rủi Ro AI (AI Risk Analyzer).
+
+### Lý do lựa chọn
+
+Tính năng này:
+
+* Giải quyết trực tiếp một khó khăn thực tế và lớn nhất của người dùng.
+* Minh chứng rõ nét năng lực ứng dụng AI vào sản phẩm phần mềm thực tế.
+* Dễ dàng kiểm soát độ phức tạp triển khai hơn là xây dựng một chatbot RAG tự do hoàn chỉnh ngay từ đầu.
+* Định vị AI như một công cụ hỗ trợ đáng tin cậy, không lấn át giá trị vận hành cốt lõi của phần mềm.
+
+### Dữ liệu đầu vào dự kiến (Inputs)
+
+* Văn bản hợp đồng thô.
+
+### Dữ liệu đầu ra dự kiến (Outputs)
+
+* Danh mục rủi ro của điều khoản.
+* Mức độ nghiêm trọng tương ứng.
+* Giải thích chi tiết bằng ngôn ngữ dễ hiểu.
+* Chỉ ra nguồn trích dẫn điều khoản cụ thể.
+
+---
+
+# Các Quyết định Quan trọng
+
+## Quyết định 1
+
+AI đóng vai trò hỗ trợ tăng tốc trải nghiệm, không quyết định thay thế hoặc làm biến dạng giá trị cốt lõi của sản phẩm.
+
+Trạng thái:
+
+Đã thông qua.
+
+---
+
+## Quyết định 2
+
+Sản phẩm phải luôn hữu ích và vận hành bình thường ngay cả khi tính năng AI bị tắt hoặc gặp sự cố ngoại tuyến.
+
+Trạng thái:
+
+Đã thông qua.
+
+Lý do:
+
+Đây là một trong những câu hỏi bảo vệ cốt lõi bắt buộc của môn học nhằm chứng minh tính bền vững của phần mềm.
+
+---
+
+## Quyết định 3
+
+Chỉ phát triển một tính năng AI duy nhất trong phiên bản MVP.
+
+Trạng thái:
+
+Đã thông qua.
+
+Tính năng được chọn:
+
+Trình Phân Tích Rủi Ro AI (AI Risk Analyzer).
+
+---
+
+# Bài học Kinh nghiệm rút ra
+
+### Bài học 1
+
+Bắt đầu viết code ngay lập tức khi chưa tiến hành phân tích kỹ lưỡng sản phẩm có thể dẫn đến sự phình to công nghệ và lãng phí nguồn lực không cần thiết.
+
+### Bài học 2
+
+Không phải bất kỳ tính năng hữu ích nào cũng cần phải nhồi nhét vào phiên bản MVP đầu tiên.
+
+### Bài học 3
+
+Một tính năng AI nhỏ, có mục tiêu rõ ràng sẽ dễ dàng triển khai, kiểm thử, giải thích cấu trúc và bảo vệ thành công hơn trước hội đồng.
+
+### Bài học 4
+
+Mọi đề xuất và kết quả do AI khởi tạo đều bắt buộc phải có sự đánh giá, kiểm duyệt và quyết định cuối cùng từ con người.
+
+---
+
+# Các Công cụ AI đã sử dụng
+
+| Công cụ | Mục đích sử dụng |
 | ------- | ---------------------- |
-| ChatGPT | Product analysis       |
-| ChatGPT | MVP scoping            |
-| ChatGPT | AI feature evaluation  |
-| ChatGPT | Documentation drafting |
+| ChatGPT | Phân tích sản phẩm |
+| ChatGPT | Khoanh vùng phạm vi MVP |
+| ChatGPT | Đánh giá so sánh các tính năng AI |
+| ChatGPT | Hỗ trợ soạn thảo tài liệu thô |
 
 ---
 
-# Human Contributions
+# Đóng góp của Thành viên trong Nhóm
 
-The team:
+Các thành viên đã chủ động:
 
-* Reviewed all AI outputs.
-* Reduced feature scope.
-* Selected the final MVP direction.
-* Chose the AI Risk Analyzer feature.
-* Approved final project decisions.
-
----
-
-# Challenges Encountered
-
-### Challenge
-
-The initial concept included too many AI features.
-
-### Resolution
-
-The team simplified the design and retained only the feature with the highest value-to-complexity ratio.
+* Kiểm duyệt toàn bộ nội dung do AI đề xuất.
+* Cắt giảm đáng kể phạm vi tính năng để đảm bảo tiến độ.
+* Quyết định hướng đi MVP tập trung nhất.
+* Thống nhất thiết kế cho Trình Phân Tích Rủi Ro AI.
+* Phê duyệt các quyết định thiết kế hệ thống quan trọng.
 
 ---
 
-# Week 02 Deliverables
+# Thách thức và Cách giải quyết
 
-Completed:
+### Thách thức gặp phải
 
-* PRODUCT_ANALYSIS.md
-* AI_FEATURE_PROPOSAL.md
-* ai-logs/week-02.md
+Ý tưởng ban đầu của nhóm bị quá tải do muốn đưa vào quá nhiều tính năng AI phức tạp.
 
-Status:
+### Cách thức giải quyết
 
-Completed Successfully
+Nhóm đã ngồi lại, sử dụng phân tích độ phức tạp của AI làm cơ sở để đơn giản hóa thiết kế, giữ lại duy nhất tính năng có tỷ lệ giá trị/độ phức tạp tốt nhất.
 
 ---
 
-# Reflection
+# Các tài liệu bàn giao Tuần 02
 
-AI was useful for brainstorming, product analysis, and evaluating alternative approaches.
+Đã hoàn thành xuất sắc:
 
-However, final decisions regarding scope, priorities, and feasibility were made by the team after reviewing AI recommendations.
+* PRODUCT_ANALYSIS.md (Đã dịch sang tiếng Việt)
+* AI_FEATURE_PROPOSAL.md (Đã dịch sang tiếng Việt)
+* ai-logs/week-02.md (Tài liệu này)
 
-The team learned that successful software engineering involves controlling complexity rather than continuously adding features.
+Trạng thái:
+
+Đã hoàn thành thành công.
+
+---
+
+# Phản hồi & Tự vấn (Reflection)
+
+AI đóng vai trò cực kỳ hiệu quả trong việc hỗ trợ brainstorm ý tưởng, phân tích cơ cấu sản phẩm và cung cấp góc nhìn đa chiều để so sánh các phương án thiết kế.
+
+Tuy nhiên, các quyết định cuối cùng về mặt phạm vi, mức độ ưu tiên công việc và tính khả thi kỹ thuật thực tế đều được các thành viên trong nhóm thống nhất đưa ra sau khi thảo luận kỹ lưỡng trên cơ sở các khuyến nghị của AI.
+
+Nhóm nhận thức sâu sắc rằng thành công của một dự án công nghệ phần mềm nằm ở việc kiểm soát tốt độ phức tạp hệ thống hơn là việc liên tục bổ sung tính năng mới.

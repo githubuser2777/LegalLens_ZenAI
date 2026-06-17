@@ -1,210 +1,90 @@
-# AI Feature Proposal
-
-## Project
-
-LegalLens AI
+# ĐỀ XUẤT TÍNH NĂNG AI — TRÌNH PHÂN TÍCH RỦI RO HỢP ĐỒNG
 
 ---
 
-# AI Strategy
+## Chiến lược tích hợp AI (AI Strategy)
 
-LegalLens AI is primarily a contract understanding platform.
+**LegalLens AI** là nền tảng hỗ trợ đọc hiểu hợp đồng thông minh. Bản chất sản phẩm vẫn hoạt động bình thường như một trình xem và duyệt tài liệu kể cả khi tính năng AI bị vô hiệu hóa.
 
-The core product remains functional without AI.
-
-Artificial Intelligence is used only as an assistive feature to help users identify potentially important contract risks faster.
-
-The AI feature does not make legal decisions and does not provide legal advice.
+* Trí tuệ nhân tạo (AI) đóng vai trò là **tính năng hỗ trợ tăng tốc**, giúp người dùng phát hiện nhanh các điều khoản bất lợi.
+* Hệ thống **không đưa ra quyết định pháp lý** và không thay thế vai trò tư vấn chuyên nghiệp của luật sư.
 
 ---
 
-# Primary AI Feature
+## Tính năng AI chính: Trình Phân Tích Rủi Ro (AI Risk Analyzer)
 
-## AI Risk Analyzer
-
-### Objective
-
-Analyze uploaded contracts and identify clauses that may contain legal, financial, or privacy risks.
+### Mục tiêu
+Tự động quét văn bản hợp đồng được tải lên và nhận diện các điều khoản tiềm ẩn rủi ro về mặt **tài chính (financial)**, **hợp đồng (contractual)**, hoặc **quyền riêng tư (privacy)**.
 
 ---
 
-## Why This Feature?
+### Luồng tương tác của Người dùng (User Flow)
 
-Contracts often contain important clauses that users overlook.
-
-Instead of reading dozens of pages manually, users can request an AI-assisted risk review and immediately focus on the most important sections.
-
-This feature delivers clear value while remaining small enough for an MVP.
-
----
-
-## User Flow
-
-1. User uploads a PDF contract.
-2. System extracts text from the document.
-3. User clicks "Analyze Risks".
-4. AI analyzes the contract.
-5. System displays detected risks.
-6. User reviews the original clauses.
-7. User decides whether further action is needed.
+```mermaid
+graph LR
+    Upload[1. Tải lên PDF] --> Extract[2. Trích xuất Text]
+    Extract --> Analyze[3. Bấm Phân tích Rủi ro]
+    Analyze --> Process[4. AI xử lý RAG]
+    Process --> Display[5. Hiển thị Dashboard Rủi ro]
+    Display --> Verify[6. Đối chiếu điều khoản gốc]
+    Verify --> Decide[7. Người dùng ra quyết định]
+```
 
 ---
 
-## Input
-
-Extracted contract text.
-
----
-
-## Output
-
-Detected risk items including:
-
-* Risk category
-* Severity level
-* Explanation
-* Related clause citation
-
-Example:
-
-### Risk: Automatic Renewal
-
-Severity: High
-
-Explanation:
-
-This contract may automatically renew unless cancelled before a specified date.
-
-Source:
-
-Clause 8.2
+### Dữ liệu Đầu vào (Input) & Đầu ra (Output)
+* **Input:** Văn bản hợp đồng thô đã trích xuất từ tệp PDF.
+* **Output:** Danh sách các thẻ rủi ro phát hiện chứa thông tin:
+  * **Danh mục rủi ro:** Tài chính, Hợp đồng, Quyền riêng tư.
+  * **Mức độ nghiêm trọng:** Cao (High), Trung bình (Medium), Thấp (Low).
+  * **Giải thích:** Giải nghĩa điều khoản bằng ngôn ngữ phổ thông dễ hiểu.
+  * **Trích dẫn nguồn:** Chỉ ra số hiệu Điều/Khoản trong văn bản gốc làm căn cứ.
 
 ---
 
-### Risk: Early Termination Penalty
+### Phân loại Danh mục Rủi ro Đánh giá
 
-Severity: Medium
-
-Explanation:
-
-The contract requires a financial penalty if terminated before the agreed period.
-
-Source:
-
-Clause 5.1
-
----
-
-## Risk Categories
-
-### Financial Risks
-
-* Deposit forfeiture
-* Late payment penalties
-* Early termination fees
-
-### Contractual Risks
-
-* Automatic renewal
-* Restrictive obligations
-* Long commitment periods
-
-### Privacy Risks
-
-* Data sharing permissions
-* Personal information collection
-* Third-party disclosure
+```
+                                  RISK CATEGORIES
+                                         |
+         +-------------------------------+-------------------------------+
+         |                               |                               |
+         v                               v                               v
+ [ Rủi ro Tài chính ]            [ Rủi ro Hợp đồng ]           [ Rủi ro Quyền riêng tư ]
+  - Mất tiền đặt cọc              - Tự động gia hạn             - Cho phép chia sẻ dữ liệu
+  - Phạt chậm thanh toán          - Nghĩa vụ ràng buộc quá mức  - Thu thập thông tin cá nhân
+  - Phí chấm dứt hợp đồng sớm     - Cam kết cam kết quá dài     - Tiết lộ thông tin bên thứ 3
+```
 
 ---
 
-## User Value
+## Kiểm soát của Con người & An toàn (Human-in-the-loop)
 
-Users can:
+> [!IMPORTANT]
+> **Nguyên tắc cốt lõi:** Người dùng luôn giữ quyền kiểm soát tối cao đối với tài liệu của mình. Hệ thống được thiết kế để hỗ trợ thông tin tham khảo, không tự động đưa ra các quyết định thay thế con người.
 
-* Review contracts faster
-* Focus on important sections
-* Understand potential risks
-* Make more informed decisions
-
----
-
-## Human Control
-
-Users always remain in control.
-
-The system:
-
-* Shows original contract clauses
-* Provides citations
-* Marks results as AI-generated
-
-Users can:
-
-* Ignore AI findings
-* Read original clauses
-* Make their own decisions
+* **Minh bạch thông tin:** Hệ thống hiển thị song song văn bản gốc của hợp đồng để người dùng có thể tự đối chiếu và đánh giá độc lập.
+* **Đánh dấu rõ ràng:** Mọi kết quả phân tích do AI đưa ra đều được dán nhãn hiển thị là "AI-Generated" (Do AI tạo ra) để người dùng đề cao sự cảnh giác.
+* **Quyền từ chối:** Người dùng có quyền bỏ qua, chỉnh sửa hoặc bác bỏ các kết quả phân tích của AI.
 
 ---
 
-## Risks
+## Rủi ro của Tính năng AI & Biện pháp Giảm thiểu
 
-### False Positives
+> [!CAUTION]
+> **Dương tính giả (False Positives):** AI cảnh báo rủi ro sai lệch trên các điều khoản hợp lý bình thường.
+> **Âm tính giả (False Negatives):** AI bỏ sót các điều khoản rủi ro lớn trong hợp đồng dài.
+> **Hallucination (Ảo tưởng):** AI tự suy diễn các giải thích hoặc các lỗi không tồn tại trong văn bản gốc.
 
-The AI may incorrectly flag harmless clauses.
-
-### False Negatives
-
-The AI may miss important risks.
-
-### Hallucination
-
-The AI may generate unsupported explanations.
-
-### User Over-Trust
-
-Users may assume the AI is always correct.
+### Biện pháp khắc phục:
+* **Ứng dụng RAG chặt chẽ:** Chỉ cấp ngữ cảnh (context) từ văn bản hợp đồng đã được phân mảnh cho mô hình AI, giảm thiểu tối đa hiện tượng tự suy diễn tự do.
+* **Bắt buộc hiển thị Citation (Trích dẫn):** Mọi cảnh báo rủi ro của AI đều bắt buộc phải đính kèm đoạn trích văn bản thực tế làm bằng chứng kiểm chứng.
+* **Tuyên bố miễn trừ trách nhiệm pháp lý:** Đặt cảnh báo rõ ràng giúp người dùng nâng cao ý thức tự chịu trách nhiệm cho các quyết định ký kết cuối cùng của mình.
 
 ---
 
-## Mitigation
+## Tiêu chí Đánh giá Thành công của Tính năng
 
-* Use Retrieval-Augmented Generation (RAG)
-* Require source citations
-* Display original contract text
-* Clearly label AI-generated content
-* Show legal disclaimer
-* Never provide legal advice
-
----
-
-# Features Not Included In MVP
-
-The following ideas may be considered future enhancements:
-
-* Contract Question Answering
-* Plain Language Translation
-* Contract Comparison
-* Contract Drafting
-* Legal Recommendation Engine
-* Multi-document Analysis
-
----
-
-# Success Criteria
-
-The AI feature is successful if:
-
-* Users can identify major contract risks quickly.
-* Every AI result includes supporting citations.
-* Users can verify findings against original contract clauses.
-* The AI feature remains optional and does not replace the core product.
-
----
-
-# Conclusion
-
-LegalLens AI follows an AI-assisted design approach.
-
-The platform's primary value comes from helping users organize, review, and understand contracts.
-
-The AI Risk Analyzer acts as a supporting feature that improves efficiency while keeping users responsible for final decisions.
+* **Tính rõ ràng:** Người dùng phổ thông hiểu ngay ý nghĩa của giải thích rủi ro mà không cần dùng từ điển thuật ngữ pháp lý.
+* **Tính liên kết:** 100% các rủi ro được cảnh báo đều liên kết dẫn tới chính xác vị trí tương ứng trong trình xem hợp đồng gốc.
+* **Tính tùy chọn:** Giao diện trực quan cho phép người dùng ẩn/hiện hoặc bỏ qua các gợi ý rủi ro từ AI để tiếp tục đọc tài liệu bình thường.
