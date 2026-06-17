@@ -1,361 +1,134 @@
-# AGENT_GUIDE.md
+# AGENT_GUIDE.md - AI Agent Execution Blueprint
 
-## Project Overview
-
-Project Name: LegalLens AI
-
-LegalLens AI is a legal document analysis platform that helps users understand contracts using Retrieval-Augmented Generation (RAG).
-
-Users can upload contracts in PDF format, receive simplified explanations, identify potentially risky clauses, and ask questions about the document.
-
-The system is designed for educational purposes as a Software Engineering course project and prioritizes explainability, transparency, and source-grounded responses.
+This document contains structured instructions, constraints, and architecture mappings designed for AI coding agents collaborating on **LegalLens AI**.
 
 ---
 
-# Core Objectives
+<system_context>
 
-The system must:
+## 1. Project Context
+* **Name**: LegalLens AI
+* **Concept**: RAG-based (Retrieval-Augmented Generation) legal document analysis platform.
+* **Goal**: Help non-legal professionals (students, freelancers, new hires) understand contracts and spot risky clauses in under 5 minutes.
+* **Core Principle**: **Evidence First**. Every AI-generated warning or answer must be anchored to a specific source paragraph or clause in the uploaded document.
 
-* Upload and process PDF contracts.
-* Extract text accurately.
-* Build searchable document knowledge.
-* Use RAG for question answering.
-* Detect potentially risky clauses.
-* Explain legal language in plain language.
-* Provide citations to source paragraphs.
-
-The system must NOT:
-
-* Provide official legal advice.
-* Claim legal certainty.
-* Generate unsupported conclusions.
-* Answer questions without document evidence.
+</system_context>
 
 ---
 
-# Development Principles
+<agent_objectives>
 
-## Evidence First
+## 2. Core Objectives & Scope
 
-Every analysis must be grounded in retrieved document content.
+### 2.1 The Agent MUST:
+* [x] Parse PDF contracts and extract text accurately.
+* [x] Segment document content into search indexable chunks.
+* [x] Run vector search retrieval to collect context for QA prompts.
+* [x] Detect potentially risky clauses using heuristic indicators and LLM analysis.
+* [x] Translate complex legalese into plain language explanations.
+* [x] Provide exact source references (citations) with matching highlighted spans.
 
-Never answer legal questions using model memory alone.
+### 2.2 The Agent MUST NOT:
+* [ ] Provide official legal advice or legal certainty claims.
+* [ ] Hallucinate or make statements unsupported by the document context.
+* [ ] Store API keys or credentials directly in the codebase.
+* [ ] Perform automatic database structural changes without documenting migrations.
 
-All responses should include source references whenever possible.
-
----
-
-## RAG Before Generation
-
-Preferred flow:
-
-Document
-→ Retrieval
-→ Context Assembly
-→ LLM Response
-
-Avoid direct prompting of the model without retrieval.
+</agent_objectives>
 
 ---
 
-## Keep Components Independent
+<technology_stack>
 
-Each major feature should remain loosely coupled.
+## 3. Architecture & Tech Stack
 
-Examples:
+```mermaid
+graph TD
+    User([User UI]) -->|Upload PDF / Chat| Frontend[Next.js + TS + TailwindCSS]
+    Frontend -->|REST API Calls| Backend[FastAPI Backend]
+    Backend -->|Metadata / Auth| DB[(PostgreSQL Relational DB)]
+    Backend -->|Vector Embeddings| VectorDB[(FAISS Vector Index)]
+    Backend -->|RAG Queries| LLM[LLM Service API]
+```
 
-* PDF Processing
-* Embedding Generation
-* Vector Search
-* Risk Analysis
-* Question Answering
-* Reporting
+### 3.1 Component Specifications
+| Layer | Technologies | Primary Responsibilities |
+| :--- | :--- | :--- |
+| **Frontend** | Next.js (Page router/App router), TypeScript, TailwindCSS | File upload states, contract text viewer, interactive risk dashboard, smooth-scrolling to highlighted citation spans, chat interface. |
+| **Backend** | FastAPI, Python | Auth routes, PDF processing pipeline, embedding generation, FAISS index management, RAG prompt orchestration, risk analysis endpoints. |
+| **Storage** | PostgreSQL, FAISS, Local Disk | PostgreSQL for user metadata, files metadata, and session history. FAISS for vector storage. Local storage for development file assets. |
 
-Avoid creating dependencies that tightly bind modules together.
-
----
-
-## Maintainability Over Cleverness
-
-Prefer readable code.
-
-Prefer explicit logic.
-
-Avoid premature optimization.
-
-Avoid unnecessary abstractions.
-
-Code should be understandable by students who did not originally write it.
+</technology_stack>
 
 ---
 
-# Architecture
+<processing_pipeline>
 
-## Frontend
+## 4. Document Processing & RAG Specification
 
-Technology:
+### 4.1 Document Pipeline Flow
+```
+[Upload PDF] ──> [Text Extraction] ──> [Cleaning & Normalization]
+                                              │
+[Retrieval (k=5)] <── [FAISS Index] <── [Embedding] <── [Chunking (500-1000 tokens)]
+```
 
-* Next.js
-* TypeScript
-* TailwindCSS
+### 4.2 Pipeline Parameters
+* **Chunk size**: 500 - 1000 tokens.
+* **Chunk overlap**: 100 - 200 tokens.
+* **Retrieval k**: Top 5 chunks.
+* **Citation Metadata Schema**:
+  ```json
+  {
+    "clause_id": "string",
+    "section_title": "string",
+    "excerpt": "string",
+    "risk_severity": "HIGH | MEDIUM | LOW"
+  }
+  ```
 
-Responsibilities:
-
-* File upload
-* Risk dashboard
-* Chat interface
-* Contract viewer
-* Highlight citations
-
-Frontend should not contain business logic.
-
----
-
-## Backend
-
-Technology:
-
-* FastAPI
-
-Responsibilities:
-
-* Authentication
-* Document processing
-* RAG orchestration
-* Risk analysis
-* Chat endpoints
-
-Backend owns all business logic.
+</processing_pipeline>
 
 ---
 
-## Storage
+<risk_detection_rules>
 
-Relational Data:
+## 5. AI Risk Detection Heuristics
 
-* PostgreSQL
+When scanning contracts, look for specific indicator clauses:
 
-Vector Data:
+> [!WARNING]
+> **HIGH RISK Indicators**:
+> * Unilateral termination rights without prior notice.
+> * Automatic contract renewal with penalty fees.
+> * 100% deposit forfeiture on early termination.
+> * Indemnity clauses that transfer all liabilities to the weaker party.
 
-* FAISS
+> [!NOTE]
+> **MEDIUM / LOW RISK Indicators**:
+> * Restrictive Non-compete covenants (geography too broad, duration > 1 year).
+> * Unclear milestones or payment schedules without defined grace periods.
+> * Mandatory arbitration clauses in unfavorable jurisdictions.
 
-Uploaded Files:
-
-* Local storage during development
-* Cloud object storage in production
-
----
-
-# Document Processing Pipeline
-
-Upload PDF
-
-↓
-
-Text Extraction
-
-↓
-
-Cleaning
-
-↓
-
-Chunking
-
-↓
-
-Embedding
-
-↓
-
-Vector Index
-
-↓
-
-Retrieval
-
-↓
-
-LLM Response
-
-Each stage must be independently testable.
+</risk_detection_rules>
 
 ---
 
-# RAG Guidelines
-
-## Chunking
-
-Target:
-
-* 500–1000 tokens
-
-Overlap:
-
-* 100–200 tokens
-
-Do not create extremely small chunks.
-
-Do not create excessively large chunks.
-
----
-
-## Retrieval
-
-Retrieve top-k chunks.
-
-Recommended:
-
-k = 5
-
-Retrieved content should be ranked before response generation.
-
----
-
-## Context Assembly
-
-Context must:
-
-* Preserve original wording.
-* Include section information.
-* Include clause identifiers when available.
-
----
-
-## Citation Requirements
-
-Responses should contain:
-
-* Clause number
-* Section title
-* Source excerpt
-
-Users must be able to trace every answer back to the contract.
-
----
-
-# Risk Detection Guidelines
-
-Risk detection is heuristic.
-
-The system identifies indicators, not legal certainty.
-
-Examples:
-
-* Automatic renewal
-* Excessive penalties
-* Deposit forfeiture
-* Unilateral termination
-* Third-party data sharing
-
-Each finding should include:
-
-* Risk level
-* Explanation
-* Supporting text
-
----
-
-# User Experience Guidelines
-
-Always prioritize clarity.
-
-Replace legal jargon when possible.
-
-Example:
-
-Instead of:
-
-"The agreement shall automatically renew."
-
-Use:
-
-"The contract may continue automatically unless cancelled."
-
-Responses should be concise and understandable.
-
----
-
-# Security Requirements
-
-Never expose API keys.
-
-Never log sensitive contract content unnecessarily.
-
-Validate uploaded files.
-
-Limit upload size.
-
-Sanitize filenames.
-
-Use environment variables for secrets.
-
----
-
-# Testing Requirements
-
-Required test categories:
-
-* Unit Tests
-* API Tests
-* RAG Evaluation
-* Retrieval Accuracy
-* PDF Processing Tests
-
-Critical workflows must have automated tests.
-
----
-
-# Code Quality Standards
-
-Use TypeScript strict mode.
-
-Use type hints in Python.
-
-Write meaningful function names.
-
-Avoid functions longer than 100 lines.
-
-Avoid duplicated business logic.
-
-Document complex workflows.
-
----
-
-# Pull Request Guidelines
-
-Every PR should:
-
-* Have a clear purpose.
-* Be small and focused.
-* Include testing notes.
-* Avoid unrelated changes.
-
----
-
-# Definition of Done
-
-A feature is complete when:
-
-* Functionality works.
-* Tests pass.
-* Documentation updated.
-* No critical bugs remain.
-* Code review completed.
-
-Working code alone is not considered complete.
-
----
-
-# Future Enhancements
-
-Possible future features:
-
-* OCR for scanned contracts
-* Multi-document comparison
-* Risk scoring dashboard
-* Multilingual support
-* Legal clause categorization
-* Exportable audit reports
-
-These features are out of scope for the MVP unless explicitly scheduled.
+<development_guidelines>
+
+## 6. Coding & Execution Guidelines for AI Agents
+
+### 6.1 Clean Code Standards
+* **TypeScript**: Enforce strict type safety. Do not use `any`.
+* **Python**: Always use type hints in FastAPI functions.
+* **Readability**: Prefer explicit, self-documenting logic over complex optimizations. Keep functions under 100 lines.
+* **Robustness**: Wrap API calls and parsing logic in try-catch/try-except blocks with clean error reporting.
+
+### 6.2 Definition of Done (DoD)
+1. Feature implementation matches the user story acceptance criteria.
+2. Unit and integration tests pass successfully.
+3. API documentation is updated and verified.
+4. No secrets or API credentials are committed to Git.
+5. All code changes are reviewed and merged via Pull Requests.
+
+</development_guidelines>

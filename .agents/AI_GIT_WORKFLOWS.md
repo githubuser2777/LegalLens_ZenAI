@@ -1,288 +1,95 @@
-# AI_GIT_WORKFLOW.md
+# AI_GIT_WORKFLOWS.md - AI & Developer Git Collaboration Protocol
 
-# Purpose
-
-This document defines how AI coding assistants and developers should collaborate through Git during project development.
-
-The objective is to maintain a clean repository, predictable commits, and traceable changes.
-
-Applies to:
-
-* Cursor
-* Claude Code
-* Codex
-* Gemini CLI
-* Roo Code
-* Cline
-* Human Contributors
+This document defines the branching strategy, commit format conventions, and Pull Request verification rules required for AI agents and human contributors.
 
 ---
 
-# Development Flow
+<git_architecture>
 
-Task
+## 1. Branching Strategy Flow
 
-↓
+```mermaid
+graph TD
+    Main[main branch: stable / production]
+    Develop[develop branch: integration]
+    Feature[feature/*: new capabilities]
+    Fix[fix/*: bug fixes]
+    Docs[docs/*: documentation updates]
 
-Branch
+    Feature -->|PR Merge| Develop
+    Fix -->|PR Merge| Develop
+    Docs -->|PR Merge| Develop
+    Develop -->|Release PR| Main
+```
 
-↓
+### 1.1 Branch Naming Conventions
+| Branch Category | Naming Pattern | Example |
+| :--- | :--- | :--- |
+| **Feature** | `feature/<feature-name>` | `feature/pdf-upload-endpoint` |
+| **Bug Fix** | `fix/<bug-name>` | `fix/pdf-extractor-timeout` |
+| **Documentation** | `docs/<doc-topic>` | `docs/rag-flowchart-update` |
 
-Implementation
+> [!CAUTION]
+> **Strict Policy**: Direct pushes to `main` and `develop` branches are forbidden. All code changes must go through a dedicated topic branch and a Pull Request.
 
-↓
-
-Testing
-
-↓
-
-Pull Request
-
-↓
-
-Review
-
-↓
-
-Merge
-
-No direct commits to main.
-
----
-
-# Branch Strategy
-
-Main Branch
-
-main
-
-Purpose:
-
-Production-ready code only.
-
-Must remain stable.
+</git_architecture>
 
 ---
 
-Development Branch
+<commit_formatting>
 
-develop
+## 2. Commit Message Standards
 
-Purpose:
+All commits must adhere to the **Conventional Commits** specification.
 
-Integration branch for completed features.
+### 2.1 Commit Structure
+```
+<type>: <description>
 
----
+[optional body explaining details]
+```
 
-Feature Branches
+### 2.2 Allowed Commit Types
+* **`feat`**: A new user feature (e.g. `feat: add pdf extraction worker thread`).
+* **`fix`**: A bug fix (e.g. `fix: handle empty paragraphs in pdf parser`).
+* **`docs`**: Documentation changes only (e.g. `docs: add setup instructions`).
+* **`refactor`**: A code change that neither fixes a bug nor adds a feature.
+* **`test`**: Adding missing tests or correcting existing tests.
+* **`perf`**: A code change that improves performance.
+* **`chore`**: Maintenance, build configs, or dependency updates.
 
-feature/<feature-name>
+### 2.3 Commit Quality Rules
+* **Atomic Changes**: One logical change per commit. Avoid grouping unrelated fixes or refactoring inside a single commit.
+* **Terse Summaries**: Keep the description under 50 characters, starting with a lowercase verb.
 
-Examples:
-
-feature/pdf-upload
-
-feature/rag-pipeline
-
-feature/risk-analysis
-
-feature/chat-interface
-
-feature/citations
-
----
-
-Bug Fix Branches
-
-fix/<bug-name>
-
-Examples:
-
-fix/pdf-parser-error
-
-fix/vector-search-timeout
+</commit_formatting>
 
 ---
 
-Documentation Branches
+<pr_validation>
 
-docs/<topic>
+## 3. Pull Request (PR) Requirements
 
-Examples:
+Before submitting a Pull Request, the contributor (or AI agent) must ensure the following conditions are met:
 
-docs/api-specification
+### 3.1 Verification Checklist
+* [x] **Local Build**: The application builds without errors (`npm run build` or `fastapi build` equivalent).
+* [x] **Unit Testing**: All unit tests run and pass locally.
+* [x] **No Secrets**: Check diff to ensure no local API keys or config parameters are committed.
+* [x] **Documentation**: If public APIs or environment variables changed, update corresponding docs.
 
-docs/rag-design
+### 3.2 PR Description Template
+```markdown
+## Purpose
+[State the goal and what this PR accomplishes]
 
----
+## Key Changes
+- [File A](file:///path/to/A): [Summary of change]
+- [File B](file:///path/to/B): [Summary of change]
 
-# AI Task Workflow
+## Verification & Testing
+- Command run: [Test command]
+- Results output: [Snippet or logs showing success]
+```
 
-Before making changes:
-
-1. Read PRODUCT_DIRECTION.md
-2. Read AGENT_GUIDE.md
-3. Read related documentation
-4. Understand current architecture
-
-Do not implement features that contradict product direction.
-
----
-
-# Commit Strategy
-
-Each commit should contain one logical change.
-
-Good:
-
-feat: add pdf upload endpoint
-
-Good:
-
-fix: resolve chunk overlap bug
-
-Bad:
-
-misc updates
-
-Bad:
-
-final changes
-
----
-
-# Commit Types
-
-feat
-
-New functionality
-
-fix
-
-Bug fixes
-
-docs
-
-Documentation updates
-
-refactor
-
-Code restructuring
-
-test
-
-Testing improvements
-
-perf
-
-Performance improvements
-
-chore
-
-Maintenance tasks
-
----
-
-# Pull Request Requirements
-
-Every PR must include:
-
-Purpose
-
-What changed
-
-Testing performed
-
-Known limitations
-
-Screenshots if UI changed
-
----
-
-# AI Coding Rules
-
-AI should:
-
-* Create small commits
-* Preserve architecture
-* Follow existing patterns
-* Add documentation
-* Avoid unnecessary dependencies
-
-AI should not:
-
-* Rewrite unrelated code
-* Introduce breaking changes
-* Remove documentation
-* Change architecture without approval
-
----
-
-# Documentation Updates
-
-If a feature changes:
-
-Update:
-
-* README.md
-* API_SPECIFICATION.md
-* SYSTEM_ARCHITECTURE.md
-
-When necessary.
-
-Documentation is part of the feature.
-
----
-
-# Testing Requirements
-
-Before merge:
-
-Backend
-
-* Unit tests pass
-
-Frontend
-
-* Build succeeds
-
-RAG
-
-* Retrieval tests pass
-
-API
-
-* Endpoint tests pass
-
----
-
-# Merge Conditions
-
-A branch may be merged when:
-
-* Feature works
-* Tests pass
-* Documentation updated
-* No critical issues remain
-
----
-
-# Emergency Fixes
-
-Only critical production issues may bypass normal workflow.
-
-All emergency fixes must be documented afterward.
-
----
-
-# Definition Of Done
-
-A task is complete when:
-
-* Code works
-* Tests pass
-* Documentation updated
-* Review completed
-* Ready for deployment
-
-Code alone is not considered done.
+</pr_validation>

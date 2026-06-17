@@ -1,299 +1,83 @@
-# AI_USAGE_POLICY.md
+# AI_USAGE_POLICY.md - AI Usage Policy & Collaboration Framework
 
-# Purpose
-
-This document defines how AI tools should be used throughout the LegalLens AI project.
-
-The goal is not to restrict AI, but to ensure that AI-generated outputs remain useful, reliable, and aligned with project objectives.
-
-This policy applies to:
-
-* ChatGPT
-* Gemini
-* Claude
-* Cursor
-* Codex
-* GitHub Copilot
-* Claude Code
-* Other AI-assisted development tools
+This document outlines the bounds, verification criteria, safety regulations, and fallback guidelines for AI-assisted development on the LegalLens AI codebase.
 
 ---
 
-# Core Philosophy
+<policy_intent>
 
-AI is a collaborator.
+## 1. Core Philosophy
+* **AI as Collaborator**: AI agents are team members designed to accelerate engineering cycles (thinking, building, testing).
+* **Humans as Authority**: The ultimate accountability for codebase integrity, correctness, security, and architectural decisions lies with human developers.
 
-AI is not an authority.
-
-AI should help the team:
-
-* Think faster
-* Learn faster
-* Build faster
-
-Final decisions always belong to human contributors.
+</policy_intent>
 
 ---
 
-# Recommended Uses
+<allowed_usage>
 
-AI is encouraged to assist with:
+## 2. Allowed AI Use Cases
 
-## Product Discovery
+AI tools are authorized and encouraged to assist with:
+* **Product Discovery**: Brainstorming scenarios, refining user personas, drafting requirements.
+* **Architecture & API Design**: Creating data schemas, modeling database tables, writing OpenAPI specs.
+* **Code Implementation**: Generating boilerplate, refactoring complex code, suggesting optimization structures.
+* **Quality Assurance**: Writing unit tests, mocking API inputs/outputs, locating edge cases.
+* **Technical Research**: Explaining programming concepts, comparing library capabilities.
 
-Examples:
-
-* Brainstorming ideas
-* User analysis
-* Product vision creation
-* Feature prioritization
-
----
-
-## Software Design
-
-Examples:
-
-* Architecture discussions
-* API design
-* Database design
-* Workflow design
+</allowed_usage>
 
 ---
 
-## Development
+<verification_levels>
 
-Examples:
+## 3. Trust & Verification Framework
 
-* Boilerplate generation
-* Refactoring suggestions
-* Debugging assistance
-* Documentation creation
+AI-generated outputs are classified by risk and require matching verification steps:
 
----
+| Risk Classification | Examples | Verification Protocol |
+| :--- | :--- | :--- |
+| **Low Risk** | Markdown documentation, README files, inline comments, code formatting. | Peer review of the diff before committing. |
+| **Medium Risk** | UI components, React hooks, API handlers, database queries. | Local compilation check and functional test verification. |
+| **High Risk** | Authentication, authorization rules, encryption, deployment scripts, security credentials. | Strict line-by-line manual audit and mandatory verification tests. |
 
-## Testing
-
-Examples:
-
-* Test case generation
-* Edge case identification
-* Validation strategies
+</verification_levels>
 
 ---
 
-## Learning
+<hallucination_mitigation>
 
-Examples:
+## 4. Hallucination Mitigation Protocol
 
-* Explaining concepts
-* Teaching frameworks
-* Comparing technologies
+AI agents are prone to generating fictitious parameters or incorrect library methods. When using AI suggestions:
 
----
+> [!IMPORTANT]
+> **Grounding Rule**: Never trust AI-generated code snippets for critical RAG prompts or legal analysis without validating the grounding parameters (e.g. ensure LLM prompts enforce referencing source clauses).
 
-# Human Responsibilities
+> [!WARNING]
+> **Check External Specs**: If the AI suggests using a library function, double-check the API signature against the official library documentation (e.g. Vercel AI SDK, FastAPI, pgvector documentation).
 
-Humans remain responsible for:
-
-* Product decisions
-* Business decisions
-* Architecture approval
-* Code review
-* Security review
-* Deployment approval
-
-AI suggestions should be evaluated before adoption.
+</hallucination_mitigation>
 
 ---
 
-# Trust Levels
+<cost_safety>
 
-Different AI outputs require different levels of verification.
+## 5. Cost & Quota Constraints
 
-## Low Risk
+### 5.1 Cloud API Preservation
+* Avoid submitting the entire repository context repeatedly. Use file target paths to keep prompts localized.
+* Break large development goals into minor, independent tasks.
 
-Examples:
+### 5.2 Quota Fallback Path
+When cloud provider credits (Gemini, Claude, OpenAI) are depleted, developers must follow this recovery sequence:
+```
+[Cloud Premium Agents] ──> [Gemini Free Tier API] ──> [Local LLM (Ollama/LM Studio)] ──> [Manual Coding]
+```
 
-* Documentation
-* README updates
-* Comments
-* Formatting
+### 5.3 Credentials Safety
+* Never include raw API keys or connection strings in code files.
+* Use environment variables accessed via `.env` files.
+* Ensure `.gitignore` contains rules blocking `.env` commits, and document variables in `.env.example`.
 
-These outputs can usually be accepted after a quick review.
-
----
-
-## Medium Risk
-
-Examples:
-
-* UI code
-* API code
-* Database queries
-
-These outputs should be tested before acceptance.
-
----
-
-## High Risk
-
-Examples:
-
-* Authentication
-* Security features
-* Legal interpretations
-* Production infrastructure
-
-These outputs require careful review and validation.
-
----
-
-# LegalLens-Specific Guidance
-
-Because this project analyzes legal documents:
-
-AI-generated responses should prioritize evidence from uploaded documents.
-
-Whenever possible:
-
-Document
-
-→ Retrieval
-
-→ Context
-
-→ Response
-
-is preferred over direct generation.
-
----
-
-# Hallucination Awareness
-
-AI may occasionally:
-
-* Invent facts
-* Misinterpret requirements
-* Assume missing information
-
-This is expected behavior.
-
-When uncertainty exists:
-
-Prefer verification over confidence.
-
----
-
-# Prompting Guidelines
-
-Good prompts provide:
-
-* Clear objectives
-* Relevant context
-* Expected outputs
-* Constraints
-
-Example:
-
-Design an MVP architecture for a RAG-based contract analysis platform using FastAPI and Next.js.
-
-Better prompts generally produce better outputs.
-
----
-
-# Documentation Expectations
-
-AI-generated documentation should:
-
-* Be reviewed
-* Be edited when necessary
-* Reflect actual implementation
-
-Documentation should not describe features that do not exist.
-
----
-
-# Coding Expectations
-
-AI-generated code should:
-
-* Follow project architecture
-* Follow existing conventions
-* Remain readable
-* Remain maintainable
-
-Readable code is preferred over overly clever code.
-
----
-
-# Security Considerations
-
-Do not blindly trust AI-generated security advice.
-
-Verify:
-
-* Authentication logic
-* Authorization rules
-* Secrets handling
-* Infrastructure configurations
-
-against official documentation whenever possible.
-
----
-
-# Experimentation
-
-Team members are encouraged to experiment with AI tools.
-
-Trying alternative approaches is acceptable when:
-
-* It does not block project progress
-* It does not significantly increase complexity
-* The reasoning is documented
-
----
-
-# Disagreements With AI
-
-AI is allowed to be wrong.
-
-If:
-
-* Requirements
-* Documentation
-* Team decisions
-
-conflict with AI suggestions,
-
-project documentation takes priority.
-
----
-
-# Practical Rule
-
-Use AI to accelerate thinking.
-
-Use human judgment to make decisions.
-
-When unsure:
-
-Test it.
-
-Measure it.
-
-Review it.
-
-Then decide.
-
----
-
-# Final Note
-
-The purpose of AI in this project is to increase productivity and learning.
-
-The best outcome is not "AI wrote everything."
-
-The best outcome is:
-
-The team understands what was built, why it was built, and can confidently explain every major decision.
+</cost_safety>
