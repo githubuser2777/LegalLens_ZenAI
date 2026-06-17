@@ -6,27 +6,47 @@ LegalLens AI
 
 ---
 
-# Overview
+# AI Strategy
 
-LegalLens AI uses Artificial Intelligence to help users understand contracts faster and identify important information that may otherwise be overlooked.
+LegalLens AI is primarily a contract understanding platform.
 
-The AI features are designed to assist users rather than replace legal professionals.
+The core product remains functional without AI.
 
-All AI outputs must remain editable, reviewable, and clearly marked as AI-generated.
+Artificial Intelligence is used only as an assistive feature to help users identify potentially important contract risks faster.
 
----
-
-# AI Feature 1: Contract Summary Generator
-
-## Objective
-
-Generate a concise summary of an uploaded contract.
+The AI feature does not make legal decisions and does not provide legal advice.
 
 ---
 
-## User Value
+# Primary AI Feature
 
-Users can understand the purpose and key contents of a contract within minutes instead of reading dozens of pages.
+## AI Risk Analyzer
+
+### Objective
+
+Analyze uploaded contracts and identify clauses that may contain legal, financial, or privacy risks.
+
+---
+
+## Why This Feature?
+
+Contracts often contain important clauses that users overlook.
+
+Instead of reading dozens of pages manually, users can request an AI-assisted risk review and immediately focus on the most important sections.
+
+This feature delivers clear value while remaining small enough for an MVP.
+
+---
+
+## User Flow
+
+1. User uploads a PDF contract.
+2. System extracts text from the document.
+3. User clicks "Analyze Risks".
+4. AI analyzes the contract.
+5. System displays detected risks.
+6. User reviews the original clauses.
+7. User decides whether further action is needed.
 
 ---
 
@@ -38,266 +58,153 @@ Extracted contract text.
 
 ## Output
 
-* Executive summary
-* Key obligations
-* Important dates
-* Payment terms
-* Contract duration
+Detected risk items including:
 
----
-
-## Human Control
-
-Users can:
-
-* Read original contract text
-* Ignore AI summary
-* Compare AI output with source clauses
-
----
-
-## Risks
-
-* Missing important clauses
-* Oversimplification
-
----
-
-## Mitigation
-
-* Provide citations
-* Allow users to inspect source sections
-
----
-
-# AI Feature 2: Risk Clause Detection
-
-## Objective
-
-Automatically identify potentially risky clauses.
-
----
-
-## User Value
-
-Users can focus on sections that may have legal or financial consequences.
-
----
-
-## Input
-
-Contract clauses.
-
----
-
-## Output
-
-Risk categories such as:
-
-* Automatic Renewal
-* Early Termination
-* Penalty Clause
-* Deposit Forfeiture
-* Privacy/Data Sharing
-
-Each detected risk includes:
-
+* Risk category
+* Severity level
 * Explanation
-* Severity Level
-* Source Citation
+* Related clause citation
+
+Example:
+
+### Risk: Automatic Renewal
+
+Severity: High
+
+Explanation:
+
+This contract may automatically renew unless cancelled before a specified date.
+
+Source:
+
+Clause 8.2
 
 ---
 
-## Human Control
+### Risk: Early Termination Penalty
 
-Users review all flagged clauses before making decisions.
+Severity: Medium
 
----
+Explanation:
 
-## Risks
+The contract requires a financial penalty if terminated before the agreed period.
 
-* False positives
-* False negatives
+Source:
 
----
-
-## Mitigation
-
-* Display original clause
-* Explain why clause was flagged
-* Show confidence indicator
+Clause 5.1
 
 ---
 
-# AI Feature 3: Plain Language Translator
+## Risk Categories
 
-## Objective
+### Financial Risks
 
-Convert complex legal language into understandable language.
+* Deposit forfeiture
+* Late payment penalties
+* Early termination fees
+
+### Contractual Risks
+
+* Automatic renewal
+* Restrictive obligations
+* Long commitment periods
+
+### Privacy Risks
+
+* Data sharing permissions
+* Personal information collection
+* Third-party disclosure
 
 ---
 
 ## User Value
 
-Users without legal backgrounds can understand contract terms more easily.
+Users can:
 
----
-
-## Input
-
-Selected contract clause.
-
----
-
-## Output
-
-* Simplified explanation
-* Important implications
-* Key obligations
+* Review contracts faster
+* Focus on important sections
+* Understand potential risks
+* Make more informed decisions
 
 ---
 
 ## Human Control
 
-Users can compare original and simplified versions side-by-side.
+Users always remain in control.
 
----
+The system:
 
-## Risks
-
-* Loss of legal nuance
-* Misinterpretation
-
----
-
-## Mitigation
-
-* Preserve original text
-* Clearly label explanation as AI-generated
-
----
-
-# AI Feature 4: Contract Question Answering (Primary AI Feature)
-
-## Objective
-
-Allow users to ask questions about the uploaded contract.
-
----
-
-## Why This Feature Is Chosen
-
-Among all AI features, this provides the highest value while remaining feasible for an MVP.
-
-Instead of searching manually through a contract, users can ask questions directly.
-
-Examples:
-
-* Can I cancel this contract early?
-* Is there an automatic renewal clause?
-* What happens if I miss a payment?
-* Can my personal data be shared?
-
----
-
-## Technical Approach
-
-RAG (Retrieval-Augmented Generation)
-
-Workflow:
-
-User Question
-
-↓
-
-Retriever
-
-↓
-
-Relevant Contract Chunks
-
-↓
-
-LLM
-
-↓
-
-Answer + Citations
-
----
-
-## Input
-
-* User question
-* Retrieved contract sections
-
----
-
-## Output
-
-* Natural language answer
-* Supporting evidence
-* Source citations
-
----
-
-## Human Control
+* Shows original contract clauses
+* Provides citations
+* Marks results as AI-generated
 
 Users can:
 
-* Read supporting clauses
-* Verify AI answers
-* Reject AI interpretation
+* Ignore AI findings
+* Read original clauses
+* Make their own decisions
 
 ---
 
 ## Risks
+
+### False Positives
+
+The AI may incorrectly flag harmless clauses.
+
+### False Negatives
+
+The AI may miss important risks.
 
 ### Hallucination
 
-AI may answer beyond available evidence.
-
-### Missing Evidence
-
-Retriever may fail to find relevant clauses.
+The AI may generate unsupported explanations.
 
 ### User Over-Trust
 
-Users may assume AI is always correct.
+Users may assume the AI is always correct.
 
 ---
 
 ## Mitigation
 
-* Answer only from retrieved content
-* Display citations
-* Show confidence warnings
-* Add legal disclaimer
-* Allow users to inspect source text
+* Use Retrieval-Augmented Generation (RAG)
+* Require source citations
+* Display original contract text
+* Clearly label AI-generated content
+* Show legal disclaimer
+* Never provide legal advice
 
 ---
 
-# AI Feature Prioritization
+# Features Not Included In MVP
 
-| Feature                     | Priority    | MVP |
-| --------------------------- | ----------- | --- |
-| Contract Summary            | High        | Yes |
-| Risk Detection              | High        | Yes |
-| Plain Language Translation  | Medium      | Yes |
-| Contract Question Answering | Highest     | Yes |
-| Contract Comparison         | Low         | No  |
-| Contract Drafting           | Low         | No  |
-| Legal Advice Generation     | Not Allowed | No  |
+The following ideas may be considered future enhancements:
+
+* Contract Question Answering
+* Plain Language Translation
+* Contract Comparison
+* Contract Drafting
+* Legal Recommendation Engine
+* Multi-document Analysis
 
 ---
 
-# Recommendation
+# Success Criteria
 
-The MVP should focus on four AI capabilities:
+The AI feature is successful if:
 
-1. Contract Summary
-2. Risk Detection
-3. Plain Language Translation
-4. RAG-Based Contract Question Answering
+* Users can identify major contract risks quickly.
+* Every AI result includes supporting citations.
+* Users can verify findings against original contract clauses.
+* The AI feature remains optional and does not replace the core product.
 
-These features are practical, valuable, demonstrable within the course timeline, and align with responsible AI principles by keeping users in control of final decisions.
+---
+
+# Conclusion
+
+LegalLens AI follows an AI-assisted design approach.
+
+The platform's primary value comes from helping users organize, review, and understand contracts.
+
+The AI Risk Analyzer acts as a supporting feature that improves efficiency while keeping users responsible for final decisions.
