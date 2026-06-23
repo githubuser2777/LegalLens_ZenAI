@@ -41,30 +41,30 @@ Bản kế hoạch này tích hợp từ tài liệu lộ trình môn học [10w
 
 ## 🛠️ GIAI ĐOẠN 2: TRIỂN KHAI CORE & AI AGENT INTEGRATION (WEEKS 6 - 8) - [ĐANG THỰC HIỆN]
 
-### Tuần 6: Sprint 1 - Hoàn Thiện Tính Năng Nền Tảng (Core Features) [ĐANG LÀM]
+### Tuần 6: Sprint 1 - Hoàn Thiện Tính Năng Nền Tảng (Core Features) [ĐÃ XONG]
 *Mục tiêu: Đưa file PDF của người dùng lên hệ thống, trích xuất text thô thành công và hiển thị rõ ràng lên giao diện.*
-- [ ] **Khởi tạo và cấu hình dự án**:
-  - [ ] Khởi tạo dự án Next.js chính thức (App Router, TypeScript, TailwindCSS).
-  - [ ] Chuyển các component và style từ thư mục [UI_wireframe](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/UI_wireframe) sang codebase mới.
-  - [ ] Cấu hình các biến môi trường kết nối Supabase (`.env.local` / `.env.example`).
-  - [ ] Chạy lệnh SQL DDL (từ [data-model.md](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/data-model.md)) trên Supabase SQL Editor để tạo các bảng `profiles`, `contracts`, `contract_chunks`, `risks`, `chat_messages`.
-- [ ] **Hoàn thiện tính năng Tải lên PDF (Liên quan đến Issue [#1 [US-01]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L25))**:
-  - [ ] Tích hợp thư viện `react-dropzone` vào component `DocumentUpload` để xử lý kéo thả.
-  - [ ] Viết API Route backend `POST /api/contracts` để nhận file PDF từ client.
-  - [ ] Viết logic validate phía server (chỉ chấp nhận `.pdf`, kích thước < 10MB).
-  - [ ] Cấu hình Supabase Storage bucket `contracts` và viết logic upload file PDF lên bucket.
-  - [ ] Ghi thông tin meta của hợp đồng (url, name, size) vào bảng `contracts` của PostgreSQL.
-- [ ] **Hoàn thiện tính năng Trích xuất & Xem nội dung (Liên quan đến Issue [#2 [US-02]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L52))**:
-  - [ ] Cài đặt và import thư viện `pdf-parse` trong API Route backend Next.js.
-  - [ ] Viết hàm trích xuất text thô từ file PDF sau khi upload.
-  - [ ] Xây dựng thuật toán phân cắt văn bản (Chunking) theo kích thước 500-1000 tokens và lưu các đoạn thô vào bảng `contract_chunks`.
-  - [ ] Tạo API Route `GET /api/contracts/[id]` để lấy danh sách chunks text của hợp đồng.
-  - [ ] Kết nối dữ liệu thô với Component Contract Viewer phía Client để render văn bản cuộn có đánh số dòng.
-- [ ] **Tích hợp và Bàn giao tuần 6**:
-  - [ ] Tạo Pull Request tích hợp tính năng Core (Sprint 1) và thực hiện review mã nguồn.
-  - [ ] Hoàn thành nhật ký sử dụng AI tuần 6: `docs/ai-logs/week-06.md`.
+- [x] **Khởi tạo và cấu hình dự án**:
+  - [x] Khởi tạo dự án Next.js chính thức (App Router, TypeScript, TailwindCSS).
+  - [x] Chuyển các component và style từ thư mục [UI_wireframe](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/UI_wireframe) sang codebase mới.
+  - [x] Cấu hình các biến môi trường kết nối Supabase (`.env.local` / `.env.example`).
+  - [x] Chạy lệnh SQL DDL (từ [data-model.md](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/data-model.md)) trên Supabase SQL Editor để tạo các bảng `profiles`, `contracts`, `contract_chunks`, `risks`, `chat_messages`.
+- [x] **Hoàn thiện tính năng Tải lên PDF (Liên quan đến Issue [#1 [US-01]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L25))**:
+  - [x] Tích hợp thư viện `react-dropzone` vào component `DocumentUpload` để xử lý kéo thả.
+  - [x] Viết API Route backend `POST /api/contracts` để nhận file PDF từ client.
+  - [x] Viết logic validate phía server (chỉ chấp nhận `.pdf`, kích thước < 10MB).
+  - [x] Cấu hình Supabase Storage bucket `contracts` và viết logic upload file PDF lên bucket.
+  - [x] Ghi thông tin meta của hợp đồng (url, name, size) vào bảng `contracts` của PostgreSQL.
+- [x] **Hoàn thiện tính năng Trích xuất & Xem nội dung (Liên quan đến Issue [#2 [US-02]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L52))**:
+  - [x] Cài đặt và import thư viện `pdf-parse` (thay thế bằng `pdf2json` và `mammoth`) trong API Route backend Next.js.
+  - [x] Viết hàm trích xuất text thô từ file PDF sau khi upload.
+  - [x] Xây dựng thuật toán phân cắt văn bản (Chunking) theo kích thước 500-1000 tokens và lưu các đoạn thô vào bảng `contract_chunks`.
+  - [x] Tạo API Route `GET /api/contracts/[id]` để lấy danh sách chunks text của hợp đồng.
+  - [x] Kết nối dữ liệu thô với Component Contract Viewer phía Client để render văn bản cuộn có đánh số dòng.
+- [x] **Tích hợp và Bàn giao tuần 6**:
+  - [x] Tạo Pull Request tích hợp tính năng Core (Sprint 1) và thực hiện review mã nguồn.
+  - [x] Hoàn thành nhật ký sử dụng AI tuần 6: `docs/ai-logs/week-06.md`.
 
-### Tuần 7: Sprint 2 - Tích Hợp AI Agent & Phân Tích Rủi Ro
+### Tuần 7: Sprint 2 - Tích Hợp AI Agent & Phân Tích Rủi Ro [ĐANG LÀM]
 *Mục tiêu: Thiết kế cấu trúc Agentic, quét rủi ro hợp đồng bằng AI kèm bằng chứng trích dẫn gốc và tương tác highlight trên UI.*
 - [ ] **Thiết lập Agentic Stack (Liên quan đến Issue [#10 [US-10]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L253))**:
   - [ ] Cài đặt Google GenAI SDK (hoặc Vercel AI SDK) và cấu hình khóa API Gemini.
