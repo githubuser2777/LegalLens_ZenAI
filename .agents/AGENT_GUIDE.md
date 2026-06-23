@@ -45,18 +45,17 @@ This document contains structured instructions, constraints, and architecture ma
 ```mermaid
 graph TD
     User([User UI]) -->|Upload PDF / Chat| Frontend[Next.js + TS + TailwindCSS]
-    Frontend -->|REST API Calls| Backend[FastAPI Backend]
-    Backend -->|Metadata / Auth| DB[(PostgreSQL Relational DB)]
-    Backend -->|Vector Embeddings| VectorDB[(FAISS Vector Index)]
-    Backend -->|RAG Queries| LLM[LLM Service API]
+    Frontend -->|API Routes| API[Next.js API Route Handlers]
+    API -->|Auth / Storage / DB| Supabase[(Supabase Cloud)]
+    API -->|RAG Queries & Embeddings| Gemini[Gemini API]
 ```
 
 ### 3.1 Component Specifications
 | Layer | Technologies | Primary Responsibilities |
 | :--- | :--- | :--- |
-| **Frontend** | Next.js (Page router/App router), TypeScript, TailwindCSS | File upload states, contract text viewer, interactive risk dashboard, smooth-scrolling to highlighted citation spans, chat interface. |
-| **Backend** | FastAPI, Python | Auth routes, PDF processing pipeline, embedding generation, FAISS index management, RAG prompt orchestration, risk analysis endpoints. |
-| **Storage** | PostgreSQL, FAISS, Local Disk | PostgreSQL for user metadata, files metadata, and session history. FAISS for vector storage. Local storage for development file assets. |
+| **Frontend** | Next.js (Client-side), TypeScript, TailwindCSS | Upload states, contract viewer, risk dashboard, citation highlighting, chat UI. |
+| **Backend** | Next.js API Routes (Node.js) | PDF parsing, chunking, Gemini API integration, RAG logic, DB operations. |
+| **Storage** | Supabase (PostgreSQL + pgvector, Storage, Auth) | PDF files, contract chunks, embeddings (768d), risk alerts, chat messages, and JWT authentication. |
 
 </technology_stack>
 
@@ -68,22 +67,22 @@ graph TD
 
 ### 4.1 Document Pipeline Flow
 ```
-[Upload PDF] ──> [Text Extraction] ──> [Cleaning & Normalization]
-                                              │
-[Retrieval (k=5)] <── [FAISS Index] <── [Embedding] <── [Chunking (500-1000 tokens)]
+[Upload PDF] ──> [Text Extraction] ──> [Chunking & Normalization]
+                                                │
+[Retrieval (k=3)] <── [Supabase pgvector] <── [Embedding] <── [Gemini text-embedding-004]
 ```
 
 ### 4.2 Pipeline Parameters
 * **Chunk size**: 500 - 1000 tokens.
 * **Chunk overlap**: 100 - 200 tokens.
-* **Retrieval k**: Top 5 chunks.
-* **Citation Metadata Schema**:
+* **Retrieval k**: Top 3 chunks.
+* **Citation / Location Metadata Schema**:
   ```json
   {
-    "clause_id": "string",
-    "section_title": "string",
-    "excerpt": "string",
-    "risk_severity": "HIGH | MEDIUM | LOW"
+    "page": 1,
+    "start_char": 0,
+    "end_char": 100,
+    "matching_text": "string"
   }
   ```
 
@@ -119,10 +118,10 @@ When scanning contracts, look for specific indicator clauses:
 ## 6. Coding & Execution Guidelines for AI Agents
 
 ### 6.1 Clean Code Standards
-* **TypeScript**: Enforce strict type safety. Do not use `any`.
-* **Python**: Always use type hints in FastAPI functions.
+* **TypeScript**: Enforce strict type safety. Do not use `any`. Use proper handler types (`NextRequest`, `NextResponse`) for Next.js API Routes.
+* **Validation**: Use schema-based validation (like Zod) for API inputs/outputs.
 * **Readability**: Prefer explicit, self-documenting logic over complex optimizations. Keep functions under 100 lines.
-* **Robustness**: Wrap API calls and parsing logic in try-catch/try-except blocks with clean error reporting.
+* **Robustness**: Wrap API calls and parsing logic in try-catch blocks with clean error reporting.
 
 ### 6.2 Definition of Done (DoD)
 1. Feature implementation matches the user story acceptance criteria.

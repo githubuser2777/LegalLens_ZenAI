@@ -258,79 +258,30 @@ Every answer should reference source clauses.
 # System Architecture
 
 User
-
 ↓
-
-Frontend (Next.js)
-
+Next.js (Frontend UI & Route Handlers)
 ↓
-
-Backend (FastAPI)
-
+Gemini API (Embeddings & RAG Queries)
 ↓
-
-Document Processing
-
-↓
-
-Embedding Generation
-
-↓
-
-Vector Store (FAISS)
-
-↓
-
-Retriever
-
-↓
-
-LLM
-
-↓
-
-Response + Citations
+Supabase (PostgreSQL + pgvector, Storage, Auth)
 
 ---
 
 # Technology Stack
 
-Frontend
-
-* Next.js
-* TypeScript
-* TailwindCSS
-
-Backend
-
-* FastAPI
-* Python
-
-AI
-
-* Gemini 2.5 Flash
-* GPT
-* Qwen
-
-RAG
-
-* LangChain
-* FAISS
-* BGE-M3
-
-Database
-
-* PostgreSQL
+* **Core**: Next.js (App Router), TypeScript, TailwindCSS
+* **Database & Vector Store**: Supabase (PostgreSQL with pgvector)
+* **Object Storage**: Supabase Storage (PDF files)
+* **Authentication**: Supabase Auth (JWT)
+* **AI & Embedding Engine**: Google Gemini 1.5/2.5 Flash API (model `text-embedding-004`)
 
 ---
 
 # Repository Structure
 
-/docs
-/frontend
-/backend
-/rag
-/tests
+* `/docs`: System specifications, data models, UX design, logs.
+* `/src`: Next.js frontend application and API route handlers (monolithic code base).
+* `/tests`: Automation and unit tests (e.g. Playwright).
 
 ---
 

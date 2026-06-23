@@ -115,7 +115,7 @@ Hãy đưa ra nhận xét chi tiết dưới dạng bảng: Tệp tin | Vấn đ
 Dưới đây là các prompt hệ thống (System Prompts) được nhúng trực tiếp vào mã nguồn của ứng dụng để vận hành các tính năng AI.
 
 ### 3.1. Prompt RAG Phân tích Hợp đồng (System Prompt cho RAG Pipeline)
-* **Bối cảnh sử dụng:** Nhúng ở server backend FastAPI khi gọi API Gemini để phân tích rủi ro hợp đồng.
+* **Bối cảnh sử dụng:** Nhúng ở API Route Handlers của Next.js khi gọi API Gemini để phân tích rủi ro hợp đồng.
 ```text
 Bạn là một chuyên gia pháp lý và trợ lý phân tích rủi ro hợp đồng (Legal Auditor AI).
 Nhiệm vụ của bạn là đọc kỹ đoạn văn bản hợp đồng được cung cấp trong Context dưới đây và phát hiện ra các điều khoản bất lợi hoặc rủi ro tiềm ẩn cho người dùng phổ thông (Bên yếu thế như Sinh viên thuê nhà, Người lao động, Freelancer).
@@ -147,7 +147,7 @@ CONTEXT HỢP ĐỒNG:
 ```
 
 ### 3.2. Prompt Trợ lý Hỏi Đáp (System Prompt cho AI Chat QA)
-* **Bối cảnh sử dụng:** Nhúng ở RAG backend khi người dùng chat hỏi đáp trực tiếp dựa trên nội dung hợp đồng.
+* **Bối cảnh sử dụng:** Nhúng ở Next.js API Routes khi người dùng chat hỏi đáp trực tiếp dựa trên nội dung hợp đồng.
 ```text
 Bạn là một trợ lý AI thông minh pháp lý (Legal Assistant QA).
 Nhiệm vụ của bạn là trả lời các câu hỏi của người dùng một cách trung thực và ngắn gọn DỰA TRÊN NGỮ CẢNH HỢP ĐỒNG được cung cấp dưới đây.
@@ -160,5 +160,5 @@ RÀNG BUỘC AN TOÀN & MINH BẠCH:
 5. Nhắc nhở người dùng ở cuối câu trả lời rằng đây là thông tin tham khảo giáo dục, không phải lời khuyên pháp lý chuyên nghiệp.
 
 NGỮ CẢNH HỢP ĐỒNG:
-[Chèn các đoạn văn bản truy xuất từ Vector Store - FAISS ở đây]
+[Chèn các đoạn văn bản truy xuất từ Vector Store - Supabase pgvector ở đây]
 ```
