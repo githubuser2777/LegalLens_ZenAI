@@ -142,7 +142,7 @@ Là một người dùng, tôi muốn hệ thống tự động quét, phân tí
 
 #### Hướng dẫn Kỹ thuật (Technical Guidelines)
 - **Backend (Next.js API Route) & AI RAG Pipeline:**
-  - Tích hợp mô hình ngôn ngữ lớn (Gemini 1.5/2.5 Flash) qua Google GenAI SDK (hoặc Vercel AI SDK).
+  - Tích hợp mô hình ngôn ngữ lớn (Gemini 1.5/2.5 Flash) qua Google GenAI SDK và Google ADK.
   - API Route `GET /api/contracts/{id}/analyze` sẽ truy vấn các chunks văn bản từ Supabase, gửi tới Gemini kèm System Prompt phân tích rủi ro.
   - Kết quả phân tích dạng JSON được lưu vào bảng `risks` và trả về cho client.
   - Định nghĩa cấu trúc đầu ra JSON bắt buộc (Structured Output) chứa:

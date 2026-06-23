@@ -64,29 +64,29 @@ Bản kế hoạch này tích hợp từ tài liệu lộ trình môn học [10w
   - [x] Tạo Pull Request tích hợp tính năng Core (Sprint 1) và thực hiện review mã nguồn.
   - [x] Hoàn thành nhật ký sử dụng AI tuần 6: `docs/ai-logs/week-06.md`.
 
-### Tuần 7: Sprint 2 - Tích Hợp AI Agent & Phân Tích Rủi Ro [ĐANG LÀM]
+### Tuần 7: Sprint 2 - Tích Hợp AI Agent & Phân Tích Rủi Ro [ĐÃ XONG]
 *Mục tiêu: Thiết kế cấu trúc Agentic, quét rủi ro hợp đồng bằng AI kèm bằng chứng trích dẫn gốc và tương tác highlight trên UI.*
-- [ ] **Thiết lập Agentic Stack (Liên quan đến Issue [#10 [US-10]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L253))**:
-  - [ ] Cài đặt Google GenAI SDK (hoặc Vercel AI SDK) và cấu hình khóa API Gemini.
-  - [ ] Cấu hình Google ADK (Agent Development Kit) cho dự án để thiết lập State Graph.
-  - [ ] Viết logic State Graph định nghĩa các node xử lý của Agent (`AnalyzeNode` -> `VerifyNode`).
-  - [ ] Thiết lập hàm tự động sinh Vector Embeddings khi lưu chunks bằng mô hình `text-embedding-004`.
-- [ ] **Tạo Antigravity Skill mẫu (Liên quan đến Issue [#11 [US-11]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L282))**:
-  - [ ] Khởi tạo thư mục `.agents/skills/contract-auditor` và tệp tin `SKILL.md`.
-  - [ ] Soạn thảo chỉ dẫn heuristics nhận diện rủi ro (Cao, Trung bình, Thấp) và các mẫu đối chiếu (few-shot examples) trong file `SKILL.md`.
-- [ ] **Hoàn thiện tính năng Phân tích Rủi ro bằng AI (Liên quan đến Issue [#5 [US-05]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L118))**:
-  - [ ] Xây dựng API Route `GET /api/contracts/[id]/analyze` để kích hoạt phân tích rủi ro của Agent.
-  - [ ] Cấu hình prompt chi tiết yêu cầu Gemini API trả về định dạng JSON Structured Output (gồm: id, category, severity, title, explanation, source_clause).
-  - [ ] Lưu các thẻ rủi ro trả về vào bảng `risks`.
-  - [ ] Hiển thị danh sách thẻ rủi ro có màu sắc phân biệt theo mức độ nghiêm trọng ở Sidebar bên phải.
-- [ ] **Hoàn thiện trích xuất dẫn chứng & tô sáng nguồn gốc (Liên quan đến Issue [#6 [US-06]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L162) & [#7 [US-07]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L186))**:
-  - [ ] Yêu cầu Gemini API trích xuất nguyên văn chuỗi text gốc làm căn cứ rủi ro (`excerpt`) mà không chỉnh sửa câu từ.
-  - [ ] Lưu trữ tọa độ dòng (`line-number`) hoặc offset ký tự của đoạn trích dẫn.
-  - [ ] Viết logic client-side: Click vào thẻ rủi ro -> tự động cuộn mượt (smooth scroll) màn hình hiển thị bên trái đến đoạn văn tương ứng và tô sáng màu nền tương ứng mức độ rủi ro.
-- [ ] **Kiểm thử & Bàn giao tuần 7**:
-  - [ ] Tạo file kiểm thử chất lượng phân tích của AI và các bộ dữ liệu mẫu: `docs/AI_FEATURE_TEST.md`.
-  - [ ] Tạo Pull Request tích hợp tính năng AI (Sprint 2).
-  - [ ] Hoàn thành nhật ký sử dụng AI tuần 7: `docs/ai-logs/week-07.md`.
+- [x] **Thiết lập Agentic Stack (Liên quan đến Issue [#10 [US-10]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L253))**:
+  - [x] Cài đặt Google GenAI SDK (hoặc Google ADK) và cấu hình khóa API Gemini.
+  - [x] Cấu hình Google ADK (Agent Development Kit) cho dự án để thiết lập State Graph.
+  - [x] Viết logic State Graph định nghĩa các node xử lý của Agent (`AnalyzeNode` -> `VerifyNode`).
+  - [x] Thiết lập hàm tự động sinh Vector Embeddings khi lưu chunks bằng mô hình `text-embedding-004`.
+- [x] **Tạo Antigravity Skill mẫu (Liên quan đến Issue [#11 [US-11]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L282))**:
+  - [x] Khởi tạo thư mục `.agents/skills/contract-auditor` và tệp tin `SKILL.md`.
+  - [x] Soạn thảo chỉ dẫn heuristics nhận diện rủi ro (Cao, Trung bình, Thấp) và các mẫu đối chiếu (few-shot examples) trong file `SKILL.md`.
+- [x] **Hoàn thiện tính năng Phân tích Rủi ro bằng AI (Liên quan đến Issue [#5 [US-05]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L118))**:
+  - [x] Xây dựng API Route `GET /api/contracts/[id]/analyze` để kích hoạt phân tích rủi ro của Agent.
+  - [x] Cấu hình prompt chi tiết yêu cầu Gemini API trả về định dạng JSON Structured Output (gồm: id, category, severity, title, explanation, source_clause).
+  - [x] Lưu các thẻ rủi ro trả về vào bảng `risks`.
+  - [x] Hiển thị danh sách thẻ rủi ro có màu sắc phân biệt theo mức độ nghiêm trọng ở Sidebar bên phải.
+- [x] **Hoàn thiện trích xuất dẫn chứng & tô sáng nguồn gốc (Liên quan đến Issue [#6 [US-06]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L162) & [#7 [US-07]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L186))**:
+  - [x] Yêu cầu Gemini API trích xuất nguyên văn chuỗi text gốc làm căn cứ rủi ro (`excerpt`) mà không chỉnh sửa câu từ.
+  - [x] Lưu trữ tọa độ dòng (`line-number`) hoặc offset ký tự của đoạn trích dẫn.
+  - [x] Viết logic client-side: Click vào thẻ rủi ro -> tự động cuộn mượt (smooth scroll) màn hình hiển thị bên trái đến đoạn văn tương ứng và tô sáng màu nền tương ứng mức độ rủi ro.
+- [x] **Kiểm thử & Bàn giao tuần 7**:
+  - [x] Tạo file kiểm thử chất lượng phân tích của AI và các bộ dữ liệu mẫu: `docs/AI_FEATURE_TEST.md`.
+  - [x] Tạo Pull Request tích hợp tính năng AI (Sprint 2).
+  - [x] Hoàn thành nhật ký sử dụng AI tuần 7: `docs/ai-logs/week-07.md`.
 
 ### Tuần 8: Sprint 3 - UX Tìm Kiếm, Bảo Mật Xác Thực & Chống Ảo Giác
 *Mục tiêu: Nâng cao trải nghiệm tìm kiếm, bảo vệ dữ liệu người dùng bằng tài khoản và cơ chế đối soát chống ảo tưởng.*

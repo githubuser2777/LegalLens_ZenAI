@@ -483,7 +483,7 @@ Mỗi nhóm phải chọn:
   - LM Studio với local model
   - Chia nhỏ task và tiếp tục thủ công
 - **Một SDK để xây dựng tính năng AI trong sản phẩm**, khuyến nghị:
-  - Vercel AI SDK cho project Next.js
+  - Google ADK cho project Next.js
   - Provider SDK chỉ dùng khi thật sự cần
 
 ### Cấu hình khuyến nghị cho sinh viên trung bình
@@ -498,7 +498,7 @@ Cline hoặc Roo Code làm backup
 
 Next.js + Supabase + Vercel
 
-Vercel AI SDK cho tính năng AI
+Google ADK cho tính năng AI
 
 Playwright cho end-to-end testing
 
@@ -528,7 +528,7 @@ Một công cụ phù hợp với học phần nếu thỏa ít nhất hai tiêu
 | Roo Code | Open-source agent trong VS Code | Hỗ trợ nhiều mode như Code, Architect, Ask, Debug |
 | Aider | Terminal pair programming gắn với Git | Rất tốt để dạy diff, commit, revert và kiểm soát thay đổi |
 | Continue | Open-source AI code assistant | Phù hợp dạy AI review, custom rules và workflow trong repo |
-| Vercel AI SDK | SDK xây dựng AI feature | Rất hợp với Next.js, streaming response và nhiều model provider |
+| Google ADK | SDK xây dựng AI feature | Rất hợp với cấu trúc Agent State Graph |
 | Supabase | Backend, Auth, Database | Free tier phù hợp MVP sinh viên |
 | Vercel | Deployment | Triển khai Next.js nhanh, dễ demo |
 | Playwright | End-to-end testing | Kiểm thử luồng người dùng rõ ràng |
@@ -581,7 +581,7 @@ Tuy nhiên, local model nhỏ có thể yếu hơn cloud model mạnh trong các
 
 ## 2E. Công cụ tích hợp AI feature vào sản phẩm
 
-Với project Next.js, khuyến nghị dùng **Vercel AI SDK** để xây dựng tính năng AI vì:
+Với project Next.js, khuyến nghị dùng **Google ADK** để xây dựng tính năng AI vì:
 
 - hỗ trợ streaming response;
 - hỗ trợ nhiều model provider;
@@ -595,7 +595,7 @@ User clicks "Generate summary"
 
 -> App sends selected feedback text to server route
 
--> Server route calls model through Vercel AI SDK
+-> Server route calls model through Google ADK
 
 -> UI streams or displays the generated summary
 

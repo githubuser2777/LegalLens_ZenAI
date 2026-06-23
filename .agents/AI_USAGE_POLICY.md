@@ -55,7 +55,7 @@ AI agents are prone to generating fictitious parameters or incorrect library met
 > **Grounding Rule**: Never trust AI-generated code snippets for critical RAG prompts or legal analysis without validating the grounding parameters (e.g. ensure LLM prompts enforce referencing source clauses).
 
 > [!WARNING]
-> **Check External Specs**: If the AI suggests using a library function, double-check the API signature against the official library documentation (e.g. Vercel AI SDK, FastAPI, pgvector documentation).
+> **Check External Specs**: If the AI suggests using a library function, double-check the API signature against the official library documentation (e.g. Google ADK, FastAPI, pgvector documentation).
 
 </hallucination_mitigation>
 
