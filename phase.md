@@ -100,10 +100,10 @@ Bản kế hoạch này tích hợp từ tài liệu lộ trình môn học [10w
   - [x] Triển khai hàm Sanitization làm sạch văn bản PDF đầu vào để chống lỗ hổng bảo mật Prompt Injection trước khi gửi lên AI.
 - [x] **Cơ chế kiểm soát chất lượng AI (Chống ảo tưởng)**:
   - [x] Viết bộ lọc client-side đối chiếu 100% chuỗi trích dẫn gốc của AI với văn bản thô để đảm bảo độ trung thực trước khi hiển thị thẻ rủi ro lên giao diện.
-- [ ] **Báo cáo & Bàn giao tuần 8**:
-  - [ ] Biên soạn các báo cáo bảo mật và kiểm thử: `docs/TEST_PLAN.md`, `docs/SECURITY.md`, `docs/AI_SAFETY_REVIEW.md`.
-  - [ ] Tạo Pull Request tích hợp Sprint 3.
-  - [ ] Hoàn thành nhật ký sử dụng AI tuần 8: `docs/ai-logs/week-08.md`.
+- [x] **Báo cáo & Bàn giao tuần 8**:
+  - [x] Biên soạn các báo cáo bảo mật và kiểm thử: `docs/TEST_PLAN.md`, `docs/SECURITY.md`, `docs/AI_SAFETY_REVIEW.md`.
+  - [x] Tạo Pull Request tích hợp Sprint 3 (Đã commit & push thẳng lên main).
+  - [x] Hoàn thành nhật ký sử dụng AI tuần 8: `docs/ai-logs/week-08.md`.
 
 ---
 
@@ -111,19 +111,19 @@ Bản kế hoạch này tích hợp từ tài liệu lộ trình môn học [10w
 
 ### Tuần 9: DevOps Triển Khai Cloud, Refactoring & Tài Liệu
 *Mục tiêu: Đóng gói Agent, deploy đám mây, tối ưu hóa code và viết hướng dẫn cài đặt.*
-- [ ] **Triển khai Agent đám mây (Liên quan đến Issue [#13 [US-13]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L340))**:
-  - [ ] Tạo Dockerfile đóng gói Agent viết bằng ADK.
-  - [ ] Triển khai Agent lên Google Cloud Agent Runtime.
-  - [ ] Cấu hình Next.js server kết nối gọi endpoint Agent Runtime trên đám mây.
-- [ ] **Tối ưu hóa Code & Tài liệu**:
-  - [ ] Sử dụng AI kiểm toán toàn bộ codebase để phát hiện technical debt, lập tài liệu: `docs/TECHNICAL_DEBT.md`.
-  - [ ] Tiến hành refactor mã nguồn (tối ưu hóa cấu trúc component, kiểu dữ liệu TypeScript).
-  - [ ] Cập nhật hướng dẫn chạy dự án đầy đủ tại file [README.md](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/README.md).
-  - [ ] Cấu hình Workflow chạy kiểm thử tự động (ví dụ: GitHub Actions).
-  - [ ] Viết tài liệu hướng dẫn cách triển khai (deploy) sản phẩm Next.js lên Vercel: `docs/DEPLOYMENT.md`.
-- [ ] **Bàn giao tuần 9**:
-  - [ ] Tạo Pull Request hoàn thiện và review.
-  - [ ] Hoàn thành nhật ký sử dụng AI tuần 9: `docs/ai-logs/week-09.md`.
+- [x] **Triển khai Agent đám mây (Liên quan đến Issue [#13 [US-13]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L340))**:
+  - [x] Tạo Dockerfile đóng gói Agent viết bằng ADK.
+  - [x] Triển khai Agent lên Google Cloud Agent Runtime.
+  - [x] Cấu hình Next.js server kết nối gọi endpoint Agent Runtime trên đám mây.
+- [x] **Tối ưu hóa Code & Tài liệu**:
+  - [x] Sử dụng AI kiểm toán toàn bộ codebase để phát hiện technical debt, lập tài liệu: `docs/TECHNICAL_DEBT.md`.
+  - [x] Tiến hành refactor mã nguồn (tối ưu hóa cấu trúc component, kiểu dữ liệu TypeScript).
+  - [x] Cập nhật hướng dẫn chạy dự án đầy đủ tại file [README.md](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/README.md).
+  - [x] Cấu hình Workflow chạy kiểm thử tự động (ví dụ: GitHub Actions).
+  - [x] Viết tài liệu hướng dẫn cách triển khai (deploy) sản phẩm Next.js lên Vercel: `docs/DEPLOYMENT.md`.
+- [x] **Bàn giao tuần 9**:
+  - [x] Tạo Pull Request hoàn thiện và review.
+  - [x] Hoàn thành nhật ký sử dụng AI tuần 9: `docs/ai-logs/week-09.md`.
 
 ### Tuần 10: Phát Hành, Demo, Nộp Bài Kaggle & Bảo Vệ Đồ Án
 *Mục tiêu: Đóng gói sản phẩm, deploy chạy trực tiếp, nộp bài Kaggle Capstone và sẵn sàng báo cáo.*

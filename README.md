@@ -285,6 +285,25 @@ Supabase (PostgreSQL + pgvector, Storage, Auth)
 
 ---
 
+# How to Run (Local Development)
+
+1. Clone the repository and navigate to the project directory.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Copy `.env.example` to `.env.local` and fill in your Supabase and Gemini API keys:
+   ```bash
+   cp .env.example .env.local
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
 # Weekly Deliverables
 
 ## Week 1
