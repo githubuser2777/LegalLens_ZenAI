@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { AIValidator } from '@/lib/AIValidator';
 
 
 export async function GET() {
@@ -116,8 +117,9 @@ export async function POST(req: Request) {
       rawText = buffer.toString('utf-8');
     }
 
-    // Strip null bytes which PostgreSQL rejects
+    // Strip null bytes which PostgreSQL rejects and sanitize AI tokens
     rawText = rawText.replace(/\0/g, '');
+    rawText = AIValidator.sanitize(rawText);
 
     // Insert into contracts table
     const { data: contract, error: contractError } = await supabaseAdmin

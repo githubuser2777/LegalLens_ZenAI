@@ -90,16 +90,16 @@ Bản kế hoạch này tích hợp từ tài liệu lộ trình môn học [10w
 
 ### Tuần 8: Sprint 3 - UX Tìm Kiếm, Bảo Mật Xác Thực & Chống Ảo Giác
 *Mục tiêu: Nâng cao trải nghiệm tìm kiếm, bảo vệ dữ liệu người dùng bằng tài khoản và cơ chế đối soát chống ảo tưởng.*
-- [ ] **UX Tìm kiếm & Mục lục tự động (Liên quan đến Issue [#3 [US-03]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L74) & [#4 [US-04]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L96))**:
-  - [ ] Thiết kế và code tính năng Tìm kiếm từ khóa nhanh trong Contract Viewer, tô sáng màu vàng nhạt tất cả từ trùng khớp.
-  - [ ] Thêm nút mũi tên Lên/Xuống để duyệt qua các kết quả trùng khớp.
-  - [ ] Dùng regex nhận diện tiêu đề cấu trúc hợp đồng để tạo mục lục tự động hiển thị ở sidebar.
-- [ ] **Tích hợp Tài khoản & Bảo mật dữ liệu (Liên quan đến Issue [#8 [US-08]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L208), [#9 [US-09]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L234) & [#12 [US-12]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L311))**:
-  - [ ] Tích hợp Supabase Auth xử lý đăng ký, đăng nhập bảo mật qua JWT ở client & server.
-  - [ ] Cấu hình Row Level Security (RLS) trên các bảng Supabase PostgreSQL để bảo vệ dữ liệu giữa các người dùng.
-  - [ ] Triển khai hàm Sanitization làm sạch văn bản PDF đầu vào để chống lỗ hổng bảo mật Prompt Injection trước khi gửi lên AI.
-- [ ] **Cơ chế kiểm soát chất lượng AI (Chống ảo tưởng)**:
-  - [ ] Viết bộ lọc client-side đối chiếu 100% chuỗi trích dẫn gốc của AI với văn bản thô để đảm bảo độ trung thực trước khi hiển thị thẻ rủi ro lên giao diện.
+- [x] **UX Tìm kiếm & Mục lục tự động (Liên quan đến Issue [#3 [US-03]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L74) & [#4 [US-04]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L96))**:
+  - [x] Thiết kế và code tính năng Tìm kiếm từ khóa nhanh trong Contract Viewer, tô sáng màu vàng nhạt tất cả từ trùng khớp.
+  - [x] Thêm nút mũi tên Lên/Xuống để duyệt qua các kết quả trùng khớp.
+  - [x] Dùng regex nhận diện tiêu đề cấu trúc hợp đồng để tạo mục lục tự động hiển thị ở sidebar.
+- [x] **Tích hợp Tài khoản & Bảo mật dữ liệu (Liên quan đến Issue [#8 [US-08]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L208), [#9 [US-09]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L234) & [#12 [US-12]](file:///c:/Users/Admin/Documents/CODE_WORKSPACE/LegalLens_ZenAI/docs/GITHUB_ISSUES.md#L311))**:
+  - [x] Tích hợp Supabase Auth xử lý đăng ký, đăng nhập bảo mật qua JWT ở client & server.
+  - [x] Cấu hình Row Level Security (RLS) trên các bảng Supabase PostgreSQL để bảo vệ dữ liệu giữa các người dùng.
+  - [x] Triển khai hàm Sanitization làm sạch văn bản PDF đầu vào để chống lỗ hổng bảo mật Prompt Injection trước khi gửi lên AI.
+- [x] **Cơ chế kiểm soát chất lượng AI (Chống ảo tưởng)**:
+  - [x] Viết bộ lọc client-side đối chiếu 100% chuỗi trích dẫn gốc của AI với văn bản thô để đảm bảo độ trung thực trước khi hiển thị thẻ rủi ro lên giao diện.
 - [ ] **Báo cáo & Bàn giao tuần 8**:
   - [ ] Biên soạn các báo cáo bảo mật và kiểm thử: `docs/TEST_PLAN.md`, `docs/SECURITY.md`, `docs/AI_SAFETY_REVIEW.md`.
   - [ ] Tạo Pull Request tích hợp Sprint 3.

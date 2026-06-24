@@ -22,10 +22,6 @@ const VIEW_LABELS: Record<View, string> = {
 export default function App() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [authError, setAuthError] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
 
   const [activeView, setActiveView] = useState<View>("dashboard");
   const [selectedContractId, setSelectedContractId] = useState<string | null>(null);
@@ -52,34 +48,13 @@ export default function App() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const supabase = createClient();
-    setAuthError("");
-    const { error } = isSignUp 
-      ? await supabase.auth.signUp({ email, password })
-      : await supabase.auth.signInWithPassword({ email, password });
-    if (error) setAuthError(error.message);
-    else if (isSignUp) setAuthError("Please check your email to verify!");
-  };
-
   if (loading) return null;
 
   if (!session) {
-    return (
-      <div className="dark size-full flex items-center justify-center" style={{ background: "#080B14", color: "#F1F5F9", fontFamily: "'Inter', system-ui, sans-serif" }}>
-        <form onSubmit={handleAuth} className="p-8 flex flex-col gap-4 rounded-xl border border-white/10 w-full max-w-sm" style={{ background: "rgba(255,255,255,0.04)" }}>
-          <h2 className="text-xl font-semibold mb-2">{isSignUp ? "Sign Up" : "Log In"} to LegalLens</h2>
-          {authError && <div className="text-red-400 text-sm mb-2">{authError}</div>}
-          <input type="email" placeholder="Email" required value={email} onChange={e=>setEmail(e.target.value)} className="p-3 text-sm rounded-lg bg-white/5 border border-white/10 outline-none focus:border-indigo-500" />
-          <input type="password" placeholder="Password" required value={password} onChange={e=>setPassword(e.target.value)} className="p-3 text-sm rounded-lg bg-white/5 border border-white/10 outline-none focus:border-indigo-500" />
-          <button type="submit" className="p-3 mt-2 text-sm font-semibold bg-indigo-600 rounded-lg hover:bg-indigo-500 transition-colors">{isSignUp ? "Sign Up" : "Log In"}</button>
-          <button type="button" onClick={()=>setIsSignUp(!isSignUp)} className="text-xs text-indigo-400 mt-2 text-center">
-            {isSignUp ? "Already have an account? Log In" : "Need an account? Sign Up"}
-          </button>
-        </form>
-      </div>
-    );
+    if (typeof window !== "undefined") {
+      window.location.href = '/login';
+    }
+    return null;
   }
 
   return (

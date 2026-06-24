@@ -7,7 +7,9 @@ import {
   Settings,
   Scale,
   ChevronRight,
+  LogOut,
 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 type View = "dashboard" | "upload" | "search" | "chat";
@@ -169,30 +171,43 @@ export function NavSidebar({ activeView, onViewChange, onSettingsOpen, collapsed
           {/* User chip */}
           {!collapsed && (
             <div
-              className="flex items-center gap-2 mt-2 rounded-lg px-3 py-2"
+              className="flex items-center justify-between mt-2 rounded-lg px-3 py-2"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              <div
-                className="rounded-full flex items-center justify-center shrink-0 text-xs font-semibold text-white"
-                style={{
-                  width: 28,
-                  height: 28,
-                  background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
+              <div className="flex items-center gap-2 min-w-0">
+                <div
+                  className="rounded-full flex items-center justify-center shrink-0 text-xs font-semibold text-white"
+                  style={{
+                    width: 28,
+                    height: 28,
+                    background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
+                  }}
+                >
+                  {userEmail ? userEmail.charAt(0).toUpperCase() : "U"}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold truncate" style={{ color: "#F1F5F9" }}>
+                    {userEmail?.split('@')[0] || "User"}
+                  </p>
+                  <p className="text-xs truncate" style={{ color: "#94A3B8" }}>
+                    {userEmail || "Signed in"}
+                  </p>
+                </div>
+              </div>
+              <button 
+                onClick={async () => {
+                  const supabase = createClient();
+                  await supabase.auth.signOut();
+                  window.location.href = '/login';
                 }}
+                className="p-1.5 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-red-400"
+                title="Log out"
               >
-                JD
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold truncate" style={{ color: "#F1F5F9" }}>
-                  {userEmail?.split('@')[0] || "User"}
-                </p>
-                <p className="text-xs truncate" style={{ color: "#94A3B8" }}>
-                  {userEmail || "Signed in"}
-                </p>
-              </div>
+                <LogOut size={16} />
+              </button>
             </div>
           )}
         </div>
