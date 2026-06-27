@@ -1,495 +1,107 @@
-# LegalLens AI
+<div align="center">
+  <img src="https://img.shields.io/badge/Status-Kaggle_Capstone-blue?style=for-the-badge" alt="Kaggle Capstone" />
+  <img src="https://img.shields.io/badge/Agentic_AI-Google_ADK-orange?style=for-the-badge" alt="Google ADK" />
+  <img src="https://img.shields.io/badge/Frontend-Next.js-black?style=for-the-badge" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Database-Supabase-green?style=for-the-badge" alt="Supabase" />
+</div>
 
-## Software Engineering Project
+<br />
 
-### AI-Powered Contract Analysis Platform
-
----
-
-# Executive Summary
-
-LegalLens AI is a legal-document intelligence platform that helps users understand contracts before signing them.
-
-The platform allows users to upload contracts, identify potentially risky clauses, receive simplified explanations, and ask questions grounded in the original document using Retrieval-Augmented Generation (RAG).
-
-The project is developed as part of a Software Engineering course and follows an iterative 10-week MVP development process.
-
----
-
-# Problem
-
-Most people do not read contracts.
-
-Reasons include:
-
-* Legal language is difficult to understand.
-* Contracts are often long.
-* Users lack legal knowledge.
-* Reviewing contracts requires significant time.
-
-As a result, users frequently agree to:
-
-* Automatic renewals
-* Unfair penalties
-* Deposit forfeiture
-* Broad data-sharing permissions
-* Restrictive obligations
-
-without fully understanding them.
+<div align="center">
+  <h1>⚖️ LegalLens AI</h1>
+  <p><strong>Your Autonomous AI Legal Operator</strong></p>
+  <p><i>Democratizing contract review through Agentic Workflows and Zero-Hallucination Guardrails.</i></p>
+</div>
 
 ---
 
-# Opportunity
+## 📖 Overview
 
-Millions of users interact with:
+**LegalLens AI** is an intelligent, autonomous agent designed to solve a ubiquitous problem: **understanding dense legal contracts**. 
+Most people sign rental agreements, NDAs, and employment contracts without fully understanding the legalese, exposing themselves to hidden penalties, predatory deposit forfeiture, and auto-renewals.
 
-* Rental agreements
-* Employment contracts
-* Freelance agreements
-* Terms of Service
-* Privacy Policies
+Built as a capstone project for the **Kaggle AI Agents Intensive Vibe Coding**, LegalLens AI acts as an expert legal auditor. Users simply upload a contract (PDF), and our Agent instantly flags high-risk clauses, translates them into plain language, and provides 100% verified citations directly from the source document.
 
-Yet very few tools help non-lawyers understand these documents quickly.
-
-LegalLens AI aims to reduce this information gap.
+*This project is submitted under the **Agents for Good** & **Agents for Business** tracks.*
 
 ---
 
-# Target Users
+## 🌟 Key Features & Capstone Highlights
 
-## Primary Users
+LegalLens AI was architected from the ground up to meet and exceed all 5 Google Codelabs criteria:
 
-Students
-
-* Dormitory agreements
-* Internship contracts
-* Scholarship terms
-
-Employees
-
-* Employment contracts
-* NDA agreements
-
-Freelancers
-
-* Service agreements
-* Client contracts
-
-Consumers
-
-* Terms of Service
-* Subscription agreements
+1. **Custom Antigravity Skills (Codelab 1):** Infused with expert legal heuristics (`SKILL.md`) to systematically categorize risks (Deposits, Non-Competes, Terminations) and score severities.
+2. **Advanced ADK Lifecycle (Codelab 2):** Powered by the Google GenAI SDK and a State Graph architecture (`AnalyzeNode` -> `VerifyNode`) to ensure high accuracy and multi-step reasoning.
+3. **Secure Agentic Coding (Codelab 3):** 
+   - **Data Privacy First:** Row Level Security (RLS) guarantees absolute data isolation.
+   - **Auto-Destruct Protocol:** A `pg_cron` background job auto-deletes contracts from the server after 24 hours.
+   - **Prompt Injection Defense:** Hardened system instructions (`CONTEXT.md`) backed by CI/CD Pytest security checks.
+4. **Vibecode Frontend (Codelab 5):** An event-driven, Next.js frontend featuring **Real-time Thought Streaming** (SSE). Users can watch the AI "think" step-by-step before arriving at a conclusion.
+5. **Modern Cloud Deployment (Codelab 4):** A decoupled monorepo architecture: the Frontend lives on Vercel, the Python ADK backend runs on Render, and the database runs on Supabase.
 
 ---
 
-# User Stories
+## 🏗️ Architecture
 
-### User Story 1
-
-As a tenant,
-
-I want to upload a rental contract,
-
-so that I can identify risky clauses before signing.
-
----
-
-### User Story 2
-
-As an employee,
-
-I want legal language translated into plain language,
-
-so that I can understand my obligations.
+```mermaid
+graph TD;
+    User[User] -->|Uploads PDF| NextJS[Next.js Frontend Vercel];
+    NextJS -->|Authenticates| SupabaseAuth[Supabase Auth & RLS];
+    NextJS -->|Proxies Request| PythonBackend[FastAPI Agent Render];
+    PythonBackend -->|Runs Graph| ADK[Google ADK State Graph];
+    ADK -->|Extracts Text| Tools[Document Parser];
+    ADK -->|Audits Risks| Gemini[Gemini 1.5 Pro];
+    Gemini -->|Streams Thought Process| NextJS;
+```
 
 ---
 
-### User Story 3
+## 🚀 Quick Start (Local Development)
 
-As a user,
+### Prerequisites
+- Node.js >= 18
+- Python >= 3.11
+- `uv` package manager
 
-I want to ask questions about a contract,
+### 1. Frontend Setup
+```bash
+# Install dependencies
+npm install
 
-so that I do not need to manually search through dozens of pages.
+# Setup environment variables
+cp .env.example .env.local
+# Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
 
----
+# Run development server
+npm run dev
+```
 
-### User Story 4
+### 2. Backend Agent Setup
+```bash
+cd agent/contract_auditor_agent
 
-As a user,
+# Install Python dependencies using uv
+uv sync --all-extras --dev
 
-I want answers backed by evidence,
+# Add your Gemini API Key
+export GEMINI_API_KEY="your_api_key_here"
 
-so that I can trust the system.
-
----
-
-# Solution
-
-LegalLens AI provides:
-
-* Contract Upload
-* Contract Summary
-* Risk Detection
-* Clause Explanation
-* RAG-based Question Answering
-* Source Citations
-
-The platform focuses on understanding rather than legal advice.
-
----
-
-# MVP Scope
-
-## Included
-
-Upload PDF
-
-Extract Text
-
-Generate Summary
-
-Detect Risks
-
-Ask Questions
-
-Provide Citations
+# Run the FastAPI server locally
+uv run uvicorn server:app --reload --port 8000
+```
 
 ---
 
-## Excluded
-
-Legal Advice
-
-Contract Drafting
-
-Court Prediction
-
-Legal Representation
-
-Electronic Signatures
-
-Multi-user Collaboration
+## 🌐 Deployment
+For instructions on deploying the AI Agent via Docker to Render and the Next.js app to Vercel, please refer to our [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md).
 
 ---
 
-# Success Criteria
-
-The MVP is considered successful if users can:
-
-* Upload a contract
-* Understand the summary
-* Identify important risks
-* Ask meaningful questions
-* Verify answers using citations
+## ⚠️ Disclaimer
+**LegalLens AI provides informational assistance only.** It does not provide legal advice, nor does it create an attorney-client relationship. Always consult a licensed legal professional before signing any legally binding documents.
 
 ---
 
-# Validation Plan
-
-Validation will be performed through:
-
-* Student testing
-* Peer reviews
-* Instructor feedback
-* Usability testing sessions
-
-Success metrics include:
-
-* Time required to understand a contract
-* User satisfaction
-* Accuracy of retrieved information
-* Citation relevance
-
----
-
-# Product Features
-
-## Contract Upload
-
-Upload PDF documents.
-
----
-
-## Contract Summary
-
-Generate concise summaries.
-
----
-
-## Risk Detection
-
-Highlight:
-
-* Deposit Loss
-* Automatic Renewal
-* Termination Clauses
-* Privacy Risks
-* Penalty Clauses
-
----
-
-## Plain Language Translation
-
-Translate legal terminology into understandable language.
-
----
-
-## Contract QA
-
-Ask natural language questions.
-
-Example:
-
-Can I lose my deposit?
-
-What happens if I terminate early?
-
-Does this contract renew automatically?
-
----
-
-## Source Citation
-
-Every answer should reference source clauses.
-
----
-
-# System Architecture
-
-User
-↓
-Next.js (Frontend UI & Route Handlers)
-↓
-Gemini API (Embeddings & RAG Queries)
-↓
-Supabase (PostgreSQL + pgvector, Storage, Auth)
-
----
-
-# Technology Stack
-
-* **Core**: Next.js (App Router), TypeScript, TailwindCSS
-* **Database & Vector Store**: Supabase (PostgreSQL with pgvector)
-* **Object Storage**: Supabase Storage (PDF files)
-* **Authentication**: Supabase Auth (JWT)
-* **AI & Embedding Engine**: Google Gemini 1.5/2.5 Flash API (model `text-embedding-004`)
-
----
-
-# Repository Structure
-
-* `/docs`: System specifications, data models, UX design, logs.
-* `/src`: Next.js frontend application and API route handlers (monolithic code base).
-* `/tests`: Automation and unit tests (e.g. Playwright).
-
----
-
-# How to Run (Local Development)
-
-1. Clone the repository and navigate to the project directory.
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Copy `.env.example` to `.env.local` and fill in your Supabase and Gemini API keys:
-   ```bash
-   cp .env.example .env.local
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-# Weekly Deliverables
-
-## Week 1
-
-Problem Definition
-
-Requirements Analysis
-
-User Stories
-
-Architecture Draft
-
-PDF Upload PoC
-
-Deliverable:
-
-Working PDF Upload Demo
-
----
-
-## Week 2
-
-Frontend Foundation
-
-UI Wireframes
-
-Contract Upload Interface
-
-Deliverable:
-
-Functional Frontend
-
----
-
-## Week 3
-
-Backend Foundation
-
-Database Design
-
-API Structure
-
-Deliverable:
-
-Working Backend APIs
-
----
-
-## Week 4
-
-Document Processing
-
-Text Extraction
-
-Chunking
-
-Deliverable:
-
-PDF → Text Pipeline
-
----
-
-## Week 5
-
-RAG Implementation
-
-Embedding Generation
-
-Vector Search
-
-Deliverable:
-
-Contract Question Answering
-
----
-
-## Week 6
-
-Risk Detection
-
-Clause Classification
-
-Deliverable:
-
-Risk Dashboard
-
----
-
-## Week 7
-
-Legal Translation
-
-Explanation Engine
-
-Deliverable:
-
-Plain Language Explanations
-
----
-
-## Week 8
-
-System Refinement
-
-Performance Improvements
-
-Deliverable:
-
-Integrated MVP
-
----
-
-## Week 9
-
-Testing
-
-Bug Fixes
-
-Evaluation
-
-Deliverable:
-
-Release Candidate
-
----
-
-## Week 10
-
-Presentation
-
-Documentation
-
-Final Demonstration
-
-Deliverable:
-
-Final Product
-
----
-
-# Risks
-
-## Technical Risks
-
-Large PDF processing
-
-Poor retrieval quality
-
-Hallucinated answers
-
-API limitations
-
----
-
-## Mitigation
-
-Use RAG
-
-Use citations
-
-Implement retrieval evaluation
-
-Limit unsupported answers
-
----
-
-# Future Improvements
-
-OCR Support
-
-Contract Comparison
-
-Multi-language Support
-
-Advanced Risk Scoring
-
-Report Generation
-
-Enterprise Dashboard
-
----
-
-# Disclaimer
-
-LegalLens AI is an educational software engineering project.
-
-The system provides informational assistance only.
-
-It does not provide legal advice and should not replace professional legal consultation.
+<div align="center">
+  <i>Built with ❤️ using the Vibe Coding Philosophy.</i>
+</div>
