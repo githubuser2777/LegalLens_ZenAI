@@ -1,0 +1,20 @@
+[project]
+name = "contract-auditor-agent"
+version = "0.1.0"
+description = "LegalLens AI Contract Auditor Agent using Google ADK 2.0"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-adk[gcp]>=2.0.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.32.0",
+    "supabase>=2.10.0",
+    "python-dotenv>=1.0.1",
+    "pydantic>=2.9.2"
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
