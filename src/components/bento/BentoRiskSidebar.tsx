@@ -19,7 +19,7 @@ interface RiskSidebarProps {
   onExcerptClick: (excerpt: string) => void;
 }
 
-export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
+export function BentoRiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
   const [risks, setRisks] = useState<Risk[]>([]);
   const [loading, setLoading] = useState(false);
   const [analyzed, setAnalyzed] = useState(false);
@@ -84,18 +84,18 @@ export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
       case "HIGH": return "border-destructive text-destructive bg-destructive/10";
       case "MEDIUM": return "border-amber-500 text-amber-500 bg-amber-500/10";
       case "LOW": return "border-emerald-500 text-emerald-500 bg-emerald-500/10";
-      default: return "border-border text-foreground bg-muted";
+      default: return "border-slate-100 text-slate-900 bg-slate-100";
     }
   };
 
   return (
-    <div className="flex flex-col h-full bg-background border-l border-border shrink-0 text-foreground" style={{ width: 320 }}>
-      <div className="p-5 border-b border-border">
-        <h2 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2">
-          <ShieldCheck size={20} weight="bold" className="text-foreground" />
+    <div className="flex flex-col h-full bg-white border-l border-slate-100 shrink-0 text-slate-900" style={{ width: 320 }}>
+      <div className="p-5 border-b border-slate-100">
+        <h2 className="text-sm font-bold font-medium flex items-center gap-2">
+          <ShieldCheck size={20} weight="bold" className="text-slate-900" />
           Risk Analysis
         </h2>
-        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-2">
+        <p className="text-[10px] font-bold text-slate-500 font-medium mt-2">
           Automated clause extraction & risk assessment.
         </p>
       </div>
@@ -103,17 +103,17 @@ export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
       <div className="flex-1 overflow-y-auto p-5">
         {!analyzed && !loading && (
           <div className="flex flex-col items-center justify-center h-full text-center gap-6">
-            <div className="w-16 h-16 border-2 border-foreground flex items-center justify-center bg-muted/10">
+            <div className="w-16 h-16 border border-slate-200/60 flex items-center justify-center bg-slate-50">
               <Warning size={32} weight="bold" />
             </div>
             <div>
-              <p className="font-bold uppercase tracking-widest text-sm mb-2">No Analysis Run</p>
-              <p className="text-[10px] font-mono text-muted-foreground mb-6">
+              <p className="font-bold font-medium text-sm mb-2">No Analysis Run</p>
+              <p className="text-[10px] font-mono text-slate-500 mb-6">
                 System requires explicit clearance to begin document scan.
               </p>
               <button
                 onClick={analyzeContract}
-                className="px-6 py-3 bg-foreground text-background text-xs font-bold uppercase tracking-widest hover:bg-foreground/90 transition-colors"
+                className="px-6 py-3 bg-blue-600 text-white text-xs font-bold font-medium hover:bg-blue-600/90 transition-colors"
               >
                 Initiate Scan
               </button>
@@ -125,11 +125,11 @@ export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
         {loading && (
           <div className="flex flex-col h-full gap-4 pb-4">
             <div className="flex flex-col items-center justify-center pt-10 gap-6">
-              <Spinner size={32} weight="bold" className="animate-spin" />
-              <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground animate-pulse">Scanning matrix...</p>
+              <Spinner size={32} weight="bold" className="animate-spin text-blue-600" />
+              <p className="text-[10px] font-mono font-bold font-medium text-slate-500 animate-pulse">Scanning matrix...</p>
             </div>
-            <div className="flex-1 overflow-y-auto p-4 mt-2 border border-border bg-muted/5 font-mono text-[10px] flex flex-col gap-2">
-              <div className="font-bold border-b border-border pb-2 mb-2 text-foreground uppercase tracking-widest flex items-center gap-2">
+            <div className="flex-1 overflow-y-auto p-4 mt-2 border border-slate-200 bg-slate-50 font-mono text-[10px] flex flex-col gap-2 rounded-lg mx-4">
+              <div className="font-bold border-b border-slate-200 pb-2 mb-2 text-slate-900 flex items-center gap-2">
                 <Info size={14} /> Agent Activity Log
               </div>
               {agentLogs.map((log, i) => (
@@ -137,9 +137,9 @@ export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
                   initial={{ opacity: 0, x: -5 }} 
                   animate={{ opacity: 1, x: 0 }} 
                   key={i} 
-                  className="flex gap-2 text-muted-foreground"
+                  className="flex gap-2 text-slate-600"
                 >
-                  <span className="text-emerald-500 font-bold">&gt;</span> {log}
+                  <span className="text-blue-600 font-bold">&gt;</span> {log}
                 </motion.div>
               ))}
             </div>
@@ -149,15 +149,15 @@ export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
         {analyzed && !loading && risks.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center">
             <ShieldCheck size={40} weight="bold" className="text-emerald-500 mb-4" />
-            <p className="font-bold uppercase tracking-widest text-sm mb-2">No Critical Risks</p>
-            <p className="text-[10px] font-mono text-muted-foreground">Document parameters are within acceptable thresholds.</p>
+            <p className="font-bold font-medium text-sm mb-2">No Critical Risks</p>
+            <p className="text-[10px] font-mono text-slate-500">Document parameters are within acceptable thresholds.</p>
           </div>
         )}
 
         {analyzed && !loading && risks.length > 0 && (
           <div className="flex flex-col gap-5">
-            <div className="flex items-center justify-between pb-2 border-b border-border">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Detected Anomalies</span>
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span className="text-[10px] font-bold text-slate-500 font-medium">Detected Anomalies</span>
               <span className="text-[10px] font-mono font-bold">{risks.length}</span>
             </div>
             
@@ -170,7 +170,7 @@ export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
                 className={`p-4 border ${getSeverityStyle(risk.severity)}`}
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
-                  <h3 className="font-bold text-xs uppercase tracking-widest leading-relaxed">{risk.title}</h3>
+                  <h3 className="font-bold text-xs font-medium leading-relaxed">{risk.title}</h3>
                   <span className={`text-[10px] font-mono font-bold px-2 py-0.5 border ${getSeverityStyle(risk.severity)}`}>
                     {risk.severity}
                   </span>
@@ -178,20 +178,20 @@ export function RiskSidebar({ contractId, onExcerptClick }: RiskSidebarProps) {
                 
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 block mb-1">Context</span>
+                    <span className="text-[10px] font-bold font-medium opacity-60 block mb-1">Context</span>
                     <div className="text-xs font-mono leading-relaxed opacity-90">
                       {risk.explanation}
                     </div>
                   </div>
                   
-                  <div className="bg-background/50 border border-current/20 p-3 relative group">
-                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-50 block mb-2">
+                  <div className="bg-white/50 border border-current/20 p-3 relative group">
+                    <span className="text-[10px] font-bold font-medium opacity-50 block mb-2">
                       Source: {risk.location_meta.clause_number}
                     </span>
                     <p className="text-xs font-mono italic opacity-75 line-clamp-4 border-l-2 border-current/40 pl-3">&quot;{risk.excerpt}&quot;</p>
                     <button
                       onClick={() => onExcerptClick(risk.excerpt)}
-                      className="mt-3 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity"
+                      className="mt-3 text-[10px] font-bold font-medium flex items-center gap-2 hover:opacity-70 transition-opacity"
                     >
                       <Info size={14} weight="bold" />
                       Locate in document

@@ -1,23 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
-  Send,
+  PaperPlaneRight,
   FileText,
-  Sparkles,
+  Sparkle,
   Copy,
   ThumbsUp,
   ThumbsDown,
-  ChevronDown,
+  CaretDown,
   Paperclip,
   X,
-} from "lucide-react";
-
-const GLASS = {
-  background: "rgba(255,255,255,0.04)",
-  backdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.08)",
-  borderRadius: 12,
-};
+  Trash,
+} from "@phosphor-icons/react";
 
 type MessageRole = "user" | "assistant";
 
@@ -27,13 +21,14 @@ interface Message {
   content: string;
   timestamp: string;
   loading?: boolean;
+  thoughtProcess?: string[];
 }
 
 const INITIAL_MESSAGES: Message[] = [
   {
     id: "1",
     role: "assistant",
-    content: "Hi! This AI Chat feature is currently scheduled for Week 8. Right now, I am just a placeholder to show you where the AI interaction will take place.",
+    content: "Hi! I am ZenAI Operator. How can I assist you with your legal documents today?",
     timestamp: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }),
   }
 ];
@@ -45,22 +40,17 @@ const SUGGESTED_PROMPTS = [
   "Extract all governing law provisions",
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ATTACHED_DOCS: any[] = [];
 
 const MODELS = ["Claude Opus 4.8", "Claude Sonnet 4.6", "GPT-4o"];
 
 function LoadingDots() {
   return (
-    <div className="flex items-center gap-1">
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={i}
-          animate={{ scale: [1, 1.6, 1], opacity: [0.4, 1, 0.4] }}
-          transition={{ repeat: Infinity, duration: 0.9, delay: i * 0.18, ease: "easeInOut" }}
-          className="rounded-full"
-          style={{ width: 6, height: 6, background: "#A78BFA" }}
-        />
-      ))}
+    <div className="flex items-center gap-1 h-6">
+      <span className="w-2 h-2 bg-foreground animate-bounce" style={{ animationDelay: "0ms" }} />
+      <span className="w-2 h-2 bg-foreground animate-bounce" style={{ animationDelay: "150ms" }} />
+      <span className="w-2 h-2 bg-foreground animate-bounce" style={{ animationDelay: "300ms" }} />
     </div>
   );
 }
@@ -71,13 +61,13 @@ function MessageBubble({ message }: { message: Message }) {
 
   const renderLine = (line: string, i: number) => {
     const bold = line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    const withWarning = bold.replace("⚠️", '<span style="color:#FCD34D">⚠️</span>');
+    const withWarning = bold.replace("⚠️", '<span class="text-amber-500 font-bold">⚠️</span>');
     return (
       <p
         key={i}
-        className="text-sm leading-relaxed"
+        className="text-xs font-mono leading-relaxed"
         dangerouslySetInnerHTML={{ __html: withWarning }}
-        style={{ color: isUser ? "#F1F5F9" : "#CBD5E1", marginBottom: i < lines.length - 1 ? 8 : 0 }}
+        style={{ marginBottom: i < lines.length - 1 ? 8 : 0 }}
       />
     );
   };
@@ -87,63 +77,54 @@ function MessageBubble({ message }: { message: Message }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className={`flex gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}
+      className={`flex gap-4 ${isUser ? "flex-row-reverse" : "flex-row"}`}
     >
       {/* Avatar */}
       <div
-        className="flex items-center justify-center rounded-full shrink-0 text-xs font-semibold"
-        style={{
-          width: 32,
-          height: 32,
-          background: isUser
-            ? "linear-gradient(135deg, #7C3AED, #4F46E5)"
-            : "linear-gradient(135deg, #06B6D4, #3B82F6)",
-          boxShadow: isUser
-            ? "0 0 12px rgba(124,58,237,0.3)"
-            : "0 0 12px rgba(6,182,212,0.3)",
-          flexShrink: 0,
-          marginTop: 4,
-        }}
+        className={`flex items-center justify-center border-2 border-foreground shrink-0 text-xs font-bold uppercase tracking-widest mt-1 ${
+          isUser ? "bg-foreground text-background" : "bg-background text-foreground"
+        }`}
+        style={{ width: 40, height: 40 }}
       >
-        {isUser ? "JD" : <Sparkles size={14} className="text-white" />}
+        {isUser ? "JD" : <Sparkle size={20} weight="bold" />}
       </div>
 
-      <div className={`flex flex-col gap-1 max-w-[75%] ${isUser ? "items-end" : "items-start"}`}>
+      <div className={`flex flex-col gap-2 max-w-[80%] ${isUser ? "items-end" : "items-start"}`}>
+        {/* Render Thought Process */}
+        {!isUser && message.thoughtProcess && message.thoughtProcess.length > 0 && (
+          <div className="flex flex-col gap-1 mb-1">
+            {message.thoughtProcess.map((thought, idx) => (
+              <div key={idx} className="text-[10px] font-mono text-muted-foreground bg-muted/20 px-2 py-1 border-l-2 border-primary/50">
+                &gt; {thought}
+              </div>
+            ))}
+          </div>
+        )}
+
         <div
-          className="px-4 py-3 rounded-2xl"
-          style={
-            isUser
-              ? {
-                  background: "linear-gradient(135deg, rgba(124,58,237,0.3), rgba(79,70,229,0.2))",
-                  border: "1px solid rgba(124,58,237,0.3)",
-                  borderRadius: "16px 16px 4px 16px",
-                }
-              : {
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: "16px 16px 16px 4px",
-                }
-          }
+          className={`p-4 border-2 border-foreground ${
+            isUser ? "bg-foreground/5" : "bg-muted/10"
+          }`}
         >
           {message.loading ? <LoadingDots /> : lines.map((line, i) => renderLine(line, i))}
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs" style={{ color: "#475569" }}>
+        <div className={`flex items-center gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
+          <span className="text-[10px] font-mono font-bold text-muted-foreground border border-border px-1.5 py-0.5">
             {message.timestamp}
           </span>
           {!isUser && !message.loading && (
-            <>
-              <button className="rounded p-0.5 transition-colors hover:bg-white/10">
-                <Copy size={11} style={{ color: "#475569" }} />
+            <div className="flex gap-2">
+              <button className="p-1 border border-border hover:border-foreground text-muted-foreground hover:text-foreground transition-colors">
+                <Copy size={14} weight="bold" />
               </button>
-              <button className="rounded p-0.5 transition-colors hover:bg-white/10">
-                <ThumbsUp size={11} style={{ color: "#475569" }} />
+              <button className="p-1 border border-border hover:border-foreground text-muted-foreground hover:text-foreground transition-colors">
+                <ThumbsUp size={14} weight="bold" />
               </button>
-              <button className="rounded p-0.5 transition-colors hover:bg-white/10">
-                <ThumbsDown size={11} style={{ color: "#475569" }} />
+              <button className="p-1 border border-border hover:border-foreground text-muted-foreground hover:text-foreground transition-colors">
+                <ThumbsDown size={14} weight="bold" />
               </button>
-            </>
+            </div>
           )}
         </div>
       </div>
@@ -160,11 +141,18 @@ export function AIChatInterface() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  const handleClearData = () => {
+    if (confirm("Bạn có chắc muốn hủy hợp đồng và xóa sạch lịch sử phân tích khỏi hệ thống không? (Hành động này không thể hoàn tác)")) {
+      setMessages([{
+        id: Date.now().toString(),
+        role: "assistant",
+        content: "Hợp đồng và toàn bộ dữ liệu phân tích đã được tiêu hủy an toàn khỏi máy chủ. Bạn cần hỗ trợ gì thêm không?",
+        timestamp: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }),
+      }]);
+    }
+  };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
     const userMsg: Message = {
       id: Date.now().toString(),
@@ -172,115 +160,165 @@ export function AIChatInterface() {
       content: input,
       timestamp: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }),
     };
+    
+    // Prepare history for backend
+    const currentHistory = messages.map(m => ({ role: m.role, content: m.content }));
+    
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
+    setIsLoading(true);
+
+    const botMsgId = (Date.now() + 1).toString();
     const loadingMsg: Message = {
-      id: (Date.now() + 1).toString(),
+      id: botMsgId,
       role: "assistant",
       content: "",
       timestamp: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }),
       loading: true,
     };
-    setMessages((prev) => [...prev, userMsg, loadingMsg]);
-    setInput("");
-    setIsLoading(true);
+    setMessages((prev) => [...prev, loadingMsg]);
 
-    setTimeout(() => {
-      setMessages((prev) =>
-        prev.map((m) =>
-          m.loading
-            ? {
-                ...m,
-                loading: false,
-                content:
-                  "I'm analysing your query against the attached documents. Based on my review, I've identified several relevant clauses that match your request. Would you like a detailed breakdown or a high-level summary?",
+    try {
+      const isAnalyze = userMsg.content.toLowerCase().startsWith("/analyze");
+      let apiUrl = "/api/chat";
+      let bodyData: any = { message: userMsg.content, history: currentHistory };
+
+      if (isAnalyze) {
+        apiUrl = "/api/analyze";
+        const parts = userMsg.content.split(" ");
+        bodyData = { contractId: parts.length > 1 ? parts[1] : "default" };
+      }
+
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyData)
+      });
+
+      if (!res.body) throw new Error("No response body");
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let done = false;
+      let fullContent = "";
+      let currentThoughts: string[] = [];
+
+      // Remove loading state once we start getting chunks
+      setMessages((prev) => prev.map(m => m.id === botMsgId ? { ...m, loading: false } : m));
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        const chunkValue = decoder.decode(value, { stream: true });
+        
+        const lines = chunkValue.split('\n');
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const dataStr = line.slice(6);
+            if (dataStr.trim() === '[DONE]') {
+              done = true;
+              break;
+            }
+            try {
+              const data = JSON.parse(dataStr);
+              if (isAnalyze) {
+                if (data.status === "starting" || data.status === "running") {
+                  if (data.message && !currentThoughts.includes(data.message)) {
+                    currentThoughts = [...currentThoughts, data.message];
+                    setMessages((prev) => prev.map(m => m.id === botMsgId ? { ...m, thoughtProcess: currentThoughts } : m));
+                  }
+                } else if (data.status === "complete") {
+                  // For simplicity, convert the result dict to a readable string
+                  fullContent = "Analysis Complete:\n" + JSON.stringify(data.result, null, 2);
+                  setMessages((prev) => prev.map(m => m.id === botMsgId ? { ...m, content: fullContent } : m));
+                }
+              } else {
+                // Normal Chat
+                if (data.text) {
+                  fullContent += data.text;
+                  setMessages((prev) => prev.map(m => m.id === botMsgId ? { ...m, content: fullContent } : m));
+                }
               }
-            : m
-        )
-      );
+              if (data.error) {
+                console.error("Backend returned error:", data.error);
+                fullContent += "\n[Error: " + data.error + "]";
+                setMessages((prev) => prev.map(m => m.id === botMsgId ? { ...m, content: fullContent } : m));
+              }
+            } catch(e) {}
+          }
+        }
+      }
+    } catch(err) {
+       console.error("Chat error:", err);
+       setMessages((prev) => prev.map(m => m.id === botMsgId ? { ...m, loading: false, content: "Sorry, I encountered an error connecting to the backend." } : m));
+    } finally {
       setIsLoading(false);
-    }, 2200);
+    }
   };
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-full overflow-hidden bg-background text-foreground">
       {/* Main chat column */}
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div className="flex flex-col flex-1 overflow-hidden border-x border-border">
         {/* Chat header */}
         <motion.div
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="flex items-center justify-between px-5 py-4 shrink-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+          className="flex items-center justify-between p-5 border-b border-border shrink-0 bg-muted/10"
         >
-          <div className="flex items-center gap-3">
-            <div
-              className="flex items-center justify-center rounded-xl"
-              style={{
-                width: 36,
-                height: 36,
-                background: "linear-gradient(135deg, #06B6D4, #3B82F6)",
-                boxShadow: "0 0 14px rgba(6,182,212,0.3)",
-              }}
-            >
-              <Sparkles size={16} className="text-white" />
+          <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center border-2 border-foreground w-10 h-10 bg-foreground text-background">
+              <Sparkle size={20} weight="bold" />
             </div>
             <div>
-              <h1 className="text-sm font-semibold" style={{ color: "#F1F5F9" }}>
-                ZenAI Legal Assistant
+              <h1 className="text-sm font-bold uppercase tracking-widest">
+                ZenAI Operator
               </h1>
-              <div className="flex items-center gap-1.5">
-                <div className="rounded-full" style={{ width: 6, height: 6, background: "#10B981", boxShadow: "0 0 6px #10B981" }} />
-                <span className="text-xs" style={{ color: "#94A3B8" }}>Coming in Week 8</span>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="w-2 h-2 bg-emerald-500 border border-emerald-900" />
+                <span className="text-[10px] font-mono font-bold text-muted-foreground uppercase">Online</span>
               </div>
             </div>
           </div>
 
-          {/* Model selector */}
-          <div className="relative">
+          {/* Actions */}
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => setModelOpen(!modelOpen)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-colors duration-150"
-              style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "#94A3B8",
-              }}
+              onClick={handleClearData}
+              title="Tiêu hủy dữ liệu"
+              className="flex items-center gap-2 px-3 py-2 border-2 border-red-500 text-red-500 bg-background hover:bg-red-500/10 transition-colors"
             >
-              <span style={{ color: "#A78BFA" }}>{selectedModel}</span>
-              <ChevronDown size={11} />
+              <Trash size={14} weight="bold" />
+              <span className="text-xs font-bold uppercase tracking-widest hidden sm:inline">Hủy Dữ Liệu</span>
             </button>
-            <AnimatePresence>
-              {modelOpen && (
-                <motion.div
+            <div className="relative">
+              <button
+                onClick={() => setModelOpen(!modelOpen)}
+                className="flex items-center gap-2 px-3 py-2 border-2 border-foreground bg-background hover:bg-muted/10 transition-colors"
+              >
+                <span className="text-xs font-bold uppercase tracking-widest">{selectedModel}</span>
+                <CaretDown size={14} weight="bold" />
+              </button>
+              <AnimatePresence>
+                {modelOpen && (
+                  <motion.div
                   initial={{ opacity: 0, y: -6, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -6, scale: 0.97 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-1 rounded-xl overflow-hidden z-50"
-                  style={{
-                    background: "#0F1629",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    minWidth: 160,
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-                  }}
+                  className="absolute right-0 top-full mt-2 z-50 flex flex-col bg-background border-2 border-foreground shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]"
+                  style={{ minWidth: 200 }}
                 >
                   {MODELS.map((model) => (
                     <button
                       key={model}
                       onClick={() => { setSelectedModel(model); setModelOpen(false); }}
-                      className="w-full text-left px-3 py-2 text-xs transition-colors duration-100"
-                      style={{
-                        color: model === selectedModel ? "#A78BFA" : "#94A3B8",
-                        background: model === selectedModel ? "rgba(124,58,237,0.1)" : "transparent",
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.background =
-                          model === selectedModel ? "rgba(124,58,237,0.15)" : "rgba(255,255,255,0.04)")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.background =
-                          model === selectedModel ? "rgba(124,58,237,0.1)" : "transparent")
-                      }
+                      className={`text-left px-4 py-3 text-xs font-bold uppercase tracking-widest transition-colors ${
+                        model === selectedModel
+                          ? "bg-foreground text-background"
+                          : "bg-background text-foreground hover:bg-muted/20"
+                      }`}
                     >
                       {model}
                     </button>
@@ -292,7 +330,7 @@ export function AIChatInterface() {
         </motion.div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-5">
+        <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6 bg-background">
           {messages.map((msg) => (
             <MessageBubble key={msg.id} message={msg} />
           ))}
@@ -300,30 +338,12 @@ export function AIChatInterface() {
         </div>
 
         {/* Suggested prompts */}
-        <div
-          className="px-5 py-2 flex gap-2 overflow-x-auto shrink-0"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
-        >
+        <div className="px-6 py-3 flex gap-3 overflow-x-auto shrink-0 border-t border-border bg-muted/5">
           {SUGGESTED_PROMPTS.map((p) => (
             <button
               key={p}
               onClick={() => setInput(p)}
-              className="text-xs px-3 py-1.5 rounded-full whitespace-nowrap transition-all duration-150 shrink-0"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                color: "#94A3B8",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(124,58,237,0.12)";
-                e.currentTarget.style.color = "#A78BFA";
-                e.currentTarget.style.border = "1px solid rgba(124,58,237,0.25)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                e.currentTarget.style.color = "#94A3B8";
-                e.currentTarget.style.border = "1px solid rgba(255,255,255,0.08)";
-              }}
+              className="text-[10px] font-bold uppercase tracking-widest px-3 py-2 border border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground whitespace-nowrap shrink-0 transition-colors"
             >
               {p}
             </button>
@@ -335,41 +355,29 @@ export function AIChatInterface() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.2 }}
-          className="px-5 py-4 shrink-0"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+          className="p-6 border-t border-border bg-background shrink-0"
         >
           {/* Attached docs */}
           {attachedDocs.length > 0 && (
-            <div className="flex gap-2 mb-2 flex-wrap">
+            <div className="flex gap-3 mb-4 flex-wrap">
               {attachedDocs.map((doc) => (
-                <div
+               <div
                   key={doc.id}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs"
-                  style={{
-                    background: "rgba(124,58,237,0.12)",
-                    border: "1px solid rgba(124,58,237,0.2)",
-                    color: "#A78BFA",
-                  }}
+                  className="flex items-center gap-2 px-3 py-1.5 border border-foreground bg-foreground/10 text-xs font-bold uppercase tracking-widest"
                 >
-                  <FileText size={10} />
+                  <FileText size={14} weight="bold" />
                   {doc.name}
                   <button onClick={() => setAttachedDocs((prev) => prev.filter((d) => d.id !== doc.id))}>
-                    <X size={9} />
+                    <X size={12} weight="bold" className="hover:text-destructive transition-colors" />
                   </button>
                 </div>
               ))}
             </div>
           )}
 
-          <div
-            className="flex items-end gap-3 rounded-xl px-4 py-3 transition-all duration-200"
-            style={{
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.08)",
-            }}
-          >
-            <button className="shrink-0 mb-0.5">
-              <Paperclip size={15} style={{ color: "#64748B" }} />
+          <div className="flex items-end gap-4 p-4 border-2 border-foreground bg-background focus-within:ring-2 focus-within:ring-foreground/50 transition-all">
+            <button className="shrink-0 mb-1 hover:text-muted-foreground transition-colors">
+              <Paperclip size={20} weight="bold" />
             </button>
             <textarea
               value={input}
@@ -380,10 +388,10 @@ export function AIChatInterface() {
                   sendMessage();
                 }
               }}
-              placeholder="Ask about clauses, risks, obligations… (Enter to send)"
+              placeholder="ENTER COMMAND OR QUERY..."
               rows={1}
-              className="flex-1 resize-none bg-transparent outline-none text-sm leading-relaxed"
-              style={{ color: "#F1F5F9", minHeight: 24, maxHeight: 120 }}
+              className="flex-1 resize-none bg-transparent outline-none text-xs font-mono font-bold placeholder:text-muted-foreground/50 uppercase leading-relaxed"
+              style={{ minHeight: 24, maxHeight: 120 }}
               onInput={(e) => {
                 const el = e.currentTarget;
                 el.style.height = "24px";
@@ -392,27 +400,19 @@ export function AIChatInterface() {
             />
             <motion.button
               onClick={sendMessage}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.95 }}
               disabled={!input.trim() || isLoading}
-              className="shrink-0 flex items-center justify-center rounded-lg transition-all duration-150"
-              style={{
-                width: 32,
-                height: 32,
-                background:
-                  input.trim() && !isLoading
-                    ? "linear-gradient(135deg, #7C3AED, #4F46E5)"
-                    : "rgba(255,255,255,0.08)",
-                boxShadow: input.trim() && !isLoading ? "0 0 12px rgba(124,58,237,0.4)" : "none",
-                cursor: input.trim() && !isLoading ? "pointer" : "default",
-              }}
+              className={`shrink-0 flex items-center justify-center p-2 border-2 transition-colors ${
+                input.trim() && !isLoading
+                  ? "border-foreground bg-foreground text-background hover:bg-foreground/90 cursor-pointer"
+                  : "border-border bg-muted/20 text-muted-foreground cursor-not-allowed"
+              }`}
             >
-              <Send size={13} style={{ color: input.trim() && !isLoading ? "white" : "#475569" }} />
+              <PaperPlaneRight size={20} weight="bold" />
             </motion.button>
           </div>
         </motion.div>
       </div>
-
-
     </div>
   );
 }

@@ -1,14 +1,17 @@
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
-  LayoutDashboard,
+  SquaresFour,
   FileText,
-  Search,
-  MessageSquare,
-  Settings,
-  Scale,
-  ChevronRight,
-  LogOut,
-} from "lucide-react";
+  MagnifyingGlass,
+  ChatCircleText,
+  Gear,
+  Scales,
+  CaretRight,
+  CaretUp,
+  SignOut,
+  User,
+} from "@phosphor-icons/react";
 import { createClient } from "@/lib/supabase/client";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
@@ -22,37 +25,28 @@ interface NavSidebarProps {
   userEmail?: string;
 }
 
-const navItems: { id: View; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+const navItems: { id: View; label: string; icon: React.ComponentType<{ size?: number; weight?: string; className?: string }> }[] = [
+  { id: "dashboard", label: "Dashboard", icon: SquaresFour },
   { id: "upload", label: "Documents", icon: FileText },
-  { id: "search", label: "Search", icon: Search },
-  { id: "chat", label: "AI Chat", icon: MessageSquare },
+  { id: "search", label: "Search", icon: MagnifyingGlass },
+  { id: "chat", label: "AI Chat", icon: ChatCircleText },
 ];
 
 export function NavSidebar({ activeView, onViewChange, onSettingsOpen, collapsed, userEmail }: NavSidebarProps) {
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
   return (
     <TooltipProvider delayDuration={0}>
       <aside
-        className="flex flex-col h-full shrink-0 transition-all duration-300"
+        className="flex flex-col h-full shrink-0 transition-all duration-300 border-r border-border bg-background"
         style={{
           width: collapsed ? 64 : 240,
-          background: "rgba(12, 15, 30, 0.95)",
-          borderRight: "1px solid rgba(255,255,255,0.06)",
-          backdropFilter: "blur(20px)",
         }}
       >
         {/* Logo */}
-        <div className="flex items-center gap-3 px-4 py-5 shrink-0" style={{ height: 64 }}>
-          <div
-            className="flex items-center justify-center rounded-lg shrink-0"
-            style={{
-              width: 32,
-              height: 32,
-              background: "linear-gradient(135deg, #7C3AED, #4F46E5)",
-              boxShadow: "0 0 16px rgba(124,58,237,0.4)",
-            }}
-          >
-            <Scale size={16} className="text-white" />
+        <div className="flex items-center gap-3 px-4 py-4 shrink-0 border-b border-border bg-background" style={{ height: 56 }}>
+          <div className="flex items-center justify-center w-8 h-8 bg-foreground text-background shrink-0">
+            <Scales size={18} weight="bold" />
           </div>
           {!collapsed && (
             <motion.div
@@ -61,69 +55,57 @@ export function NavSidebar({ activeView, onViewChange, onSettingsOpen, collapsed
               exit={{ opacity: 0, x: -8 }}
               transition={{ duration: 0.2 }}
             >
-              <span
-                className="text-sm font-semibold tracking-tight"
-                style={{
-                  background: "linear-gradient(90deg, #A78BFA, #67E8F9)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
+              <span className="text-sm font-bold tracking-tight text-foreground uppercase">
                 LegalLens
               </span>
-              <span className="text-xs block" style={{ color: "#94A3B8", marginTop: -2 }}>
+              <span className="text-[10px] block text-muted-foreground uppercase tracking-widest font-bold" style={{ marginTop: -2 }}>
                 ZenAI
               </span>
             </motion.div>
           )}
         </div>
 
-        {/* Divider */}
-        <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 16px" }} />
-
         {/* Nav items */}
-        <nav className="flex flex-col gap-1 px-2 py-4 flex-1">
+        <nav className="flex flex-col flex-1 py-4">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeView === item.id;
 
             const button = (
-              <motion.button
+              <button
                 key={item.id}
                 onClick={() => onViewChange(item.id)}
-                whileHover={{ x: collapsed ? 0 : 2 }}
-                transition={{ duration: 0.15 }}
-                className="flex items-center gap-3 w-full rounded-lg transition-colors duration-150 cursor-pointer"
+                className={`flex items-center gap-3 w-full transition-colors duration-150 cursor-pointer ${
+                  isActive
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                }`}
                 style={{
-                  padding: collapsed ? "10px 0" : "10px 12px",
+                  padding: collapsed ? "12px 0" : "12px 20px",
                   justifyContent: collapsed ? "center" : "flex-start",
-                  background: isActive
-                    ? "linear-gradient(135deg, rgba(124,58,237,0.25), rgba(79,70,229,0.15))"
-                    : "transparent",
-                  border: isActive ? "1px solid rgba(124,58,237,0.3)" : "1px solid transparent",
-                  color: isActive ? "#A78BFA" : "#94A3B8",
                 }}
               >
                 <Icon
                   size={18}
-                  style={{ color: isActive ? "#A78BFA" : "#64748B", flexShrink: 0 }}
+                  weight={isActive ? "fill" : "regular"}
+                  className="shrink-0"
                 />
                 {!collapsed && (
-                  <span className="text-sm" style={{ fontWeight: isActive ? 600 : 400 }}>
+                  <span className="text-sm font-medium">
                     {item.label}
                   </span>
                 )}
                 {!collapsed && isActive && (
-                  <ChevronRight size={14} className="ml-auto" style={{ color: "#A78BFA" }} />
+                  <CaretRight size={14} weight="bold" className="ml-auto opacity-50" />
                 )}
-              </motion.button>
+              </button>
             );
 
             if (collapsed) {
               return (
                 <Tooltip key={item.id}>
                   <TooltipTrigger asChild>{button}</TooltipTrigger>
-                  <TooltipContent side="right" className="text-xs">
+                  <TooltipContent side="right" className="text-[10px] uppercase tracking-widest font-bold rounded-none border border-border">
                     {item.label}
                   </TooltipContent>
                 </Tooltip>
@@ -134,80 +116,84 @@ export function NavSidebar({ activeView, onViewChange, onSettingsOpen, collapsed
         </nav>
 
         {/* Bottom section */}
-        <div className="px-2 pb-4 shrink-0">
-          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", margin: "0 8px 12px" }} />
+        <div className="flex flex-col border-t border-border shrink-0 bg-background">
           {collapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   onClick={onSettingsOpen}
-                  className="flex items-center justify-center w-full rounded-lg transition-colors duration-150 cursor-pointer"
-                  style={{
-                    padding: "10px 0",
-                    color: "#64748B",
-                    border: "1px solid transparent",
-                  }}
+                  className="flex items-center justify-center w-full py-4 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors cursor-pointer"
                 >
-                  <Settings size={18} />
+                  <Gear size={18} />
                 </button>
               </TooltipTrigger>
-              <TooltipContent side="right" className="text-xs">Settings</TooltipContent>
+              <TooltipContent side="right" className="text-[10px] uppercase tracking-widest font-bold rounded-none border border-border">Settings</TooltipContent>
             </Tooltip>
           ) : (
             <button
               onClick={onSettingsOpen}
-              className="flex items-center gap-3 w-full rounded-lg transition-colors duration-150 cursor-pointer"
-              style={{
-                padding: "10px 12px",
-                color: "#64748B",
-                border: "1px solid transparent",
-              }}
+              className="flex items-center gap-3 w-full px-5 py-4 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors cursor-pointer border-b border-border"
             >
-              <Settings size={18} style={{ flexShrink: 0 }} />
-              <span className="text-sm">Settings</span>
+              <Gear size={18} className="shrink-0" />
+              <span className="text-sm font-medium">Settings</span>
             </button>
           )}
 
           {/* User chip */}
           {!collapsed && (
-            <div
-              className="flex items-center justify-between mt-2 rounded-lg px-3 py-2"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.06)",
-              }}
-            >
-              <div className="flex items-center gap-2 min-w-0">
-                <div
-                  className="rounded-full flex items-center justify-center shrink-0 text-xs font-semibold text-white"
-                  style={{
-                    width: 28,
-                    height: 28,
-                    background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
-                  }}
-                >
+            <div className="relative flex items-center justify-between px-5 py-4 bg-muted/10">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="flex items-center justify-center w-8 h-8 border border-border bg-background text-foreground text-xs font-bold shrink-0">
                   {userEmail ? userEmail.charAt(0).toUpperCase() : "U"}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold truncate" style={{ color: "#F1F5F9" }}>
+                  <p className="text-xs font-semibold text-foreground truncate">
                     {userEmail?.split('@')[0] || "User"}
                   </p>
-                  <p className="text-xs truncate" style={{ color: "#94A3B8" }}>
-                    {userEmail || "Signed in"}
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold truncate">
+                    Operator
                   </p>
                 </div>
               </div>
               <button 
-                onClick={async () => {
-                  const supabase = createClient();
-                  await supabase.auth.signOut();
-                  window.location.href = '/login';
-                }}
-                className="p-1.5 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-red-400"
-                title="Log out"
+                onClick={() => setUserMenuOpen(v => !v)}
+                className={`p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors ${userMenuOpen ? "bg-muted/50 text-foreground" : ""}`}
+                title="Account Menu"
               >
-                <LogOut size={16} />
+                <CaretUp size={16} weight="bold" className={`transition-transform duration-200 ${userMenuOpen ? "rotate-180" : ""}`} />
               </button>
+
+              <AnimatePresence>
+                {userMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute bottom-full left-4 right-4 mb-2 bg-background border border-border shadow-2xl z-50 flex flex-col"
+                  >
+                    <button className="flex items-center gap-3 px-4 py-3 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors border-b border-border text-left">
+                      <User size={16} weight="bold" />
+                      Profile Settings
+                    </button>
+                    <button className="flex items-center gap-3 px-4 py-3 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors border-b border-border text-left">
+                      <Gear size={16} weight="bold" />
+                      Preferences
+                    </button>
+                    <button 
+                      onClick={async () => {
+                        const supabase = createClient();
+                        await supabase.auth.signOut();
+                        window.location.href = '/login';
+                      }}
+                      className="flex items-center gap-3 px-4 py-3 text-xs font-bold uppercase tracking-widest text-destructive hover:bg-destructive/10 transition-colors text-left"
+                    >
+                      <SignOut size={16} weight="bold" />
+                      Log out
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )}
         </div>

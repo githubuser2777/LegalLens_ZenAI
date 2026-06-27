@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { AIValidator } from '@/lib/AIValidator';
@@ -57,8 +58,14 @@ export async function GET(
       return NextResponse.json({ error: errorData.error || 'Agent failed' }, { status: response.status });
     }
 
-    const data = await response.json();
-    return NextResponse.json({ risks: data.risks });
+    // Proxy the Server-Sent Events stream from FastAPI to the Next.js client
+    return new Response(response.body, {
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+      },
+    });
 
   } catch (error) {
     console.error('Analysis proxy error:', error);

@@ -6,53 +6,30 @@ import {
   Cpu,
   Shield,
   Eye,
-  EyeOff,
+  EyeClosed,
   CheckCircle,
-  Loader2,
-  AlertCircle,
-  ChevronRight,
-} from "lucide-react";
+  Spinner,
+  WarningCircle,
+  CaretRight,
+  PaintBrush,
+} from "@phosphor-icons/react";
 import { Switch } from "./ui/switch";
+import { useTheme } from "./ThemeProvider";
 
 interface SettingsModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-type SettingsTab = "api" | "model" | "privacy";
+type SettingsTab = "appearance" | "api" | "privacy";
 
-const TABS: { id: SettingsTab; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
-  { id: "api", label: "API Keys", icon: Key },
-  { id: "model", label: "Model Selection", icon: Cpu },
+const TABS: { id: SettingsTab; label: string; icon: React.ComponentType<{ size?: number; weight?: string }> }[] = [
+  { id: "appearance", label: "Appearance", icon: PaintBrush },
+  { id: "api", label: "Agent Config", icon: Key },
   { id: "privacy", label: "Privacy", icon: Shield },
 ];
 
-const MODELS = [
-  {
-    id: "claude-opus",
-    name: "Claude Opus 4.8",
-    provider: "Anthropic",
-    description: "Most capable model for complex legal reasoning and nuanced analysis",
-    badge: "Recommended",
-    badgeColor: "#10B981",
-  },
-  {
-    id: "claude-sonnet",
-    name: "Claude Sonnet 4.6",
-    provider: "Anthropic",
-    description: "Balanced performance for routine document processing",
-    badge: "Fast",
-    badgeColor: "#06B6D4",
-  },
-  {
-    id: "gpt4o",
-    name: "GPT-4o",
-    provider: "OpenAI",
-    description: "Strong general-purpose model with broad knowledge",
-    badge: null,
-    badgeColor: null,
-  },
-];
+
 
 function ApiKeyRow({
   label,
@@ -72,69 +49,58 @@ function ApiKeyRow({
   };
 
   return (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-xs uppercase tracking-wider" style={{ color: "#64748B" }}>
+    <div className="flex flex-col gap-2">
+      <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
         {label}
       </label>
-      <div className="flex gap-2">
-        <div
-          className="flex items-center gap-2 flex-1 px-3 py-2 rounded-lg transition-all duration-200"
-          style={{
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.1)",
-          }}
-        >
+      <div className="flex gap-3">
+        <div className="flex items-center gap-2 flex-1 px-4 py-3 bg-muted/10 border border-border focus-within:border-foreground focus-within:ring-1 focus-within:ring-foreground transition-all">
           <input
             type={visible ? "text" : "password"}
             value={value}
             onChange={(e) => { setValue(e.target.value); setStatus("idle"); }}
             placeholder={placeholder}
-            className="flex-1 bg-transparent outline-none text-sm"
-            style={{ color: "#F1F5F9" }}
+            className="flex-1 bg-transparent outline-none text-xs font-mono font-bold placeholder:text-muted-foreground"
           />
           <button onClick={() => setVisible(!visible)}>
             {visible ? (
-              <EyeOff size={13} style={{ color: "#64748B" }} />
+              <EyeClosed size={16} weight="bold" className="text-muted-foreground hover:text-foreground transition-colors" />
             ) : (
-              <Eye size={13} style={{ color: "#64748B" }} />
+              <Eye size={16} weight="bold" className="text-muted-foreground hover:text-foreground transition-colors" />
             )}
           </button>
         </div>
         <button
           onClick={test}
           disabled={!value || status === "testing"}
-          className="px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150"
-          style={{
-            background: "rgba(255,255,255,0.07)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            color: "#94A3B8",
-            opacity: !value ? 0.5 : 1,
-          }}
+          className={`px-4 py-3 text-xs font-bold uppercase tracking-widest transition-colors ${
+            !value ? "opacity-50 cursor-not-allowed bg-muted border border-border text-muted-foreground" : "bg-foreground text-background hover:bg-foreground/90 border border-foreground"
+          }`}
         >
           {status === "testing" ? (
-            <Loader2 size={12} className="animate-spin" />
+            <Spinner size={16} weight="bold" className="animate-spin" />
           ) : status === "ok" ? (
-            <CheckCircle size={12} style={{ color: "#10B981" }} />
+            <CheckCircle size={16} weight="bold" />
           ) : status === "error" ? (
-            <AlertCircle size={12} style={{ color: "#EF4444" }} />
+            <WarningCircle size={16} weight="bold" />
           ) : (
             "Test"
           )}
         </button>
       </div>
       {status === "ok" && (
-        <p className="text-xs" style={{ color: "#34D399" }}>Connection verified</p>
+        <p className="text-[10px] font-mono font-bold text-emerald-500">CONNECTION VERIFIED</p>
       )}
       {status === "error" && (
-        <p className="text-xs" style={{ color: "#F87171" }}>Invalid or expired key</p>
+        <p className="text-[10px] font-mono font-bold text-destructive">INVALID OR EXPIRED KEY</p>
       )}
     </div>
   );
 }
 
 export function SettingsModal({ open, onClose }: SettingsModalProps) {
-  const [activeTab, setActiveTab] = useState<SettingsTab>("api");
-  const [selectedModel, setSelectedModel] = useState("claude-opus");
+  const [activeTab, setActiveTab] = useState<SettingsTab>("appearance");
+  const { uiStyle, setUiStyle } = useTheme();
   const [privacyToggles, setPrivacyToggles] = useState({
     dataRetention: true,
     telemetry: false,
@@ -150,64 +116,37 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(6px)" }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 12 }}
+        initial={{ opacity: 0, scale: 0.98, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 12 }}
-        transition={{ duration: 0.25 }}
-        className="flex flex-col overflow-hidden"
-        style={{
-          width: "min(680px, calc(100vw - 32px))",
-          maxHeight: "calc(100vh - 80px)",
-          background: "#0C0F1E",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: 16,
-          boxShadow: "0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.08)",
-        }}
+        exit={{ opacity: 0, scale: 0.98, y: 8 }}
+        transition={{ duration: 0.2 }}
+        className="flex flex-col bg-background border border-border w-full max-w-4xl max-h-[85vh] shadow-2xl"
       >
         {/* Header */}
-        <div
-          className="flex items-center justify-between px-6 py-5 shrink-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
-        >
+        <div className="flex items-center justify-between p-6 border-b border-border bg-background shrink-0">
           <div>
-            <h2 className="text-base font-semibold" style={{ color: "#F1F5F9", letterSpacing: "-0.01em" }}>
-              Settings
+            <h2 className="text-xl font-bold uppercase tracking-widest text-foreground">
+              System Configuration
             </h2>
-            <p className="text-xs mt-0.5" style={{ color: "#64748B" }}>
-              Manage API keys, models, and privacy preferences
+            <p className="text-xs font-mono font-bold opacity-70 mt-1 uppercase">
+              Manage API keys, models, and privacy parameters
             </p>
           </div>
           <button
             onClick={onClose}
-            className="flex items-center justify-center rounded-lg transition-colors duration-150"
-            style={{
-              width: 32,
-              height: 32,
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.08)",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+            className="p-2 border-2 border-transparent hover:border-background transition-colors"
           >
-            <X size={14} style={{ color: "#94A3B8" }} />
+            <X size={20} weight="bold" />
           </button>
         </div>
 
         <div className="flex flex-1 overflow-hidden">
           {/* Tab nav */}
-          <nav
-            className="flex flex-col gap-1 p-3 shrink-0"
-            style={{
-              width: 180,
-              borderRight: "1px solid rgba(255,255,255,0.06)",
-              background: "rgba(0,0,0,0.2)",
-            }}
-          >
+          <nav className="flex flex-col gap-2 p-6 shrink-0 w-64 border-r border-border bg-muted/5">
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -215,49 +154,44 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-left transition-all duration-150 w-full"
-                  style={{
-                    background: isActive ? "rgba(124,58,237,0.18)" : "transparent",
-                    border: isActive ? "1px solid rgba(124,58,237,0.3)" : "1px solid transparent",
-                    color: isActive ? "#A78BFA" : "#64748B",
-                    fontWeight: isActive ? 600 : 400,
-                  }}
+                  className={`flex items-center gap-3 px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-left transition-colors border w-full ${
+                    isActive
+                      ? "bg-muted/50 text-foreground border-border"
+                      : "bg-transparent text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/30"
+                  }`}
                 >
-                  <Icon size={14} />
+                  <Icon size={16} weight="bold" />
                   {tab.label}
-                  {isActive && <ChevronRight size={12} className="ml-auto" style={{ color: "#A78BFA" }} />}
+                  {isActive && <CaretRight size={14} weight="bold" className="ml-auto" />}
                 </button>
               );
             })}
           </nav>
 
           {/* Tab content */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-8 bg-background">
             {activeTab === "api" && (
               <motion.div
                 initial={{ opacity: 0, x: 8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.2 }}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-8"
               >
                 <div>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: "#F1F5F9" }}>
-                    AI Provider Keys
+                  <h3 className="text-sm font-bold uppercase tracking-widest mb-2">
+                    Google AI Studio Config
                   </h3>
-                  <p className="text-xs" style={{ color: "#64748B" }}>
-                    Keys are stored encrypted and never transmitted in plaintext.
+                  <p className="text-[10px] font-mono font-bold text-muted-foreground uppercase">
+                    Provide your Gemini API key to run the agent. Models and parameters are predefined.
                   </p>
                 </div>
-                <ApiKeyRow label="Anthropic API Key" placeholder="sk-ant-…" />
-                <ApiKeyRow label="OpenAI API Key" placeholder="sk-…" />
-                <div
-                  style={{ height: 1, background: "rgba(255,255,255,0.06)" }}
-                />
+                <ApiKeyRow label="Gemini API Key" placeholder="AIzaSy..." />
+                <div className="h-px bg-border w-full" />
                 <div>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: "#F1F5F9" }}>
+                  <h3 className="text-sm font-bold uppercase tracking-widest mb-2">
                     Integrations
                   </h3>
-                  <p className="text-xs" style={{ color: "#64748B" }}>
+                  <p className="text-[10px] font-mono font-bold text-muted-foreground uppercase">
                     Connect external document sources.
                   </p>
                 </div>
@@ -266,170 +200,141 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </motion.div>
             )}
 
-            {activeTab === "model" && (
-              <motion.div
-                initial={{ opacity: 0, x: 8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.2 }}
-                className="flex flex-col gap-4"
-              >
-                <div>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: "#F1F5F9" }}>
-                    Default AI Model
-                  </h3>
-                  <p className="text-xs" style={{ color: "#64748B" }}>
-                    Choose the model used for document analysis and chat.
-                  </p>
-                </div>
-                {MODELS.map((model) => {
-                  const isSelected = selectedModel === model.id;
-                  return (
-                    <button
-                      key={model.id}
-                      onClick={() => setSelectedModel(model.id)}
-                      className="flex items-start gap-3 p-4 rounded-xl text-left transition-all duration-150 w-full"
-                      style={{
-                        background: isSelected ? "rgba(124,58,237,0.12)" : "rgba(255,255,255,0.03)",
-                        border: isSelected
-                          ? "1px solid rgba(124,58,237,0.35)"
-                          : "1px solid rgba(255,255,255,0.07)",
-                      }}
-                    >
-                      <div
-                        className="rounded-full mt-0.5 shrink-0 flex items-center justify-center"
-                        style={{
-                          width: 16,
-                          height: 16,
-                          border: isSelected ? "2px solid #7C3AED" : "2px solid rgba(255,255,255,0.2)",
-                          background: isSelected ? "#7C3AED" : "transparent",
-                        }}
-                      >
-                        {isSelected && (
-                          <div className="rounded-full" style={{ width: 6, height: 6, background: "white" }} />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-semibold" style={{ color: "#F1F5F9" }}>
-                            {model.name}
-                          </span>
-                          <span className="text-xs" style={{ color: "#64748B" }}>
-                            {model.provider}
-                          </span>
-                          {model.badge && (
-                            <span
-                              className="text-xs px-1.5 py-0.5 rounded-full"
-                              style={{
-                                background: `${model.badgeColor}22`,
-                                color: model.badgeColor!,
-                                border: `1px solid ${model.badgeColor}44`,
-                              }}
-                            >
-                              {model.badge}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs mt-1" style={{ color: "#64748B" }}>
-                          {model.description}
-                        </p>
-                      </div>
-                    </button>
-                  );
-                })}
-              </motion.div>
-            )}
-
             {activeTab === "privacy" && (
               <motion.div
                 initial={{ opacity: 0, x: 8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.2 }}
-                className="flex flex-col gap-5"
+                className="flex flex-col gap-6"
               >
                 <div>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: "#F1F5F9" }}>
+                  <h3 className="text-sm font-bold uppercase tracking-widest mb-2">
                     Data & Privacy
                   </h3>
-                  <p className="text-xs" style={{ color: "#64748B" }}>
+                  <p className="text-[10px] font-mono font-bold text-muted-foreground uppercase">
                     Control how your documents and usage data are handled.
                   </p>
                 </div>
-                {[
-                  {
-                    key: "dataRetention" as const,
-                    label: "Document Retention",
-                    desc: "Keep processed documents in your workspace for 90 days",
-                  },
-                  {
-                    key: "encryptAtRest" as const,
-                    label: "Encryption at Rest",
-                    desc: "AES-256 encryption for all stored documents and metadata",
-                  },
-                  {
-                    key: "auditLog" as const,
-                    label: "Audit Logging",
-                    desc: "Log all document access and AI queries for compliance",
-                  },
-                  {
-                    key: "telemetry" as const,
-                    label: "Usage Telemetry",
-                    desc: "Share anonymous usage data to improve the product",
-                  },
-                  {
-                    key: "shareWithProviders" as const,
-                    label: "Share with AI Providers",
-                    desc: "Allow AI providers to use your queries for model training",
-                  },
-                ].map(({ key, label, desc }) => (
-                  <div
-                    key={key}
-                    className="flex items-start justify-between gap-4 py-3"
-                    style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-                  >
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold" style={{ color: "#F1F5F9" }}>
-                        {label}
-                      </p>
-                      <p className="text-xs mt-0.5" style={{ color: "#64748B" }}>
-                        {desc}
-                      </p>
+                <div className="flex flex-col border border-border">
+                  {[
+                    {
+                      key: "dataRetention" as const,
+                      label: "Document Retention",
+                      desc: "Keep processed documents in your workspace for 90 days",
+                    },
+                    {
+                      key: "encryptAtRest" as const,
+                      label: "Encryption at Rest",
+                      desc: "AES-256 encryption for all stored documents and metadata",
+                    },
+                    {
+                      key: "auditLog" as const,
+                      label: "Audit Logging",
+                      desc: "Log all document access and AI queries for compliance",
+                    },
+                    {
+                      key: "telemetry" as const,
+                      label: "Usage Telemetry",
+                      desc: "Share anonymous usage data to improve the product",
+                    },
+                    {
+                      key: "shareWithProviders" as const,
+                      label: "Share with AI Providers",
+                      desc: "Allow AI providers to use your queries for model training",
+                    },
+                  ].map(({ key, label, desc }, idx, arr) => (
+                    <div
+                      key={key}
+                      className={`flex items-start justify-between gap-6 p-5 ${
+                        idx !== arr.length - 1 ? "border-b border-border" : ""
+                      }`}
+                    >
+                      <div className="flex-1">
+                        <p className="text-xs font-bold uppercase tracking-widest text-foreground mb-1">
+                          {label}
+                        </p>
+                        <p className="text-[10px] font-mono text-muted-foreground uppercase">
+                          {desc}
+                        </p>
+                      </div>
+                      <Switch
+                        checked={privacyToggles[key]}
+                        onCheckedChange={() => togglePrivacy(key)}
+                      />
                     </div>
-                    <Switch
-                      checked={privacyToggles[key]}
-                      onCheckedChange={() => togglePrivacy(key)}
-                    />
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === "appearance" && (
+              <motion.div
+                initial={{ opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col gap-6"
+              >
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-widest mb-2">
+                    UI Theme
+                  </h3>
+                  <p className="text-[10px] font-mono font-bold text-muted-foreground uppercase">
+                    Choose the visual style of the application.
+                  </p>
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setUiStyle("modern")}
+                    className={`flex-1 flex flex-col items-center gap-3 p-6 text-center transition-all ${
+                      uiStyle === "modern" 
+                        ? "border-2 border-foreground bg-foreground/5 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]" 
+                        : "border-2 border-border hover:border-foreground opacity-70 hover:opacity-100"
+                    }`}
+                  >
+                    <div className="w-16 h-12 border-2 border-foreground bg-background shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] flex items-center justify-center">
+                      <div className="w-8 h-2 bg-foreground" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold uppercase tracking-widest">Modern</h4>
+                      <p className="text-[10px] font-mono text-muted-foreground uppercase mt-1">Brutalist</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setUiStyle("classic")}
+                    className={`flex-1 flex flex-col items-center gap-3 p-6 text-center transition-all ${
+                      uiStyle === "classic" 
+                        ? "border-2 border-foreground bg-foreground/5 rounded-xl" 
+                        : "border-2 border-border hover:border-foreground rounded-xl opacity-70 hover:opacity-100"
+                    }`}
+                  >
+                    <div className="w-16 h-12 border border-border bg-background rounded-lg shadow-sm flex items-center justify-center">
+                      <div className="w-8 h-2 bg-foreground rounded-full" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold tracking-tight">Classic</h4>
+                      <p className="text-xs text-muted-foreground mt-1">Web 2.0</p>
+                    </div>
+                  </button>
+                </div>
               </motion.div>
             )}
           </div>
         </div>
 
         {/* Footer */}
-        <div
-          className="flex items-center justify-end gap-3 px-6 py-4 shrink-0"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
-        >
+        <div className="flex items-center justify-end gap-4 p-6 border-t border-border bg-muted/5 shrink-0">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-sm transition-colors duration-150"
-            style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              color: "#94A3B8",
-            }}
+            className="px-6 py-3 text-xs font-bold uppercase tracking-widest border border-border text-foreground hover:bg-muted/50 transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{
-              background: "linear-gradient(135deg, #7C3AED, #4F46E5)",
-              boxShadow: "0 0 16px rgba(124,58,237,0.3)",
-            }}
+            className="px-6 py-3 text-xs font-bold uppercase tracking-widest bg-foreground text-background border border-foreground hover:bg-foreground/90 transition-colors"
           >
-            Save Changes
+            Save Configuration
           </button>
         </div>
       </motion.div>

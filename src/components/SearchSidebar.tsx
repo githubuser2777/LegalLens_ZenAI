@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import {
-  Search,
+  MagnifyingGlass,
   Tag,
-  Calendar,
-  Sparkles,
+  CalendarBlank,
+  Sparkle,
   FileText,
   X,
   SlidersHorizontal,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+  CaretDown,
+  CaretUp,
+} from "@phosphor-icons/react";
 import { Slider } from "./ui/slider";
-
-const GLASS = {
-  background: "rgba(255,255,255,0.04)",
-  backdropFilter: "blur(20px)",
-  border: "1px solid rgba(255,255,255,0.08)",
-  borderRadius: 12,
-};
 
 const ALL_TAGS = ["NDA", "Contract", "IP", "Employment", "License", "Merger", "Compliance", "Liability", "IP Rights", "Arbitration"];
 const AI_KEYWORDS = ["Force Majeure", "Indemnification", "Confidentiality", "Non-compete", "Termination Clause", "Governing Law"];
 
+interface Contract {
+  id: string;
+  title: string;
+  created_at: string;
+}
 
 export function SearchSidebar() {
   const [query, setQuery] = useState("");
@@ -30,7 +28,7 @@ export function SearchSidebar() {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
   const [confidenceRange, setConfidenceRange] = useState([75]);
   const [filtersOpen, setFiltersOpen] = useState(true);
-  const [contracts, setContracts] = useState<any[]>([]);
+  const [contracts, setContracts] = useState<Contract[]>([]);
 
   useEffect(() => {
     fetch('/api/contracts')
@@ -53,65 +51,47 @@ export function SearchSidebar() {
   });
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-full overflow-hidden bg-background text-foreground">
       {/* Filter sidebar */}
       <motion.aside
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.35 }}
-        className="flex flex-col gap-4 p-4 overflow-y-auto shrink-0"
-        style={{
-          width: 264,
-          background: "rgba(12,15,30,0.6)",
-          borderRight: "1px solid rgba(255,255,255,0.06)",
-          backdropFilter: "blur(20px)",
-        }}
+        className="flex flex-col gap-6 p-6 overflow-y-auto shrink-0 border-r border-border bg-muted/10"
+        style={{ width: 280 }}
       >
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <SlidersHorizontal size={14} style={{ color: "#A78BFA" }} />
-            <span className="text-sm font-semibold" style={{ color: "#F1F5F9" }}>
+            <SlidersHorizontal size={16} weight="bold" />
+            <span className="text-sm font-semibold uppercase tracking-widest">
               Filters
             </span>
           </div>
-          <button onClick={() => setFiltersOpen(!filtersOpen)}>
-            {filtersOpen ? (
-              <ChevronUp size={14} style={{ color: "#64748B" }} />
-            ) : (
-              <ChevronDown size={14} style={{ color: "#64748B" }} />
-            )}
+          <button onClick={() => setFiltersOpen(!filtersOpen)} className="text-muted-foreground hover:text-foreground transition-colors">
+            {filtersOpen ? <CaretUp size={16} weight="bold" /> : <CaretDown size={16} weight="bold" />}
           </button>
         </div>
 
         {filtersOpen && (
-          <>
+          <div className="flex flex-col gap-6">
             {/* Tags */}
             <div>
-              <div className="flex items-center gap-1.5 mb-2">
-                <Tag size={12} style={{ color: "#64748B" }} />
-                <span className="text-xs uppercase tracking-wider" style={{ color: "#64748B" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <Tag size={14} weight="bold" className="text-muted-foreground" />
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   Document Tags
                 </span>
               </div>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2">
                 {ALL_TAGS.map((tag) => (
                   <button
                     key={tag}
                     onClick={() => toggleTag(tag)}
-                    className="text-xs px-2 py-0.5 rounded-full transition-all duration-150"
-                    style={
+                    className={`text-[10px] uppercase font-bold tracking-widest px-2 py-1 border transition-colors ${
                       selectedTags.includes(tag)
-                        ? {
-                            background: "rgba(124,58,237,0.25)",
-                            color: "#A78BFA",
-                            border: "1px solid rgba(124,58,237,0.4)",
-                          }
-                        : {
-                            background: "rgba(255,255,255,0.05)",
-                            color: "#64748B",
-                            border: "1px solid rgba(255,255,255,0.07)",
-                          }
-                    }
+                        ? "bg-foreground text-background border-foreground"
+                        : "bg-background text-muted-foreground border-border hover:border-foreground hover:text-foreground"
+                    }`}
                   >
                     {tag}
                   </button>
@@ -119,30 +99,25 @@ export function SearchSidebar() {
               </div>
             </div>
 
-            <div style={{ height: 1, background: "rgba(255,255,255,0.06)" }} />
+            <div className="h-px bg-border w-full" />
 
             {/* Date range */}
             <div>
-              <div className="flex items-center gap-1.5 mb-2">
-                <Calendar size={12} style={{ color: "#64748B" }} />
-                <span className="text-xs uppercase tracking-wider" style={{ color: "#64748B" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <CalendarBlank size={14} weight="bold" className="text-muted-foreground" />
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   Date Range
                 </span>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5">
                 {["Last 7 days", "Last 30 days", "Last 90 days", "Custom…"].map((opt) => (
                   <button
                     key={opt}
-                    className="text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors duration-150"
-                    style={
+                    className={`text-left text-xs font-semibold px-3 py-2 border transition-colors ${
                       opt === "Last 30 days"
-                        ? {
-                            background: "rgba(124,58,237,0.2)",
-                            color: "#A78BFA",
-                            border: "1px solid rgba(124,58,237,0.3)",
-                          }
-                        : { color: "#94A3B8" }
-                    }
+                        ? "bg-foreground text-background border-foreground"
+                        : "bg-background text-muted-foreground border-transparent hover:border-border hover:bg-muted/50"
+                    }`}
                   >
                     {opt}
                   </button>
@@ -150,50 +125,45 @@ export function SearchSidebar() {
               </div>
             </div>
 
-            <div style={{ height: 1, background: "rgba(255,255,255,0.06)" }} />
+            <div className="h-px bg-border w-full" />
 
             {/* AI Keywords */}
             <div>
-              <div className="flex items-center gap-1.5 mb-2">
-                <Sparkles size={12} style={{ color: "#06B6D4" }} />
-                <span className="text-xs uppercase tracking-wider" style={{ color: "#64748B" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkle size={14} weight="bold" className="text-muted-foreground" />
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   AI Keywords
                 </span>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1.5">
                 {AI_KEYWORDS.map((kw) => (
                   <button
                     key={kw}
                     onClick={() => toggleKeyword(kw)}
-                    className="text-left text-xs px-2.5 py-1.5 rounded-lg flex items-center justify-between group transition-colors duration-150"
-                    style={
+                    className={`text-left text-xs font-semibold px-3 py-2 border flex items-center justify-between group transition-colors ${
                       selectedKeywords.includes(kw)
-                        ? {
-                            background: "rgba(6,182,212,0.1)",
-                            color: "#67E8F9",
-                            border: "1px solid rgba(6,182,212,0.2)",
-                          }
-                        : { color: "#94A3B8" }
-                    }
+                        ? "bg-foreground text-background border-foreground"
+                        : "bg-background text-muted-foreground border-transparent hover:border-border hover:bg-muted/50"
+                    }`}
                   >
                     {kw}
                     {selectedKeywords.includes(kw) && (
-                      <X size={10} style={{ color: "#67E8F9" }} />
+                      <X size={12} weight="bold" />
                     )}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div style={{ height: 1, background: "rgba(255,255,255,0.06)" }} />
+            <div className="h-px bg-border w-full" />
 
             {/* Confidence */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs uppercase tracking-wider" style={{ color: "#64748B" }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   Min. AI Confidence
                 </span>
-                <span className="text-xs font-semibold tabular-nums" style={{ color: "#A78BFA" }}>
+                <span className="text-xs font-mono font-bold text-foreground">
                   {confidenceRange[0]}%
                 </span>
               </div>
@@ -205,53 +175,40 @@ export function SearchSidebar() {
                 step={1}
               />
             </div>
-          </>
+          </div>
         )}
       </motion.aside>
 
       {/* Results pane */}
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div className="flex flex-col flex-1 overflow-hidden bg-background">
         {/* Search bar */}
         <motion.div
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="p-4 shrink-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+          className="p-6 border-b border-border bg-background shrink-0"
         >
           <div className="relative">
-            <Search
-              size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2"
-              style={{ color: "#64748B" }}
+            <MagnifyingGlass
+              size={18}
+              weight="bold"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground"
             />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search documents, clauses, parties…"
-              className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm outline-none transition-all duration-200"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                color: "#F1F5F9",
-              }}
-              onFocus={(e) =>
-                (e.currentTarget.style.border = "1px solid rgba(124,58,237,0.5)")
-              }
-              onBlur={(e) =>
-                (e.currentTarget.style.border = "1px solid rgba(255,255,255,0.08)")
-              }
+              placeholder="SEARCH DOCUMENTS, CLAUSES, PARTIES…"
+              className="w-full pl-12 pr-4 py-3 bg-muted/10 border border-border text-xs font-mono font-bold text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground focus:ring-1 focus:ring-foreground transition-all"
             />
           </div>
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-xs" style={{ color: "#64748B" }}>
-              {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+          <div className="flex items-center gap-3 mt-4">
+            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-2 py-0.5 border border-border">
+              {filtered.length} RESULT{filtered.length !== 1 ? "S" : ""}
             </span>
             {selectedTags.length > 0 && (
               <button
                 onClick={() => setSelectedTags([])}
-                className="text-xs px-2 py-0.5 rounded"
-                style={{ color: "#A78BFA", background: "rgba(124,58,237,0.1)" }}
+                className="text-[10px] font-bold text-background bg-foreground uppercase tracking-widest px-2 py-0.5 border border-foreground hover:bg-foreground/90 transition-colors"
               >
                 Clear tags
               </button>
@@ -260,60 +217,46 @@ export function SearchSidebar() {
         </motion.div>
 
         {/* Result list */}
-        <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
+        <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
           {filtered.map((result, i) => (
             <motion.div
               key={result.id}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.06 }}
-              whileHover={{ y: -1 }}
-              className="p-4 rounded-xl cursor-pointer transition-all duration-200"
-              style={{
-                ...GLASS,
-                boxShadow: "0 0 0 transparent",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.boxShadow = "0 0 24px rgba(124,58,237,0.1)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.boxShadow = "0 0 0 transparent")
-              }
+              className="p-5 border border-border bg-background hover:bg-muted/10 transition-colors cursor-pointer group"
             >
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-2 min-w-0">
-                  <FileText size={13} style={{ color: "#7C3AED", flexShrink: 0 }} />
-                  <span className="text-sm font-semibold truncate" style={{ color: "#F1F5F9" }}>
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <FileText size={16} weight="light" className="text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+                  <span className="text-sm font-semibold text-foreground truncate">
                     {result.title}
                   </span>
                 </div>
-                <span
-                  className="text-xs font-semibold tabular-nums shrink-0 ml-2"
-                  style={{
-                    color: "#94A3B8",
-                  }}
-                >
+                <span className="text-[10px] font-mono font-bold text-muted-foreground shrink-0 ml-4 border border-border px-1.5 py-0.5">
                   N/A
                 </span>
               </div>
 
-              <p
-                className="text-xs mb-2 leading-relaxed"
-                style={{ color: "#94A3B8" }}
-              >
+              <p className="text-xs text-muted-foreground leading-relaxed mb-4 font-mono">
                 No snippet preview available yet.
               </p>
 
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "#64748B" }}>
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 border border-border text-muted-foreground bg-muted/20">
                   PDF
                 </span>
-                <span className="text-xs ml-auto" style={{ color: "#475569" }}>
+                <span className="text-[10px] font-mono font-bold text-muted-foreground ml-auto">
                   {new Date(result.created_at).toLocaleDateString()}
                 </span>
               </div>
             </motion.div>
           ))}
+          {filtered.length === 0 && (
+            <div className="p-12 text-center text-xs uppercase tracking-widest font-bold text-muted-foreground border border-dashed border-border">
+              No results found
+            </div>
+          )}
         </div>
       </div>
     </div>
