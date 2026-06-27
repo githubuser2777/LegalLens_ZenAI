@@ -1,0 +1,36 @@
+name: Python Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+        
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      
+    - name: Install dependencies
+      working-directory: ./agent/contract_auditor_agent
+      run: uv sync --all-extras --dev
+      
+    - name: Test with pytest
+      working-directory: ./agent/contract_auditor_agent
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy"
+        SUPABASE_SERVICE_ROLE_KEY: "dummy"
+      run: |
+        uv run pytest tests/
